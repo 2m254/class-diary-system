@@ -62,7 +62,7 @@ if(strlen($_SESSION['alogin'])=="")
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-primary" href="manage-students.php">
+                                        <a class="dashboard-stat bg-primary" href="manage-classes.php">
 <?php 
 $sql1 ="SELECT StudentId from tblstudents ";
 $query1 = $dbh -> prepare($sql1);
@@ -97,7 +97,7 @@ $totalsubjects=$query->rowCount();
                                     <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
 
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-warning" href="manage-classes.php">
+                                        <a class="dashboard-stat bg-warning" href="manage-subjects.php">
                                         <?php 
 $sql2 ="SELECT id from  tblclasses ";
 $query2 = $dbh -> prepare($sql2);

@@ -1,5 +1,5 @@
   <nav class="navbar top-navbar bg-white box-shadow">
-            	<div class="container-fluid">
+            	<div class="container-fluid" img src="images/bg.jpg" >
                     <div class="row">
                         <div class="navbar-header no-padding">
                 			<a class="navbar-brand" href="dashboard.php">
