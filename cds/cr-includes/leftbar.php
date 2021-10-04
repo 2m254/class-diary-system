@@ -23,8 +23,8 @@
                                     <li class="has-children">
                                         <a href="#"><i class="fa fa-file-text"></i> <span>Class-diary</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
-                                            <li><a href="create-class.php"><i class="fa fa-bars"></i> <span>add class diary</span></a></li>
-                                            <li><a href="manage-classes.php"><i class="fa fa fa-server"></i> <span>Manage class diary</span></a></li>
+                                            <li><a href="add-class_diary.php"><i class="fa fa-bars"></i> <span>add class diary</span></a></li>
+                                            <li><a href="manage-class_diary.php"><i class="fa fa fa-server"></i> <span>Manage class diary</span></a></li>
                                            
                                         </ul>
                                     </li>
