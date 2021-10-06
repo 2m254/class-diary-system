@@ -89,7 +89,7 @@ $results=$query->fetchAll(PDO::FETCH_OBJ);
 $totalsubjects=$query->rowCount();
 ?>
                                             <span class="number counter"><?php echo htmlentities($totalsubjects);?></span>
-                                            <span class="name">Subjects Listed</span>
+                                            <span class="name">#######2</span>
                                             <span class="bg-icon"><i class="fa fa-ticket"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->

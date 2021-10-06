@@ -8,7 +8,6 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +15,7 @@ if(strlen($_SESSION['alogin'])=="")
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Admin Manage Subjects</title>
+        <title>HOD Manage Modules</title>
         <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" >
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
@@ -25,6 +24,7 @@ if(strlen($_SESSION['alogin'])=="")
         <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
+        <link rel="stylesheet" href="styles.css">
           <style>
         .errorWrap {
     padding: 10px;
@@ -45,6 +45,12 @@ if(strlen($_SESSION['alogin'])=="")
         </style>
     </head>
     <body class="top-navbar-fixed">
+    <div class="login-background" >
+        <div class="slider">
+        <div class="load">
+            
+
+        <div id="navbar">
         <div class="main-wrapper">
 
             <!-- ========== TOP NAVBAR ========== -->
@@ -58,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Manage Subjects</h2>
+                                    <h2 class="title">Manage Modules</h2>
                                 
                                 </div>
                                 
@@ -69,8 +75,8 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li> Subjects</li>
-            							<li class="active">Manage Subjects</li>
+                                        <li> Modules</li>
+            							<li class="active">Manage Modules</li>
             						</ul>
                                 </div>
                              
@@ -78,7 +84,7 @@ if(strlen($_SESSION['alogin'])=="")
                             <!-- /.row -->
                         </div>
                         <!-- /.container-fluid -->
-
+                                    
                         <section class="section">
                             <div class="container-fluid">
 
@@ -90,7 +96,7 @@ if(strlen($_SESSION['alogin'])=="")
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>View Subjects Info</h5>
+                                                    <h5>View Modules Info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -108,25 +114,25 @@ else if($error){?>
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Subject Name</th>
-                                                            <th>Subject Code</th>
-                                                            <th>Creation Date</th>
-                                                            <th>Updation Date</th>
+                                                            <th>Module Name</th>
+                                                            <th>Module Code</th>
+                                                            <th>Module credit</th>
+                                                          
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
                                                           <th>#</th>
-                                                             <th>Subject Name</th>
-                                                            <th>Subject Code</th>
-                                                            <th>Creation Date</th>
-                                                            <th>Updation Date</th>
+                                                            <th>Module Name</th>
+                                                            <th>Module Code</th>
+                                                            <th>Module credit</th>
+                                                           
                                                             <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from tblsubjects";
+<?php $sql = "SELECT * from tblclasses";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -137,12 +143,12 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->SubjectName);?></td>
-                                                            <td><?php echo htmlentities($result->SubjectCode);?></td>
-                                                            <td><?php echo htmlentities($result->Creationdate);?></td>
-                                                            <td><?php echo htmlentities($result->UpdationDate);?></td>
+                                                            <td><?php echo htmlentities($result->ClassName);?></td>
+                                                            <td><?php echo htmlentities($result->ClassNameNumeric);?></td>
+                                                            <td><?php echo htmlentities($result->Section);?></td>
+                                                            <td><?php echo htmlentities($result->CreationDate);?></td>
 <td>
-<a href="edit-subject.php?subjectid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-class.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>
@@ -214,7 +220,7 @@ foreach($results as $result)
 
                 $('#example3').DataTable();
             });
-        </script>
+        </script></div></div></div></div>
     </body>
 </html>
 <?php } ?>
