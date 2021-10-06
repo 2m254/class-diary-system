@@ -23,8 +23,8 @@
                                     <li class="has-children">
                                         <a href="#"><i class="fa fa-file-text"></i> <span>Modules</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
-                                            <li><a href="create-class.php"><i class="fa fa-bars"></i> <span>Create Modules</span></a></li>
-                                            <li><a href="manage-classes.php"><i class="fa fa fa-server"></i> <span>Manage Modules</span></a></li>
+                                            <li><a href="create-module.php"><i class="fa fa-bars"></i> <span>Create Modules</span></a></li>
+                                            <li><a href="manage-modules.php"><i class="fa fa fa-server"></i> <span>Manage Modules</span></a></li>
                                            
                                         </ul>
                                     </li>

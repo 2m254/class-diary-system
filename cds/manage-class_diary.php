@@ -54,17 +54,17 @@ if(strlen($_SESSION['alogin'])=="")
         <div class="main-wrapper">
 
             <!-- ========== TOP NAVBAR ========== -->
-   <?php include('includes/topbar.php');?> 
+   <?php include('cr-includes/topbar.php');?> 
             <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
             <div class="content-wrapper">
                 <div class="content-container">
-<?php include('includes/leftbar.php');?>  
+<?php include('cr-includes/leftbar.php');?>  
 
                     <div class="main-page">
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Manage Modules</h2>
+                                    <h2 class="title">Manage Class Diary</h2>
                                 
                                 </div>
                                 
@@ -75,8 +75,8 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li> Modules</li>
-            							<li class="active">Manage Modules</li>
+                                        <li> Class-Diary</li>
+            							<li class="active">Manage Class Diary</li>
             						</ul>
                                 </div>
                              
@@ -96,7 +96,7 @@ if(strlen($_SESSION['alogin'])=="")
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>View Modules Info</h5>
+                                                    <h5>View Class Diary Info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -114,9 +114,12 @@ else if($error){?>
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Module Name</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module credit</th>
+                                                            <th>#1</th>
+                                                            <th>#2</th>
+                                                            <th>#3</th>
+                                                            <th>#4</th>
+                                                            <th>#5</th>
+                                                            <th>#6</th>
                                                           
                                                             <th>Action</th>
                                                         </tr>
@@ -124,9 +127,12 @@ else if($error){?>
                                                     <tfoot>
                                                         <tr>
                                                           <th>#</th>
-                                                            <th>Module Name</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module credit</th>
+                                                            <th>#1</th>
+                                                            <th>#2</th>
+                                                            <th>#3</th>
+                                                            <th>#4</th>
+                                                            <th>#5</th>
+                                                            <th>#6</th>
                                                            
                                                             <th>Action</th>
                                                         </tr>
