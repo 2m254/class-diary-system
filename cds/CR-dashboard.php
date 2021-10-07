@@ -64,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-primary" href="manage-class_diary.php">
 <?php 
-$sql1 ="SELECT StudentId from tblstudents ";
+$sql1 ="SELECT id from modules_tbl ";
 $query1 = $dbh -> prepare($sql1);
 $query1->execute();
 $results1=$query1->fetchAll(PDO::FETCH_OBJ);
@@ -82,7 +82,7 @@ $totalstudents=$query1->rowCount();
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-danger" href="#">
 <?php 
-$sql ="SELECT id from  tblsubjects ";
+$sql ="SELECT id from  modules_tbl ";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -99,7 +99,7 @@ $totalsubjects=$query->rowCount();
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-warning" href="#">
                                         <?php 
-$sql2 ="SELECT id from  tblclasses ";
+$sql2 ="SELECT id from  modules_tbl ";
 $query2 = $dbh -> prepare($sql2);
 $query2->execute();
 $results2=$query2->fetchAll(PDO::FETCH_OBJ);
@@ -116,7 +116,7 @@ $totalclasses=$query2->rowCount();
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-success" href="#">
                                         <?php 
-$sql3="SELECT  distinct StudentId from  tblresult ";
+$sql3="SELECT  distinct id from  modules_tbl ";
 $query3 = $dbh -> prepare($sql3);
 $query3->execute();
 $results3=$query3->fetchAll(PDO::FETCH_OBJ);

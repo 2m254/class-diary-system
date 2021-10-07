@@ -3,7 +3,7 @@
                             <div class="user-info closed">
                                 <img src="http://placehold.it/90/c2c2c2?text=User" alt="John Doe" class="img-circle profile-img">
                                 <h6 class="title">C-R</h6>
-                                <small class="info">Head Of Department</small>
+                                <small class="info">Class Representative</small>
                             </div>
                             <!-- /.user-info -->
 

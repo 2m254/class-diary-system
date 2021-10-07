@@ -259,9 +259,9 @@ foreach($results as $result)
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Comment</label>
+                                                        <label for="success" class="control-label"><u><b>Comment:</b></u></label>
                                                         <div class="">
-                                                            <input type="text" name="section" class="form-control" required="required" id="success">
+                                                        <label for="success" class="control-label">Understandable</label>  <input type="radio" name="gender"   value="Male" required="required" checked="">  <label for="success" class="control-label">Not Understandable</label>   <input type="radio" name="gender"  id="success" value="Female" required="required">  
                                                             
                                                         </div>
                                                     </div>

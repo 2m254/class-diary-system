@@ -9,15 +9,19 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-$classname=$_POST['classname'];
-$classnamenumeric=$_POST['classnamenumeric']; 
-$section=$_POST['section'];
-$cid=intval($_GET['classid']);
-$sql="update  tblclasses set ClassName=:classname,ClassNameNumeric=:classnamenumeric,Section=:section where id=:cid ";
-$query = $dbh->prepare($sql);
-$query->bindParam(':classname',$classname,PDO::PARAM_STR);
-$query->bindParam(':classnamenumeric',$classnamenumeric,PDO::PARAM_STR);
-$query->bindParam(':section',$section,PDO::PARAM_STR);
+    $modulename=$_POST['modulename'];
+    $modulecode=$_POST['modulecode']; 
+    $modulecredit=$_POST['modulecredit'];
+    $moduleinstructor=$_POST['moduleinstructor'];
+    $moduleassistant=$_POST['moduleassistant'];
+    $cid=intval($_GET['classid']);
+    $sql="update  modules_tbl set module_name=:modulename,module_code=:modulecode,module_credit=:modulecredit,module_instructor=:moduleinstructor,module_assistant=:moduleassistant where id=:cid ";
+    $query = $dbh->prepare($sql);
+$query->bindParam(':modulename',$modulename,PDO::PARAM_STR);
+$query->bindParam(':modulecode',$modulecode,PDO::PARAM_STR);
+$query->bindParam(':modulecredit',$modulecredit,PDO::PARAM_STR);
+$query->bindParam(':moduleinstructor',$moduleinstructor,PDO::PARAM_STR);
+$query->bindParam(':moduleassistant',$moduleassistant,PDO::PARAM_STR);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
 $msg="Data has been updated successfully";
@@ -107,10 +111,10 @@ else if($error){?>
                                         </div>
                                         <?php } ?>
 
-                                                <form method="post">
+                                                <form method="post" >
 <?php 
 $cid=intval($_GET['classid']);
-$sql = "SELECT * from tblclasses where id=:cid";
+$sql = "SELECT * from modules_tbl where id=:cid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -122,32 +126,55 @@ foreach($results as $result)
 {   ?>
 
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Class Name</label>
+                                                        <label for="success" class="control-label">Module Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="classname" value="<?php echo htmlentities($result->ClassName);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- Third, Fouth,Sixth etc</span>
+                                                			<input type="text" name="modulename" value="<?php echo htmlentities($result->module_name);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- ICT,Analog,Soral Energy etc</span>
                                                 		</div>
                                                 	</div>
                                                        <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Class Name in Numeric</label>
+                                                        <label for="success" class="control-label">Module Code</label>
                                                         <div class="">
-                                                            <input type="number" name="classnamenumeric" value="<?php echo htmlentities($result->ClassNameNumeric);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- 1,2,4,5 etc</span>
+                                                            <input type="text" name="modulecode" value="<?php echo htmlentities($result->module_code);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- ict101 etc</span>
                                                         </div>
                                                     </div>
                                                      <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Section</label>
+                                                        <label for="success" class="control-label">Module Credit</label>
                                                         <div class="">
-                                                            <input type="text" name="section" value="<?php echo htmlentities($result->Section);?>" class="form-control" required="required" id="success">
-                                                            <span class="help-block">Eg- A,B,C etc</span>
+                                                            <input type="text" name="modulecredit" value="<?php echo htmlentities($result->module_credit);?>" class="form-control" required="required" id="success">
+                                                            <span class="help-block">Eg- 10,15 etc</span>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">module_instructor</label>
+                                                        <div class="">
+                                                            <input type="text" name="moduleinstructor" value="<?php echo htmlentities($result->module_instructor);?>" class="form-control" required="required" id="success">
+                                                            <span class="help-block">her/his Names </span>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Module Assistant</label>
+                                                        <div class="">
+                                                            <input type="text" name="moduleassistant" value="<?php echo htmlentities($result->module_assistant);?>" class="form-control" required="required" id="success">
+                                                            <span class="help-block">her/his Assistant Names</span>
                                                         </div>
                                                     </div>
                                                     <?php }} ?>
   <div class="form-group has-success">
 
                                                         <div class="">
-                                                           <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                    </div>
+                                                            <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    
+                                                    
+                    
+                                                    		
+                                                           
+                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-modules.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    		</div>
+                    </div>
 
 
                                                     

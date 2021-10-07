@@ -9,14 +9,19 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$classname=$_POST['classname'];
-$classnamenumeric=$_POST['classnamenumeric']; 
-$section=$_POST['section'];
-$sql="INSERT INTO  tblclasses(ClassName,ClassNameNumeric,Section) VALUES(:classname,:classnamenumeric,:section)";
+$module_name=$_POST['module_name'];
+$module_code=$_POST['module_code']; 
+$module_credit=$_POST['module_credit'];
+$module_instructor=$_POST['module_instructor'];
+$module_assistant=$_POST['module_assistant'];
+
+$sql="INSERT INTO  modules_tbl(module_name,module_code,module_credit,module_instructor,module_assistant) VALUES(:module_name,:module_code,:module_credit,:module_instructor,:module_assistant)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':classname',$classname,PDO::PARAM_STR);
-$query->bindParam(':classnamenumeric',$classnamenumeric,PDO::PARAM_STR);
-$query->bindParam(':section',$section,PDO::PARAM_STR);
+$query->bindParam(':module_name',$module_name,PDO::PARAM_STR);
+$query->bindParam(':module_code',$module_code,PDO::PARAM_STR);
+$query->bindParam(':module_credit',$module_credit,PDO::PARAM_STR);
+$query->bindParam(':module_instructor',$module_instructor,PDO::PARAM_STR);
+$query->bindParam(':module_assistant',$module_assistant,PDO::PARAM_STR);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
@@ -138,14 +143,14 @@ else if($error){?>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="classname" class="form-control" required="required" id="success">
+                                                			<input type="text" name="module_name" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Code</label>
                                                 		<div class="">
-                                                			<input type="text" name="classname" class="form-control" required="required" id="success">
+                                                			<input type="text" name="module_code" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
@@ -153,7 +158,7 @@ else if($error){?>
                                                        <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Credit </label>
                                                         <div class="">
-                                                            <input type="text" name="classnamenumeric" required="required" class="form-control" id="success">
+                                                            <input type="text" name="module_credit" required="required" class="form-control" id="success">
                                                             
 
                                                         </div>
@@ -161,7 +166,7 @@ else if($error){?>
                                                      <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Instructor </label>
                                                         <div class="">
-                                                            <input type="text" name="section" class="form-control" required="required" id="success">
+                                                            <input type="text" name="module_instructor" class="form-control" required="required" id="success">
                                                             
                                                        
                                                     </div>
@@ -169,10 +174,11 @@ else if($error){?>
                                                      <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Assistant </label>
                                                         <div class="">
-                                                            <input type="text" name="section" class="form-control" required="required" id="success">
+                                                            <input type="text" name="module_assistant" class="form-control" required="required" id="success">
                                                             
                                                         </div>
                                                     </div>
+                                                    
   <div class="form-group has-success">
 
                                                         <div class="">
