@@ -9,14 +9,40 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$classname=$_POST['classname'];
-$classnamenumeric=$_POST['classnamenumeric']; 
-$section=$_POST['section'];
-$sql="INSERT INTO  tblclasses(ClassName,ClassNameNumeric,Section) VALUES(:classname,:classnamenumeric,:section)";
+$week=$_POST['Week'];
+$day=$_POST['day']; 
+$dat=$_POST['dat'];
+$modulename=$_POST['modulename'];
+$modulecode=$_POST['modulecode'];
+$lecture=$_POST['lecture'];
+$starttime=$_POST['starttime'];
+$endtime=$_POST['endtime'];
+$activity=$_POST['activity'];
+$contenttitle=$_POST['contenttitle'];
+$comment=$_POST['comment'];
+$commentdesc=$_POST['commentdesc'];
+$sql="INSERT INTO  cd_tbl(week,day,dat,modulename,modulecode,lecture,startime,endtime,activity,comment,commentdesc) VALUES(:week,:day,:dat,:modulename,:modulecode,:lecture,:startime,:endtime,:activity,:comment,:commentdesc)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':classname',$classname,PDO::PARAM_STR);
-$query->bindParam(':classnamenumeric',$classnamenumeric,PDO::PARAM_STR);
-$query->bindParam(':section',$section,PDO::PARAM_STR);
+$query->bindParam(':week',$classname,PDO::PARAM_STR);
+$query->bindParam(':day',$classnamenumeric,PDO::PARAM_STR);
+$query->bindParam(':dat',$section,PDO::PARAM_STR);
+$query->bindParam(':modulename',$section,PDO::PARAM_STR);
+$query->bindParam(':modulecode',$section,PDO::PARAM_STR);
+$query->bindParam(':lecture',$section,PDO::PARAM_STR);
+$query->bindParam(':starttime',$section,PDO::PARAM_STR);
+$query->bindParam('endtime',$section,PDO::PARAM_STR);
+$query->bindParam(':activity',$section,PDO::PARAM_STR);
+$query->bindParam(':contenttitle',$section,PDO::PARAM_STR);
+$query->bindParam(':comment',$section,PDO::PARAM_STR);
+$query->bindParam(':commentdesc',$section,PDO::PARAM_STR);
+
+
+
+
+
+
+
+
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
@@ -63,6 +89,20 @@ $error="Something went wrong. Please try again";
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 }
         </style>
+        <<script>
+            function my_fun(str){
+                if(window.XMLHttpRequest)
+                {
+                    xmlhttp =new XMLHttpRequest();
+
+                }else{
+                    xmlhttp=new ActiveXobject("Microsoftt.XMLHTTP");
+
+                }
+                xmlhttp.open("GET","helper.php?value="+str,true);
+                xmlhttp.send();
+            }
+        </script>
     </head>
     <body class="top-navbar-fixed">
     <div class="login-background" >
@@ -85,7 +125,7 @@ $error="Something went wrong. Please try again";
  <!-- /.left-sidebar -->
 
                     <div class="main-page">
-                        <div class="container-fluid">
+                        <div class="container-fluid">````````
                             <div class="row page-title-div">
                                 <div class="col-md-6">
                                     <h2 class="title">Create Class Diary </h2>
@@ -149,17 +189,16 @@ else if($error){?>
                                                 <label for="default" class="control-label">Day</label>
                                                        
  <select name="class" class="form-control" id="success" required="required">
-<option value="">Select Class</option>
-<?php $sql = "SELECT * from tblclasses";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->ClassName); ?>&nbsp; Section-<?php echo htmlentities($result->Section); ?></option>
-<?php }} ?>
+<option value="">Select Day</option>
+
+<option value="Monday ">Monday</option>
+<option value="Tuesday ">Tuesday</option>
+<option value="Wednesday ">wednesday</option>
+<option value="Thursday ">Thursday</option>
+<option value="Friday ">Friday</option>
+<option value="Surtday ">Surtday</option>
+<option value="Sunday ">Sunday</option>
+
  </select>
                                                         </div>
                                                     </div>
@@ -176,39 +215,37 @@ foreach($results as $result)
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
                                                 <label for="default" class="control-label">Module Name</label>
+                                                
                                                        
- <select name="class" class="form-control" id="success" required="required">
-<option value="">Select Class</option>
-<?php $sql = "SELECT * from tblclasses";
+ <select name="class" class="form-control" id="success" onchange="my_fun(this.value);" required="required">
+<option value="">Select Module Name</option>
+<?php 
+
+$val=$_GET("value");
+
+
+
+
+$sql = "SELECT * from modules_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount() > 0)
+if($query->rowCount()>0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->ClassName); ?>&nbsp; Section-<?php echo htmlentities($result->Section); ?></option>
-<?php }} ?>
+<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->module_name); ?>&nbsp; <?php echo htmlentities($result->modulename); ?></option>
+<?php }
+
+
+} ?>
  </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Module Code</label>
-                                                       
- <select name="class" class="form-control" id="success" required="required">
-<option value="">Select Class</option>
-<?php $sql = "SELECT * from tblclasses";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->ClassName); ?>&nbsp; Section-<?php echo htmlentities($result->Section); ?></option>
-<?php }} ?>
- </select>
+                                                        <label for="success" class="control-label">Module code</label>
+                                                        <div class="">
+                                   
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-success">
@@ -217,7 +254,7 @@ foreach($results as $result)
                                                        
  <select name="class" class="form-control" id="success" required="required">
 <option value="">Select Class</option>
-<?php $sql = "SELECT * from tblclasses";
+<?php $sql = "SELECT * from modules_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -246,10 +283,10 @@ foreach($results as $result)
                                                     </div>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label"><u><b>Activity:</b></u></label>
-                                                        <div class="">
-                                                        <label for="success" class="control-label">Practical</label>  <input type="radio" name="gender"   value="Male" required="required" checked="">  <label for="success" class="control-label">Theory</label>   <input type="radio" name="gender"  id="success" value="Female" required="required">  
+                                                        
+                                                        <label for="success" class="control-label">Practical</label>  <input type="radio" name="activity"   value="Practical" required="required" checked="">  <label for="success" class="control-label">Theory</label>   <input type="radio" name="activity"  id="success" value="Theory" required="required">  
                                                             
-                                                        </div>
+                                                        
                                                     </div>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Title of the Contents </label>
@@ -261,7 +298,7 @@ foreach($results as $result)
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label"><u><b>Comment:</b></u></label>
                                                         <div class="">
-                                                        <label for="success" class="control-label">Understandable</label>  <input type="radio" name="gender"   value="Male" required="required" checked="">  <label for="success" class="control-label">Not Understandable</label>   <input type="radio" name="gender"  id="success" value="Female" required="required">  
+                                                        <label for="success" class="control-label">Understandable</label>  <input type="radio" name="comment"   value="Understandable" required="required" checked="">  <label for="success" class="control-label">Not Understandable</label>   <input type="radio" name="comment"  id="success" value="Not Understandable" required="required">  
                                                             
                                                         </div>
                                                     </div>

@@ -1,2 +1,0 @@
-# class-diary-system
-CDS

@@ -9,16 +9,16 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $modulename=$_POST['modulename'];
-    $modulecode=$_POST['modulecode']; 
-    $modulecredit=$_POST['modulecredit'];
+    $lecture_name=$_POST['lecture_name'];
+    $assistant_name=$_POST['assistant_name']; 
+   
     
     $cid=intval($_GET['classid']);
-    $sql="update  modules_tbl set module_name=:modulename,module_code=:modulecode,module_credit=:modulecredit where id=:cid ";
+    $sql="update  lecture_tbl set lecture_name=:lecture_name,assistant_name=:assistant_name where id=:cid ";
     $query = $dbh->prepare($sql);
-$query->bindParam(':modulename',$modulename,PDO::PARAM_STR);
-$query->bindParam(':modulecode',$modulecode,PDO::PARAM_STR);
-$query->bindParam(':modulecredit',$modulecredit,PDO::PARAM_STR);
+$query->bindParam(':lecture_name',$lecture_name,PDO::PARAM_STR);
+$query->bindParam(':assistant_name',$assistant_name,PDO::PARAM_STR);
+
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -65,7 +65,7 @@ $msg="Data has been updated successfully";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Update Module</h2>
+                                    <h2 class="title">Update Lecture</h2>
                                 </div>
                                 
                             </div>
@@ -74,8 +74,8 @@ $msg="Data has been updated successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="#">Modules</a></li>
-            							<li class="active">Update Modules</li>
+            							<li><a href="#">Lecture</a></li>
+            							<li class="active">Update Lecture</li>
             						</ul>
                                 </div>
                                
@@ -96,7 +96,7 @@ $msg="Data has been updated successfully";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Update Module info</h5>
+                                                    <h5>Update lectures info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -112,7 +112,7 @@ else if($error){?>
                                                 <form method="post" >
 <?php 
 $cid=intval($_GET['classid']);
-$sql = "SELECT * from modules_tbl where id=:cid";
+$sql = "SELECT * from lecture_tbl where id=:cid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -124,26 +124,20 @@ foreach($results as $result)
 {   ?>
 
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Name</label>
+                                                        <label for="success" class="control-label">Lecture Names</label>
                                                 		<div class="">
-                                                			<input type="text" name="modulename" value="<?php echo htmlentities($result->module_name);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- ICT,Analog,Soral Energy etc</span>
+                                                			<input type="text" name="lecture_name" value="<?php echo htmlentities($result->lecture_name);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- John Smith etc</span>
                                                 		</div>
                                                 	</div>
                                                        <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Code</label>
+                                                        <label for="success" class="control-label">Assistant Names</label>
                                                         <div class="">
-                                                            <input type="text" name="modulecode" value="<?php echo htmlentities($result->module_code);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- ict101 etc</span>
+                                                            <input type="text" name="assistant_name" value="<?php echo htmlentities($result->assistant_name);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- Johnson Ntwali</span>
                                                         </div>
                                                     </div>
-                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Credit</label>
-                                                        <div class="">
-                                                            <input type="text" name="modulecredit" value="<?php echo htmlentities($result->module_credit);?>" class="form-control" required="required" id="success">
-                                                            <span class="help-block">Eg- 10,15 etc</span>
-                                                        </div>
-                                                    </div>
+                                            
                                                    
                                                     
                                                    
@@ -157,7 +151,7 @@ foreach($results as $result)
                     
                                                     		
                                                            
-                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-modules.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-lectures.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     		</div>
                     </div>
 

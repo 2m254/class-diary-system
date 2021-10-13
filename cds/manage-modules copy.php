@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 error_reporting(0);
@@ -7,31 +8,6 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-if(isset($_POST['submit']))
-{
-$module_name=$_POST['module_name'];
-$module_code=$_POST['module_code']; 
-$module_credit=$_POST['module_credit'];
-
-
-$sql="INSERT INTO  modules_tbl(module_name,module_code,module_credit) VALUES(:module_name,:module_code,:module_credit)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':module_name',$module_name,PDO::PARAM_STR);
-$query->bindParam(':module_code',$module_code,PDO::PARAM_STR);
-$query->bindParam(':module_credit',$module_credit,PDO::PARAM_STR);
-
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$msg="Class Created successfully";
-}
-else 
-{
-$error="Something went wrong. Please try again";
-}
-
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,16 +15,17 @@ $error="Something went wrong. Please try again";
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>CDS HOD Create Modules</title>
-        <link rel="stylesheet" href="css/bootstrap.css" media="screen" >
+        <title>HOD Manage Modules</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" >
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
         <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen" >
         <link rel="stylesheet" href="css/prism/prism.css" media="screen" > <!-- USED FOR DEMO HELP - YOU CAN REMOVE IT -->
+        <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
         <link rel="stylesheet" href="styles.css">
-         <style>
+          <style>
         .errorWrap {
     padding: 10px;
     margin: 0 0 20px 0;
@@ -77,110 +54,128 @@ $error="Something went wrong. Please try again";
         <div class="main-wrapper">
 
             <!-- ========== TOP NAVBAR ========== -->
-            <?php include('includes/topbar.php');?>   
-          <!-----End Top bar>
+   <?php include('includes/topbar.php');?> 
             <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
             <div class="content-wrapper">
                 <div class="content-container">
-
-<!-- ========== LEFT SIDEBAR ========== -->
-<?php include('includes/leftbar.php');?>                   
- <!-- /.left-sidebar -->
+<?php include('includes/leftbar.php');?>  
 
                     <div class="main-page">
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Create Modules </h2>
+                                    <h2 class="title">Manage Lecture</h2>
+                                
                                 </div>
                                 
+                                <!-- /.col-md-6 text-right -->
                             </div>
                             <!-- /.row -->
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="#">Modules</a></li>
-            							<li class="active">Create Modules</li>
+            							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+                                        <li> Lectures</li>
+            							<li class="active">Manage Lectures</li>
             						</ul>
                                 </div>
-                               
+                             
                             </div>
                             <!-- /.row -->
                         </div>
                         <!-- /.container-fluid -->
-
+                                    
                         <section class="section">
                             <div class="container-fluid">
 
                              
 
-                              
-
                                 <div class="row">
-                                    <div class="col-md-8 col-md-offset-2">
+                                    <div class="col-md-12">
+
                                         <div class="panel">
-                                            <div class="panel-heading"
-                                            >
+                                            <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Create Modules</h5>
+                                                    <h5>View lectures Info</h5>
                                                 </div>
                                             </div>
-           <?php if($msg){?>
+<?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
- <strong>Well done! </strong><?php echo htmlentities($msg); ?>
+ <strong>Well done!</strong><?php echo htmlentities($msg); ?>
  </div><?php } 
 else if($error){?>
     <div class="alert alert-danger left-icon-alert" role="alert">
                                             <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
                                         </div>
                                         <?php } ?>
-  
-                                            <div class="panel-body">
+                                            <div class="panel-body p-20">
 
-                                                <form method="post">
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Name</label>
-                                                		<div class="">
-                                                			<input type="text" name="module_name" class="form-control" required="required" id="success">
+                                                <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Lecture Name</th>
+                                                            <th>Assistant Name</th>
                                                             
-                                                		</div>
-                                                	</div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Code</label>
-                                                		<div class="">
-                                                			<input type="text" name="module_code" class="form-control" required="required" id="success">
+                                                          
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                    <tr>
+                                                            <th>#</th>
+                                                            <th>Lecture Name</th>
+                                                            <th>Assistant Name</th>
                                                             
-                                                		</div>
-                                                	</div>
+                                                          
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+<?php $sql = "SELECT * from lectures_tbl";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   ?>
+<tr>
+ <td><?php echo htmlentities($cnt);?></td>
+                                                            <td><?php echo htmlentities($result->module_name);?></td>
+                                                            <td><?php echo htmlentities($result->module_code);?></td>
+                                                            <td><?php echo htmlentities($result->module_credit);?></td>
+                                                           
+<td>
+<a href="edit-class.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
-                                                       <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Credit </label>
-                                                        <div class="">
-                                                            <input type="text" name="module_credit" required="required" class="form-control" id="success">
-                                                            
-
-                                                        </div>
+</td>
+</tr>
+<?php $cnt=$cnt+1;}} ?>
+                                                       
                                                     
-  <div class="form-group has-success">
+                                                    </tbody>
+                                                </table>
 
-                                                        <div class="">
-                                                           <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                    </div>
-
-
-                                                    
-                                                </form>
-
-                                              
+                                         
+                                                <!-- /.col-md-12 -->
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.col-md-8 col-md-offset-2 -->
+                                    <!-- /.col-md-6 -->
+
+                                                               
+                                                </div>
+                                                <!-- /.col-md-12 -->
+                                            </div>
+                                        </div>
+                                        <!-- /.panel -->
+                                    </div>
+                                    <!-- /.col-md-6 -->
+
                                 </div>
                                 <!-- /.row -->
-
-                               
-                               
 
                             </div>
                             <!-- /.container-fluid -->
@@ -189,6 +184,8 @@ else if($error){?>
 
                     </div>
                     <!-- /.main-page -->
+
+                    
 
                 </div>
                 <!-- /.content-container -->
@@ -200,7 +197,6 @@ else if($error){?>
 
         <!-- ========== COMMON JS FILES ========== -->
         <script src="js/jquery/jquery-2.2.4.min.js"></script>
-        <script src="js/jquery-ui/jquery-ui.min.js"></script>
         <script src="js/bootstrap/bootstrap.min.js"></script>
         <script src="js/pace/pace.min.js"></script>
         <script src="js/lobipanel/lobipanel.min.js"></script>
@@ -208,14 +204,24 @@ else if($error){?>
 
         <!-- ========== PAGE JS FILES ========== -->
         <script src="js/prism/prism.js"></script>
+        <script src="js/DataTables/datatables.min.js"></script>
 
         <!-- ========== THEME JS ========== -->
         <script src="js/main.js"></script>
+        <script>
+            $(function($) {
+                $('#example').DataTable();
 
+                $('#example2').DataTable( {
+                    "scrollY":        "300px",
+                    "scrollCollapse": true,
+                    "paging":         false
+                } );
 
-
-        <!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->
-        </div> </div> </div> </div>
+                $('#example3').DataTable();
+            });
+        </script></div></div></div></div>
     </body>
 </html>
-<?php  } ?>
+<?php } ?>
+

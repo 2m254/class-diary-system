@@ -117,8 +117,7 @@ else if($error){?>
                                                             <th>Module Name</th>
                                                             <th>Module Code</th>
                                                             <th>Module Credit</th>
-                                                            <th>Module Instructor</th>
-                                                            <th>Module Assistant</th>
+                                                            <
                                                           
                                                             <th>Action</th>
                                                         </tr>
@@ -129,8 +128,7 @@ else if($error){?>
                                                             <th>Module Name</th>
                                                             <th>Module Code</th>
                                                             <th>Module credit</th>
-                                                            <th>Module Instructor</th>
-                                                            <th>Module Assistant</th>
+                                                            
                                                            
                                                             <th>Action</th>
                                                         </tr>
@@ -150,8 +148,7 @@ foreach($results as $result)
                                                             <td><?php echo htmlentities($result->module_name);?></td>
                                                             <td><?php echo htmlentities($result->module_code);?></td>
                                                             <td><?php echo htmlentities($result->module_credit);?></td>
-                                                            <td><?php echo htmlentities($result->module_instructor);?></td>
-                                                            <td><?php echo htmlentities($result->module_assistant);?></td>
+                                                           
 <td>
 <a href="edit-class.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
