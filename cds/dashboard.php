@@ -80,16 +80,16 @@ $totalstudents=$query1->rowCount();
                                     <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
 
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-danger" href="#">
+                                        <a class="dashboard-stat bg-danger" href="manage-lectures.php">
 <?php 
-$sql ="SELECT id from  modules_tbl ";
+$sql ="SELECT id from  lecture_tbl ";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $totalsubjects=$query->rowCount();
 ?>
                                             <span class="number counter"><?php echo htmlentities($totalsubjects);?></span>
-                                            <span class="name">#######2</span>
+                                            <span class="name">lecture List</span>
                                             <span class="bg-icon"><i class="fa fa-ticket"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->
@@ -97,16 +97,16 @@ $totalsubjects=$query->rowCount();
                                     <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
 
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-warning" href="#">
+                                        <a class="dashboard-stat bg-warning" href="manage-level.php">
                                         <?php 
-$sql2 ="SELECT id from  modules_tbl ";
+$sql2 ="SELECT id from  level_tbl ";
 $query2 = $dbh -> prepare($sql2);
 $query2->execute();
 $results2=$query2->fetchAll(PDO::FETCH_OBJ);
 $totalclasses=$query2->rowCount();
 ?>
                                             <span class="number counter"><?php echo htmlentities($totalclasses);?></span>
-                                            <span class="name">######3</span>
+                                            <span  class="name">Class Level List</span>
                                             <span class="bg-icon"><i class="fa fa-bank"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->

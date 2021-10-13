@@ -64,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Manage Lecture</h2>
+                                    <h2 class="title">Manage Level</h2>
                                 
                                 </div>
                                 
@@ -75,8 +75,8 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li> Lectures</li>
-            							<li class="active">Manage Lectures</li>
+                                        <li> Leveles</li>
+            							<li class="active">Manage Leveles</li>
             						</ul>
                                 </div>
                              
@@ -95,9 +95,14 @@ if(strlen($_SESSION['alogin'])=="")
 
                                         <div class="panel">
                                             <div class="panel-heading">
+                                                
+                                                <button name="login" class="btn btn-success btn-labeled pull-right"><a href="create-level.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                 <div class="panel-title">
-                                                    <h5>View lectures Info</h5>
+                                                    <h5>View Levels Info</h5>
+                                                    
+                                                
                                                 </div>
+                                                
                                             </div>
 <?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
@@ -111,11 +116,15 @@ else if($error){?>
                                             <div class="panel-body p-20">
 
                                                 <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Lecture Name</th>
-                                                            <th>Assistant Name</th>
+                                                            <th>Level Name</th>
+                                                            <th>Level Room</th>
+                                                            <th>Class Mentor</th>
+                                                            <th>Chief</th>
+                                                            <th>Chieften</th>
                                                             
                                                           
                                                             <th>Action</th>
@@ -124,15 +133,18 @@ else if($error){?>
                                                     <tfoot>
                                                     <tr>
                                                             <th>#</th>
-                                                            <th>Lecture Name</th>
-                                                            <th>Assistant Name</th>
+                                                            <th>Level Name</th>
+                                                            <th>Level Room</th>
+                                                            <th>Class Mentor</th>
+                                                            <th>Chief</th>
+                                                            <th>Chieften</th>
                                                             
                                                           
                                                             <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from lectures_tbl";
+<?php $sql = "SELECT * from level_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -143,12 +155,16 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->module_name);?></td>
-                                                            <td><?php echo htmlentities($result->module_code);?></td>
-                                                            <td><?php echo htmlentities($result->module_credit);?></td>
+                                                            <td><?php echo htmlentities($result->level_name);?></td>
+                                                            <td><?php echo htmlentities($result->level_room);?></td>
+                                                            <td><?php echo htmlentities($result->class_mentor);?></td>
+                                                            <td><?php echo htmlentities($result->chief);?></td>
+                                                            <td><?php echo htmlentities($result->chieften);?></td>
+                                                            
+                                                           
                                                            
 <td>
-<a href="edit-class.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-level.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>

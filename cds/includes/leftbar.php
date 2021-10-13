@@ -33,15 +33,16 @@
                                         <ul class="child-nav">
                                             <li><a href="create-lecture.php"><i class="fa fa-bars"></i> <span>Create Lecture</span></a></li>
                                             <li><a href="manage-lectures.php"><i class="fa fa fa-server"></i> <span>Manage Lectures</span></a></li>
-                                           <li><a href="#"><i class="fa fa-newspaper-o"></i> <span># ###</span></a></li>
-                                           <a href="#"><i class="fa fa-newspaper-o"></i> <span># #### </span></a></li>
+                                           
                                         </ul>
                                     </li>
    <li class="has-children">
-                                        <a href="#"><i class="fa fa-users"></i> <span>######</span> <i class="fa fa-angle-right arrow"></i></a>
+                                        <a href="#"><i class="fa fa-users"></i> <span>Levels</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
-                                            <li><a href="#"><i class="fa fa-bars"></i> <span>######</span></a></li>
-                                            <li><a href="#"><i class="fa fa fa-server"></i> <span>#####</span></a></li>
+                                            <li><a href="create-level.php"><i class="fa fa-bars"></i> <span>Create Level</span></a></li>
+                                            <li><a href="manage-level.php"><i class="fa fa fa-server"></i> <span>manage Level</span></a></li>
+                                            <li><a href="#"><i class="fa fa-newspaper-o"></i> <span># ###</span></a></li>
+                                           <a href="#"><i class="fa fa-newspaper-o"></i> <span># #### </span></a></li>
                                            
                                         </ul>
                                     </li>

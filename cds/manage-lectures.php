@@ -86,19 +86,24 @@ if(strlen($_SESSION['alogin'])=="")
                         <!-- /.container-fluid -->
                                     
                         <section class="section">
-                            <div class="container-fluid">
+                        <div class="container-fluid">
 
                              
 
-                                <div class="row">
-                                    <div class="col-md-12">
+<div class="row">
+    <div class="col-md-12">
 
-                                        <div class="panel">
-                                            <div class="panel-heading">
-                                                <div class="panel-title">
-                                                    <h5>View lectures Info</h5>
-                                                </div>
-                                            </div>
+        <div class="panel">
+            <div class="panel-heading">
+                
+                <button name="login" class="btn btn-success btn-labeled pull-right"><a href="create-lecture.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                <div class="panel-title">
+                    <h5>View Lectures Info</h5>
+                    
+                
+                </div>
+                
+            </div>
 <?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
  <strong>Well done!</strong><?php echo htmlentities($msg); ?>

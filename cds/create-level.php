@@ -9,15 +9,21 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$lecture_name=$_POST['lecture_name'];
-$assistant_name=$_POST['assistant_name']; 
+$level_name=$_POST['level_name'];
+$level_room=$_POST['level_room']; 
+$class_mentor=$_POST['class_mentor']; 
+$chief=$_POST['chief'];
+$chieften=$_POST['chieften'];  
 
 
 
-$sql="INSERT INTO  lecture_tbl(lecture_name,assistant_name) VALUES(:lecture_name,:assistant_name)";
+$sql="INSERT INTO  level_tbl(level_name,level_room,class_mentor,chief,chieften) VALUES(:level_name,:level_room,:class_mentor,:chief,:chieften)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':lecture_name',$lecture_name,PDO::PARAM_STR);
-$query->bindParam(':assistant_name',$assistant_name,PDO::PARAM_STR);
+$query->bindParam(':level_name',$level_name,PDO::PARAM_STR);
+$query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
+$query->bindParam(':class_mentor',$class_mentor,PDO::PARAM_STR);
+$query->bindParam(':chief',$chief,PDO::PARAM_STR);
+$query->bindParam(':chieften',$chieften,PDO::PARAM_STR);
 
 
 $query->execute();
@@ -91,7 +97,7 @@ $error="Something went wrong. Please try again";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Create Lectures </h2>
+                                    <h2 class="title">Create Levels </h2>
                                 </div>
                                 
                             </div>
@@ -99,8 +105,8 @@ $error="Something went wrong. Please try again";
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="#">Lectures</a></li>
-            							<li class="active">Create Lectures</li>
+            							<li><a href="#">levels</a></li>
+            							<li class="active">Create Levels</li>
             						</ul>
                                 </div>
                                
@@ -122,7 +128,7 @@ $error="Something went wrong. Please try again";
                                             <div class="panel-heading"
                                             >
                                                 <div class="panel-title">
-                                                    <h5>Create Lectures</h5>
+                                                    <h5>Create Level</h5>
                                                 </div>
                                             </div>
            <?php if($msg){?>
@@ -139,16 +145,35 @@ else if($error){?>
 
                                                 <form method="post">
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Lecture Name</label>
+                                                        <label for="success" class="control-label">Level Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="lecture_name" class="form-control" required="required" id="success">
+                                                			<input type="text" name="level_name" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">His/her Assistant Name</label>
+                                                        <label for="success" class="control-label">Level Room</label>
                                                 		<div class="">
-                                                			<input type="text" name="assistant_name" class="form-control"  id="success">
+                                                			<input type="text" name="level_room" class="form-control" required="required" id="success">
+                                                            
+                                                		</div>
+                                                	</div>
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Class Mentor</label>
+                                                		<div class="">
+                                                			<input type="text" name="class_mentor" class="form-control" required="required" id="success">
+                                                            
+                                                		</div>
+                                                	</div> <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Cheif</label>
+                                                		<div class="">
+                                                			<input type="text" name="chief" class="form-control" required="required" id="success">
+                                                            
+                                                		</div>
+                                                	</div> <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Chieften</label>
+                                                		<div class="">
+                                                			<input type="text" name="chieften" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
@@ -159,12 +184,15 @@ else if($error){?>
 
                                                         <div class="">
                                                            <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                   		
+                                                
+
+
+                                                                                       		
                                                            
-                                                           <button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-lectures.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    <button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-level.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     		</div>
                     </div>
-                                                    
+
                                                 </form>
 
                                               

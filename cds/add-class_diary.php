@@ -219,14 +219,7 @@ else if($error){?>
                                                        
  <select name="class" class="form-control" id="success" onchange="my_fun(this.value);" required="required">
 <option value="">Select Module Name</option>
-<?php 
-
-$val=$_GET("value");
-
-
-
-
-$sql = "SELECT * from modules_tbl";
+<?php $sql = "SELECT * from modules_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -243,14 +236,8 @@ foreach($results as $result)
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module code</label>
-                                                        <div class="">
-                                   
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
                                                        <div class="form-group">
-                                                <label for="default" class="control-label">Lecture</label>
+                                                <label for="default" class="control-label">Module Code</label>
                                                        
  <select name="class" class="form-control" id="success" required="required">
 <option value="">Select Class</option>
@@ -262,7 +249,26 @@ if($query->rowCount() > 0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->ClassName); ?>&nbsp; Section-<?php echo htmlentities($result->Section); ?></option>
+<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->module_code); ?>&nbsp; <?php echo htmlentities($result->modulecode); ?></option>
+<?php }} ?>
+ </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Lecture</label>
+                                                       
+ <select name="class" class="form-control" id="success" required="required">
+<option value="">Select Class</option>
+<?php $sql = "SELECT * from lecture_tbl";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->lecture_name); ?>&nbsp; <?php echo htmlentities($result->assistant_name); ?></option>
 <?php }} ?>
  </select>
                                                         </div>

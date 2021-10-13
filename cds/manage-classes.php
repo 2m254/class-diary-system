@@ -148,7 +148,7 @@ foreach($results as $result)
                                                             <td><?php echo htmlentities($result->Section);?></td>
                                                             <td><?php echo htmlentities($result->CreationDate);?></td>
 <td>
-<a href="edit-class.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-module.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>
