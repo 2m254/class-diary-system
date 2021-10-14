@@ -1,0 +1,16 @@
+ 
+ Class diary system project
+================================
+
+activity already done 
+---------------------
+
+-design of HOD
+-design for filling class diary
+-only login design.
+
+activity non already work
+--------------------------
+
+-database and there relations
+-login connection
