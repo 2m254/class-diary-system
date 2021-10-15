@@ -133,14 +133,14 @@ foreach($results as $result)
                                                        <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Code</label>
                                                         <div class="">
-                                                            <input type="text" name="modulecode" value="<?php echo htmlentities($result->module_code);?>" required="required" class="form-control" id="success">
+                                                            <input type="text" name="modulecode"  value="<?php echo htmlentities($result->module_code);?>" required="required" class="form-control" id="success" maxlength="8" >
                                                             <span class="help-block">Eg- ict101 etc</span>
                                                         </div>
                                                     </div>
                                                      <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Credit</label>
+                                                        <label for="success"  class="control-label">Module Credit</label>
                                                         <div class="">
-                                                            <input type="text" name="modulecredit" value="<?php echo htmlentities($result->module_credit);?>" class="form-control" required="required" id="success">
+                                                            <input type="text"    name="modulecredit" value="<?php echo htmlentities($result->module_credit);?>" class="form-control" required="required" id="success" maxlength="2">
                                                             <span class="help-block">Eg- 10,15 etc</span>
                                                         </div>
                                                     </div>

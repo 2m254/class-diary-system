@@ -152,7 +152,7 @@ else if($error){?>
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Level Room</label>
+                                                        <label for="success" maxlength="1" class="control-label">Level Room</label>
                                                 		<div class="">
                                                 			<input type="text" name="level_room" class="form-control" required="required" id="success">
                                                             

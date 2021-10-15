@@ -139,7 +139,7 @@ foreach($results as $result)
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label"></label>
                                                         <div class="">
-                                                            <input type="text" name="level_room" value="<?php echo htmlentities($result->level_room);?>" required="required" class="form-control" id="success">
+                                                            <input type="text" maxlength="1" name="level_room" value="<?php echo htmlentities($result->level_room);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- a, b, c etc</span>
                                                         </div>
                                                     </div>

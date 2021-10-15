@@ -148,15 +148,15 @@ else if($error){?>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Code</label>
                                                 		<div class="">
-                                                			<input type="text" name="module_code" class="form-control" required="required" id="success">
+                                                			<input type="text" maxlength="8" name="module_code" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
 
                                                        <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Credit </label>
+                                                        <label for="success"  class="control-label">Module Credit </label>
                                                         <div class="">
-                                                            <input type="text" name="module_credit" required="required" class="form-control" id="success">
+                                                            <input type="text" maxlength="2" name="module_credit" required="required" class="form-control" id="success">
                                                             
 
                                                         </div>

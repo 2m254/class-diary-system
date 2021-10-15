@@ -8,6 +8,18 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
+
+        if(isset($_REQUEST['del']))
+{
+//Get row id
+$rid=intval($_GET['classid']);
+//Qyery for deletion
+$sql =mysqli_query($con,"call sp_delete('$rid')");
+
+echo "<script>alert('Record deleted');</script>";
+// Code for redirection
+echo "<script>window.location.href='manage-modules.php'</script>"; 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,7 +136,7 @@ else if($error){?>
                                                             <th>Module Credit</th>
                                                             
                                                           
-                                                            <th>Action</th>
+                                                            <th>Edit  / Delete</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
@@ -135,7 +147,8 @@ else if($error){?>
                                                             <th>Module credit</th>
                                                             
                                                            
-                                                            <th>Action</th>
+                                                            <th>Edit  / Delete</th>
+                                                            
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -155,9 +168,9 @@ foreach($results as $result)
                                                             <td><?php echo htmlentities($result->module_credit);?></td>
                                                            
 <td>
-<a href="edit-module.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-module.php?classid=<?php echo htmlentities($result->id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
+<a href="manage-modules.php?classid=<?php echo htmlentities($result->id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 
-</td>
 </tr>
 <?php $cnt=$cnt+1;}} ?>
                                                        
