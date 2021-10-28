@@ -9,18 +9,11 @@ if(strlen($_SESSION['alogin'])=="")
     }
     else{
 
-        if(isset($_REQUEST['del']))
-{
-//Get row id
-$rid=intval($_GET['classid']);
-//Qyery for deletion
-$sql =mysqli_query($con,"call sp_delete('$rid')");
 
-echo "<script>alert('Record deleted');</script>";
-// Code for redirection
-echo "<script>window.location.href='manage-modules.php'</script>"; 
-}
-?>
+
+
+
+    ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -134,6 +127,7 @@ else if($error){?>
                                                             <th>Module Name</th>
                                                             <th>Module Code</th>
                                                             <th>Module Credit</th>
+                                                            <th>Depertment</th> 
                                                             
                                                           
                                                             <th>Edit  / Delete</th>
@@ -145,6 +139,8 @@ else if($error){?>
                                                             <th>Module Name</th>
                                                             <th>Module Code</th>
                                                             <th>Module credit</th>
+                                                            <th>Depertment</th>
+
                                                             
                                                            
                                                             <th>Edit  / Delete</th>
@@ -163,13 +159,14 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->module_name);?></td>
-                                                            <td><?php echo htmlentities($result->module_code);?></td>
-                                                            <td><?php echo htmlentities($result->module_credit);?></td>
+                                                            <td><?php echo htmlentities($result->mod_name);?></td>
+                                                            <td><?php echo htmlentities($result->mod_code);?></td>
+                                                            <td><?php echo htmlentities($result->mod_credit);?></td>
+                                                            <td><?php echo htmlentities($result->dept_id);?></td>
                                                            
 <td>
-<a href="edit-module.php?classid=<?php echo htmlentities($result->id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
-<a href="manage-modules.php?classid=<?php echo htmlentities($result->id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mod_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
+<a href="delete.php?id=<?php echo htmlentities($result->id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 
 </tr>
 <?php $cnt=$cnt+1;}} ?>

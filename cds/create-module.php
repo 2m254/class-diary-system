@@ -9,16 +9,18 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$module_name=$_POST['module_name'];
-$module_code=$_POST['module_code']; 
-$module_credit=$_POST['module_credit'];
+$mod_name=$_POST['mod_name'];
+$mod_code=$_POST['mod_code']; 
+$mod_credit=$_POST['mod_credit'];
+$dept_id=$_POST['dept_id'];
 
 
-$sql="INSERT INTO  modules_tbl(module_name,module_code,module_credit) VALUES(:module_name,:module_code,:module_credit)";
+$sql="INSERT INTO  modules_tbl(mod_name,mod_code,mod_credit,dept_id) VALUES(:mod_name,:mod_code,:mod_credit,:dept_id)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':module_name',$module_name,PDO::PARAM_STR);
-$query->bindParam(':module_code',$module_code,PDO::PARAM_STR);
-$query->bindParam(':module_credit',$module_credit,PDO::PARAM_STR);
+$query->bindParam(':mod_name',$mod_name,PDO::PARAM_STR);
+$query->bindParam(':mod_code',$mod_code,PDO::PARAM_STR);
+$query->bindParam(':mod_credit',$mod_credit,PDO::PARAM_STR);
+$query->bindParam(':dept_id',$dept_id,PDO::PARAM_STR);
 
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
@@ -141,14 +143,14 @@ else if($error){?>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="module_name" class="form-control" required="required" id="success">
+                                                			<input type="text" name="mod_name" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Code</label>
                                                 		<div class="">
-                                                			<input type="text" maxlength="8" name="module_code" class="form-control" required="required" id="success">
+                                                			<input type="text" maxlength="16" name="mod_code" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
@@ -156,7 +158,14 @@ else if($error){?>
                                                        <div class="form-group has-success">
                                                         <label for="success"  class="control-label">Module Credit </label>
                                                         <div class="">
-                                                            <input type="text" maxlength="2" name="module_credit" required="required" class="form-control" id="success">
+                                                            <input type="text" maxlength="2" name="mod_credit" required="required" class="form-control" id="success">
+                                                            
+
+                                                        </div>
+                                                        <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">Depertment </label>
+                                                        <div class="">
+                                                            <input type="text" maxlength="2" name="dept_id" required="required" class="form-control" id="success">
                                                             
 
                                                         </div>

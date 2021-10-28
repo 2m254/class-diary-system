@@ -9,15 +9,15 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$lecture_name=$_POST['lecture_name'];
-$assistant_name=$_POST['assistant_name']; 
+$lect_name=$_POST['lect_name'];
+$mod_id=$_POST['mod_id']; 
 
 
 
-$sql="INSERT INTO  lecture_tbl(lecture_name,assistant_name) VALUES(:lecture_name,:assistant_name)";
+$sql="INSERT INTO   lectures_tbl(lect_name,mod_id) VALUES(:lect_name,:Mod_id)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':lecture_name',$lecture_name,PDO::PARAM_STR);
-$query->bindParam(':assistant_name',$assistant_name,PDO::PARAM_STR);
+$query->bindParam(':lect_name',$lect_name,PDO::PARAM_STR);
+$query->bindParam(':mod_id',$mod_id,PDO::PARAM_STR);
 
 
 $query->execute();
@@ -141,14 +141,14 @@ else if($error){?>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Lecture Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="lecture_name" class="form-control" required="required" id="success">
+                                                			<input type="text" name="lect_name" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">His/her Assistant Name</label>
+                                                        <label for="success" class="control-label">Module</label>
                                                 		<div class="">
-                                                			<input type="text" name="assistant_name" class="form-control"  id="success">
+                                                			<input type="text" name="mod_id" class="form-control"  id="success">
                                                             
                                                 		</div>
                                                 	</div>

@@ -122,10 +122,7 @@ else if($error){?>
                                                             <th>#</th>
                                                             <th>Level Name</th>
                                                             <th>Level Room</th>
-                                                            <th>Class Mentor</th>
-                                                            <th>Chief</th>
-                                                            <th>Chieften</th>
-                                                            
+                                                            <th>Depertment</th>
                                                           
                                                             <th>Action</th>
                                                         </tr>
@@ -135,9 +132,8 @@ else if($error){?>
                                                             <th>#</th>
                                                             <th>Level Name</th>
                                                             <th>Level Room</th>
-                                                            <th>Class Mentor</th>
-                                                            <th>Chief</th>
-                                                            <th>Chieften</th>
+                                                            <th>Depertment</th>
+                                                            
                                                             
                                                           
                                                             <th>Action</th>
@@ -157,14 +153,13 @@ foreach($results as $result)
  <td><?php echo htmlentities($cnt);?></td>
                                                             <td><?php echo htmlentities($result->level_name);?></td>
                                                             <td><?php echo htmlentities($result->level_room);?></td>
-                                                            <td><?php echo htmlentities($result->class_mentor);?></td>
-                                                            <td><?php echo htmlentities($result->chief);?></td>
-                                                            <td><?php echo htmlentities($result->chieften);?></td>
+                                                            <td><?php echo htmlentities($result->dept_id);?></td>
+                                                            
                                                             
                                                            
                                                            
 <td>
-<a href="edit-level.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-level.php?classid=<?php echo htmlentities($result->level_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>

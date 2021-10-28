@@ -11,19 +11,17 @@ if(isset($_POST['update']))
 {
     $level_name=$_POST['level_name'];
     $level_room=$_POST['level_room']; 
-    $class_mentor=$_POST['class_mentor']; 
-    $chief=$_POST['chief']; 
-    $chieften=$_POST['chieften']; 
+    $class_mentor=$_POST['dept_id']; 
+   
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  level_tbl set level_name=:level_name,level_room=:level_room,class_mentor=:class_mentor,chief=:chief,chieften=:chieften where id=:cid ";
+    $sql="update  level_tbl set level_name=:level_name,level_room=:level_room,dept_id=:dept_id where level_id=:cid ";
     $query = $dbh->prepare($sql);
 $query->bindParam(':level_name',$level_name,PDO::PARAM_STR);
 $query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
-$query->bindParam(':class_mentor',$class_mentor,PDO::PARAM_STR);
-$query->bindParam(':chief',$chief,PDO::PARAM_STR);
-$query->bindParam(':chieften',$chieften,PDO::PARAM_STR);
+$query->bindParam(':dept_id',$dept_id,PDO::PARAM_STR);
+
 
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
@@ -118,7 +116,7 @@ else if($error){?>
                                                 <form method="post" >
 <?php 
 $cid=intval($_GET['classid']);
-$sql = "SELECT * from level_tbl where id=:cid";
+$sql = "SELECT * from level_tbl where level_id=:cid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -137,33 +135,20 @@ foreach($results as $result)
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label"></label>
+                                                        <label for="success" class="control-label">Level Room</label>
                                                         <div class="">
                                                             <input type="text" maxlength="1" name="level_room" value="<?php echo htmlentities($result->level_room);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- a, b, c etc</span>
                                                         </div>
                                                     </div>
                                                        <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Class Mentor</label>
+                                                        <label for="success" class="control-label">Depertment</label>
                                                         <div class="">
-                                                            <input type="text" name="class_mentor" value="<?php echo htmlentities($result->class_mentor);?>" required="required" class="form-control" id="success">
+                                                            <input type="text" name="dept_id" value="<?php echo htmlentities($result->dept_id);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- full name.</span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">chief</label>
-                                                        <div class="">
-                                                            <input type="text" name="chief" value="<?php echo htmlentities($result->chief);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- Muhirwa David etc</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">chieften</label>
-                                                        <div class="">
-                                                            <input type="text" name="chieften" value="<?php echo htmlentities($result->chieften);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- Aline Foi</span>
-                                                        </div>
-                                                    </div>
+                                                    
                                                   
                                             
                                                    

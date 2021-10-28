@@ -10,14 +10,14 @@ if(strlen($_SESSION['alogin'])=="")
 if(isset($_POST['update']))
 {
     $lecture_name=$_POST['lecture_name'];
-    $assistant_name=$_POST['assistant_name']; 
+    $assistant_name=$_POST['mod_id']; 
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  lecture_tbl set lecture_name=:lecture_name,assistant_name=:assistant_name where id=:cid ";
+    $sql="update  lectures_tbl set lecture_name=:lecture_name,mod_id=:mod_id where lect_id=:cid ";
     $query = $dbh->prepare($sql);
 $query->bindParam(':lecture_name',$lecture_name,PDO::PARAM_STR);
-$query->bindParam(':assistant_name',$assistant_name,PDO::PARAM_STR);
+$query->bindParam(':mod_id',$assistant_name,PDO::PARAM_STR);
 
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);

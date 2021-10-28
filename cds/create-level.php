@@ -11,19 +11,16 @@ if(isset($_POST['submit']))
 {
 $level_name=$_POST['level_name'];
 $level_room=$_POST['level_room']; 
-$class_mentor=$_POST['class_mentor']; 
-$chief=$_POST['chief'];
-$chieften=$_POST['chieften'];  
+$dept_id=$_POST['dept_id']; 
+ 
 
 
 
-$sql="INSERT INTO  level_tbl(level_name,level_room,class_mentor,chief,chieften) VALUES(:level_name,:level_room,:class_mentor,:chief,:chieften)";
+$sql="INSERT INTO  level_tbl(level_name,level_room,dept_id,) VALUES(:level_name,:level_room,:dept_id)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':level_name',$level_name,PDO::PARAM_STR);
 $query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
-$query->bindParam(':class_mentor',$class_mentor,PDO::PARAM_STR);
-$query->bindParam(':chief',$chief,PDO::PARAM_STR);
-$query->bindParam(':chieften',$chieften,PDO::PARAM_STR);
+$query->bindParam(':dept_id',$dept_id,PDO::PARAM_STR);
 
 
 $query->execute();
@@ -159,24 +156,13 @@ else if($error){?>
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Class Mentor</label>
+                                                        <label for="success" class="control-label">Depertment</label>
                                                 		<div class="">
-                                                			<input type="text" name="class_mentor" class="form-control" required="required" id="success">
+                                                			<input type="text" name="dept_id" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div> <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Cheif</label>
-                                                		<div class="">
-                                                			<input type="text" name="chief" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div> <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Chieften</label>
-                                                		<div class="">
-                                                			<input type="text" name="chieften" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div>
+                                                      
 
                                                       
                                                     

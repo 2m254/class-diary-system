@@ -118,9 +118,9 @@ else if($error){?>
                                                 <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>#</th>
+                                                            <th>ID</th>
                                                             <th>Lecture Name</th>
-                                                            <th>Assistant Name</th>
+                                                            <th>Course</th>
                                                             
                                                           
                                                             <th>Action</th>
@@ -128,16 +128,16 @@ else if($error){?>
                                                     </thead>
                                                     <tfoot>
                                                     <tr>
-                                                            <th>#</th>
+                                                            <th>ID</th>
                                                             <th>Lecture Name</th>
-                                                            <th>Assistant Name</th>
+                                                            <th>Course</th>
                                                             
                                                           
                                                             <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from lecture_tbl";
+<?php $sql = "SELECT * from lectures_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -148,12 +148,12 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->lecture_name);?></td>
-                                                            <td><?php echo htmlentities($result->assistant_name);?></td>
+                                                            <td><?php echo htmlentities($result->lect_name);?></td>
+                                                            <td><?php echo htmlentities($result->mod_id);?></td>
                                                            
                                                            
 <td>
-<a href="edit-lecture.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-lecture.php?classid=<?php echo htmlentities($result->lect_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>
