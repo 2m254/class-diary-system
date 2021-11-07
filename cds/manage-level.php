@@ -115,8 +115,10 @@ else if($error){?>
                                         <?php } ?>
                                             <div class="panel-body p-20">
 
-                                                <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+                                            
 
+                                                <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+                                
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
@@ -140,7 +142,7 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from level_tbl";
+<?php $sql = "SELECT level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,department_tbl.de_short  from level_tbl join department_tbl ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -151,15 +153,15 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->level_name);?></td>
-                                                            <td><?php echo htmlentities($result->level_room);?></td>
-                                                            <td><?php echo htmlentities($result->dept_id);?></td>
+                                                            <td><?php echo htmlentities($result->le_title);?></td>
+                                                            <td><?php echo htmlentities($result->le_class);?></td>
+                                                            <td><?php echo htmlentities($result->de_short);?></td>
                                                             
                                                             
                                                            
                                                            
 <td>
-<a href="edit-level.php?classid=<?php echo htmlentities($result->level_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-level.php?classid=<?php echo htmlentities($result->le_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>

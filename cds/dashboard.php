@@ -64,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-primary" href="manage-modules.php">
 <?php 
-$sql1 ="SELECT mod_id from modules_tbl ";
+$sql1 ="SELECT le_id from level_tbl ";
 $query1 = $dbh -> prepare($sql1);
 $query1->execute();
 $results1=$query1->fetchAll(PDO::FETCH_OBJ);
@@ -72,7 +72,7 @@ $totalstudents=$query1->rowCount();
 ?>
 
                                             <span class="number counter"><?php echo htmlentities($totalstudents);?></span>
-                                            <span class="name">Modules list</span>
+                                            <span class="name">Level list</span>
                                             <span class="bg-icon"><i class="fa fa-users"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->
@@ -82,14 +82,14 @@ $totalstudents=$query1->rowCount();
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-danger" href="manage-lectures.php">
 <?php 
-$sql ="SELECT lect_id from  lectures_tbl ";
+$sql ="SELECT mo_id from  module_tbl ";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $totalsubjects=$query->rowCount();
 ?>
                                             <span class="number counter"><?php echo htmlentities($totalsubjects);?></span>
-                                            <span class="name">lecture List</span>
+                                            <span class="name">Module List</span>
                                             <span class="bg-icon"><i class="fa fa-ticket"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->
@@ -99,14 +99,14 @@ $totalsubjects=$query->rowCount();
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-warning" href="manage-level.php">
                                         <?php 
-$sql2 ="SELECT level_id from  level_tbl ";
+$sql2 ="SELECT lect_id from  lecture_tbl ";
 $query2 = $dbh -> prepare($sql2);
 $query2->execute();
 $results2=$query2->fetchAll(PDO::FETCH_OBJ);
 $totalclasses=$query2->rowCount();
 ?>
                                             <span class="number counter"><?php echo htmlentities($totalclasses);?></span>
-                                            <span  class="name">Class Level List</span>
+                                            <span  class="name">Lecture List</span>
                                             <span class="bg-icon"><i class="fa fa-bank"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->

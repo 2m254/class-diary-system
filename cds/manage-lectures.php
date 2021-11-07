@@ -120,6 +120,7 @@ else if($error){?>
                                                         <tr>
                                                             <th>ID</th>
                                                             <th>Lecture Name</th>
+                                                            <th>Lecture Assistant</th>
                                                             <th>Course</th>
                                                             
                                                           
@@ -130,14 +131,14 @@ else if($error){?>
                                                     <tr>
                                                             <th>ID</th>
                                                             <th>Lecture Name</th>
+                                                            <th>Lecture Assistant</th>
                                                             <th>Course</th>
-                                                            
                                                           
                                                             <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from lectures_tbl";
+<?php $sql = "SELECT * from lecture_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -149,7 +150,8 @@ foreach($results as $result)
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
                                                             <td><?php echo htmlentities($result->lect_name);?></td>
-                                                            <td><?php echo htmlentities($result->mod_id);?></td>
+                                                            <td><?php echo htmlentities($result->lect_assistant);?></td>
+                                                            <td><?php echo htmlentities($result->mo_id);?></td>
                                                            
                                                            
 <td>

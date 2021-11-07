@@ -2,9 +2,9 @@
 
 include "includes/config.php"; // Using database connection file here
 
-$id = $_GET['classid']; // get id through query string
+$id = $_GET['mo_id']; // get id through query string
 
-$del = "delete from modules_tbl where id = '$id'"; // delete query
+$del = "delete from modules_tbl where mo_id = '$id'"; // delete query
 $query = $dbh->prepare($del);
 if($query)
 {

@@ -124,10 +124,10 @@ else if($error){?>
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Module Name</th>
+                                                            <th>Module Title</th>
                                                             <th>Module Code</th>
                                                             <th>Module Credit</th>
-                                                            <th>Depertment</th> 
+                                                            <th>Level</th> 
                                                             
                                                           
                                                             <th>Edit  / Delete</th>
@@ -136,10 +136,10 @@ else if($error){?>
                                                     <tfoot>
                                                         <tr>
                                                           <th>#</th>
-                                                            <th>Module Name</th>
+                                                          <th>Module Title</th>
                                                             <th>Module Code</th>
-                                                            <th>Module credit</th>
-                                                            <th>Depertment</th>
+                                                            <th>Module Credit</th>
+                                                            <th>Level</th> 
 
                                                             
                                                            
@@ -148,7 +148,7 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from modules_tbl";
+<?php $sql = "SELECT module_tbl.mo_id,module_tbl.mo_title,module_tbl.mo_code,module_tbl.mo_credits,level_tbl.le_title  from module_tbl join level_tbl on level_tbl.le_id=module_tbl.mo_id ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -159,14 +159,14 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->mod_name);?></td>
-                                                            <td><?php echo htmlentities($result->mod_code);?></td>
-                                                            <td><?php echo htmlentities($result->mod_credit);?></td>
-                                                            <td><?php echo htmlentities($result->dept_id);?></td>
+                                                            <td><?php echo htmlentities($result->mo_title);?></td>
+                                                            <td><?php echo htmlentities($result->mo_code);?></td>
+                                                            <td><?php echo htmlentities($result->mo_credits);?></td>
+                                                            <td><?php echo htmlentities($result->le_title);?></td>
                                                            
 <td>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mod_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
-<a href="delete.php?id=<?php echo htmlentities($result->id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mo_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
+<a href="delete.php?id=<?php echo htmlentities($result->mo_id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 
 </tr>
 <?php $cnt=$cnt+1;}} ?>

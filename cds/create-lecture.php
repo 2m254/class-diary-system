@@ -10,14 +10,16 @@ if(strlen($_SESSION['alogin'])=="")
 if(isset($_POST['submit']))
 {
 $lect_name=$_POST['lect_name'];
-$mod_id=$_POST['mod_id']; 
+$lect_assistant=$_POST['lect_assistant'];
+$mo_id=$_POST['mo_id']; 
 
 
 
-$sql="INSERT INTO   lectures_tbl(lect_name,mod_id) VALUES(:lect_name,:Mod_id)";
+$sql="INSERT INTO   lecture_tbl(lect_name,lect_assistant,mo_id) VALUES(:lect_name,:lect_assistant,:mo_id)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':lect_name',$lect_name,PDO::PARAM_STR);
-$query->bindParam(':mod_id',$mod_id,PDO::PARAM_STR);
+$query->bindParam(':lect_assistant',$lect_assistant,PDO::PARAM_STR);
+$query->bindParam(':mo_id',$mo_id,PDO::PARAM_STR);
 
 
 $query->execute();
@@ -146,12 +148,36 @@ else if($error){?>
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module</label>
+                                                        <label for="success" class="control-label">Lecture Assistant</label>
                                                 		<div class="">
-                                                			<input type="text" name="mod_id" class="form-control"  id="success">
+                                                			<input type="text" name="lect_assistant" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Module</label>
+                                                
+                                                       
+ <select name="mo_id" class="form-control" id="success"  required="required">
+<option value="">Select Department Name</option>
+<?php $sql = "SELECT * from module_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->mo_id); ?>"><?php echo htmlentities($result->mo_title); ?></option>
+<?php }
+
+
+} ?>
+ </select>
+                                                        </div>
+                                                    </div>
+                                                    
 
                                                       
                                                     

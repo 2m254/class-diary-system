@@ -9,15 +9,17 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $lecture_name=$_POST['lecture_name'];
-    $assistant_name=$_POST['mod_id']; 
+    $lect_name=$_POST['lect_name'];
+    $lect_assistant=$_POST['lect_assistant'];
+    $mo_id=$_POST['mo_id']; 
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  lectures_tbl set lecture_name=:lecture_name,mod_id=:mod_id where lect_id=:cid ";
+    $sql="update  lecture_tbl set lect_name=:lect_name,lect_assistant=:lect_assistant,mo_id=:mo_id where lect_id=:cid ";
     $query = $dbh->prepare($sql);
-$query->bindParam(':lecture_name',$lecture_name,PDO::PARAM_STR);
-$query->bindParam(':mod_id',$assistant_name,PDO::PARAM_STR);
+$query->bindParam(':lect_name',$lect_name,PDO::PARAM_STR);
+$query->bindParam(':lect_assistant',$lect_assistant,PDO::PARAM_STR);
+$query->bindParam(':mo_id',$mo_id,PDO::PARAM_STR);
 
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
@@ -112,7 +114,7 @@ else if($error){?>
                                                 <form method="post" >
 <?php 
 $cid=intval($_GET['classid']);
-$sql = "SELECT * from lecture_tbl where id=:cid";
+$sql = "SELECT * from lecture_tbl where lect_id=:cid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -124,17 +126,41 @@ foreach($results as $result)
 {   ?>
 
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Lecture Names</label>
+                                                        <label for="success" class="control-label">Lecture Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="lecture_name" value="<?php echo htmlentities($result->lecture_name);?>" required="required" class="form-control" id="success">
+                                                			<input type="text" name="lect_name" value="<?php echo htmlentities($result->lect_name);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- John Smith etc</span>
                                                 		</div>
                                                 	</div>
                                                        <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Assistant Names</label>
+                                                        <label for="success" class="control-label">Assistant Name</label>
                                                         <div class="">
-                                                            <input type="text" name="assistant_name" value="<?php echo htmlentities($result->assistant_name);?>" required="required" class="form-control" id="success">
+                                                            <input type="text" name="lect_assistant" value="<?php echo htmlentities($result->lect_assistant);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- Johnson Ntwali</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Module</label>
+                                                
+                                                       
+ <select name="mo_id" class="form-control" id="success"  required="required">
+<option value="">Select Department Name</option>
+<?php $sql = "SELECT * from module_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->mo_id); ?>"><?php echo htmlentities($result->mo_title); ?></option>
+<?php }
+
+
+} ?>
+ </select>
                                                         </div>
                                                     </div>
                                             

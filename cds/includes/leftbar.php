@@ -1,7 +1,7 @@
 <div class="left-sidebar bg-black-300 box-shadow ">
                         <div class="sidebar-content">
                             <div class="user-info closed">
-                                <img src="http://placehold.it/90/c2c2c2?text=User" alt="John Doe" class="img-circle profile-img">
+                                <img src="images/lock.png"  alt="#####" width="100" height="100" class="img-circle profile-img">
                                 <h6 class="title">HOD</h6>
                                 <small class="info">Head Of Department</small>
                             </div>
@@ -21,6 +21,15 @@
                                         <span class="">Appearance</span>
                                     </li>
                                     <li class="has-children">
+                                        <a href="#"><i class="fa fa-users"></i> <span>Levels</span> <i class="fa fa-angle-right arrow"></i></a>
+                                        <ul class="child-nav">
+                                            <li><a href="create-level.php"><i class="fa fa-bars"></i> <span>Create Level</span></a></li>
+                                            <li><a href="manage-level.php"><i class="fa fa fa-server"></i> <span>manage Level</span></a></li>
+                                            
+                                           
+                                        </ul>
+                                    </li>
+                                    <li class="has-children">
                                         <a href="#"><i class="fa fa-file-text"></i> <span>Modules</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
                                             <li><a href="create-module.php"><i class="fa fa-bars"></i> <span>Create Modules</span></a></li>
@@ -36,21 +45,12 @@
                                            
                                         </ul>
                                     </li>
-   <li class="has-children">
-                                        <a href="#"><i class="fa fa-users"></i> <span>Levels</span> <i class="fa fa-angle-right arrow"></i></a>
-                                        <ul class="child-nav">
-                                            <li><a href="create-level.php"><i class="fa fa-bars"></i> <span>Create Level</span></a></li>
-                                            <li><a href="manage-level.php"><i class="fa fa fa-server"></i> <span>manage Level</span></a></li>
-                                            <li><a href="#"><i class="fa fa-newspaper-o"></i> <span># ###</span></a></li>
-                                           <a href="#"><i class="fa fa-newspaper-o"></i> <span># #### </span></a></li>
-                                           
-                                        </ul>
-                                    </li>
+                                    
 <li class="has-children">
-                                        <a href="#"><i class="fa fa-info-circle"></i> <span>#####</span> <i class="fa fa-angle-right arrow"></i></a>
+                                        <a href="#"><i class="fa fa-info-circle"></i> <span>Class Diary </span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
-                                            <li><a href="#"><i class="fa fa-bars"></i> <span>####</span></a></li>
-                                            <li><a href="#"><i class="fa fa fa-server"></i> <span>####</span></a></li>
+                                            <li><a href="view_class_diary.php"><i class="fa fa-bars"></i> <span>View Class Diary</span></a></li>
+                                            
                                            
                                         </ul>
                                         <li><a href="change-password.php"><i class="fa fa fa-server"></i> <span> HOD Change Password</span></a></li>

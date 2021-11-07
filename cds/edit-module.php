@@ -12,15 +12,15 @@ if(isset($_POST['update']))
     $modulename=$_POST['modulename'];
     $modulecode=$_POST['modulecode']; 
     $modulecredit=$_POST['modulecredit'];
-    $deptid=$_POST['deptid'];
+    $le_id=$_POST['le_id'];
     
     $cid=intval($_GET['classid']);
-    $sql="update  modules_tbl set mod_name=:modulename,mod_code=:modulecode,mod_credit=:modulecredit,deptid=:dept_id where id=:cid ";
+    $sql="update  module_tbl set mo_title=:modulename,mo_code=:modulecode,mo_credits=:modulecredit,le_id=:le_id where mo_id=:cid ";
     $query = $dbh->prepare($sql);
 $query->bindParam(':modulename',$modulename,PDO::PARAM_STR);
 $query->bindParam(':modulecode',$modulecode,PDO::PARAM_STR);
 $query->bindParam(':modulecredit',$modulecredit,PDO::PARAM_STR);
-$query->bindParam(':deptid',$deptid,PDO::PARAM_STR);
+$query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -114,7 +114,7 @@ else if($error){?>
                                                 <form method="post" >
 <?php 
 $cid=intval($_GET['classid']);
-$sql = "SELECT * from modules_tbl where mod_id=:cid";
+$sql = "SELECT * from module_tbl where mo_id=:cid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -126,31 +126,47 @@ foreach($results as $result)
 {   ?>
 
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Name</label>
+                                                        <label for="success" class="control-label">Module Title</Title></label>
                                                 		<div class="">
-                                                			<input type="text" name="modulename" value="<?php echo htmlentities($result->mod_name);?>" required="required" class="form-control" id="success">
+                                                			<input type="text" name="modulename" value="<?php echo htmlentities($result->mo_title);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- ICT,Analog,Soral Energy etc</span>
                                                 		</div>
                                                 	</div>
                                                        <div class="form-group has-success">
                                                         <label for="success" class="control-label">Module Code</label>
                                                         <div class="">
-                                                            <input type="text" name="modulecode"  value="<?php echo htmlentities($result->mod_code);?>" required="required" class="form-control" id="success" maxlength="8" >
+                                                            <input type="text" name="modulecode"  value="<?php echo htmlentities($result->mo_code);?>" required="required" class="form-control" id="success" maxlength="8" >
                                                             <span class="help-block">Eg- ict101 etc</span>
                                                         </div>
                                                     </div>
                                                      <div class="form-group has-success">
                                                         <label for="success"  class="control-label">Module Credit</label>
                                                         <div class="">
-                                                            <input type="text"    name="modulecredit" value="<?php echo htmlentities($result->mod_credit);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <input type="text"    name="modulecredit" value="<?php echo htmlentities($result->mo_credits);?>" class="form-control" required="required" id="success" maxlength="2">
                                                             <span class="help-block">Eg- 10,15 etc</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-success">
-                                                        <label for="success"  class="control-label">Deperment</label>
-                                                        <div class="">
-                                                            <input type="text"    name="deptid" value="<?php echo htmlentities($result->dept_id);?>" class="form-control" required="required" id="success" maxlength="2">
-                                                            <span class="help-block">Eg- 10,15 etc</span>
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Level</label>
+                                                
+                                                       
+ <select name="le_id" class="form-control" id="success"  required="required">
+<option value="">Select Department Name</option>
+<?php $sql = "SELECT * from level_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?>&nbsp; -<?php echo htmlentities($result->le_class); ?></option>
+<?php }
+
+
+} ?>
+ </select>
                                                         </div>
                                                     </div>
                                                    

@@ -9,18 +9,18 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $level_name=$_POST['level_name'];
-    $level_room=$_POST['level_room']; 
-    $class_mentor=$_POST['dept_id']; 
+    $le_title=$_POST['le_title'];
+    $le_class=$_POST['le_class']; 
+    $de_id=$_POST['de_id']; 
    
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  level_tbl set level_name=:level_name,level_room=:level_room,dept_id=:dept_id where level_id=:cid ";
+    $sql="update  level_tbl set le_title=:le_title,le_class=:le_class,de_id=:de_id where le_id=:cid ";
     $query = $dbh->prepare($sql);
-$query->bindParam(':level_name',$level_name,PDO::PARAM_STR);
-$query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
-$query->bindParam(':dept_id',$dept_id,PDO::PARAM_STR);
+$query->bindParam(':le_title',$le_title,PDO::PARAM_STR);
+$query->bindParam(':le_class',$le_class,PDO::PARAM_STR);
+$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
 
 
@@ -114,40 +114,60 @@ else if($error){?>
                                         <?php } ?>
 
                                                 <form method="post" >
-<?php 
-$cid=intval($_GET['classid']);
-$sql = "SELECT * from level_tbl where level_id=:cid";
-$query = $dbh->prepare($sql);
-$query->bindParam(':cid',$cid,PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>
+                            <?php 
+                            $cid=intval($_GET['classid']);
+                            $sql = "SELECT * from level_tbl where le_id=:cid";
+                            $query = $dbh->prepare($sql);
+                            $query->bindParam(':cid',$cid,PDO::PARAM_STR);
+                            $query->execute();
+                            $results=$query->fetchAll(PDO::FETCH_OBJ);
+                            $cnt=1;
+                            if($query->rowCount() > 0)
+                            {
+                            foreach($results as $result)
+                              {   ?>
 
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Level Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="level_name" value="<?php echo htmlentities($result->level_name);?>" required="required" class="form-control" id="success">
+                                                			<input type="text" name="le_title" value="<?php echo htmlentities($result->le_title);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- level 1, level 2 etc</span>
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Level Room</label>
                                                         <div class="">
-                                                            <input type="text" maxlength="1" name="level_room" value="<?php echo htmlentities($result->level_room);?>" required="required" class="form-control" id="success">
+                                                            <input type="text" maxlength="1" name="le_class" value="<?php echo htmlentities($result->le_class);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- a, b, c etc</span>
                                                         </div>
                                                     </div>
-                                                       <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Depertment</label>
-                                                        <div class="">
-                                                            <input type="text" name="dept_id" value="<?php echo htmlentities($result->dept_id);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- full name.</span>
+
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Department</label>
+                                                
+                                                       
+ <select name="de_id" class="form-control" id="success"  required="required">
+<option value="">Select Department Name</option>
+<?php $sql = "SELECT * from department_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
+<?php }
+
+
+} ?>
+ </select>
                                                         </div>
                                                     </div>
+
+                                                    
+                                                       
                                                     
                                                   
                                             

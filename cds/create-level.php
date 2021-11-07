@@ -9,18 +9,18 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$level_name=$_POST['level_name'];
-$level_room=$_POST['level_room']; 
-$dept_id=$_POST['dept_id']; 
+$le_title=$_POST['le_title'];
+$le_class=$_POST['le_class']; 
+$de_id=$_POST['de_id']; 
  
 
 
 
-$sql="INSERT INTO  level_tbl(level_name,level_room,dept_id,) VALUES(:level_name,:level_room,:dept_id)";
+$sql="INSERT INTO  level_tbl(le_title,le_class,de_id) VALUES(:le_title,:le_class,:de_id)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':level_name',$level_name,PDO::PARAM_STR);
-$query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
-$query->bindParam(':dept_id',$dept_id,PDO::PARAM_STR);
+$query->bindParam(':le_title',$le_title,PDO::PARAM_STR);
+$query->bindParam(':le_class',$le_class,PDO::PARAM_STR);
+$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
 
 $query->execute();
@@ -122,8 +122,7 @@ $error="Something went wrong. Please try again";
                                 <div class="row">
                                     <div class="col-md-8 col-md-offset-2">
                                         <div class="panel">
-                                            <div class="panel-heading"
-                                            >
+                                            <div class="panel-heading">
                                                 <div class="panel-title">
                                                     <h5>Create Level</h5>
                                                 </div>
@@ -144,24 +143,56 @@ else if($error){?>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Level Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="level_name" class="form-control" required="required" id="success">
+                                                			<input type="text" name="le_title" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
+                                                    
                                                     <div class="form-group has-success">
-                                                        <label for="success" maxlength="1" class="control-label">Level Room</label>
-                                                		<div class="">
-                                                			<input type="text" name="level_room" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div>
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Level Room</label>
+                                                
+                                                       
+ <select name="le_class" class="form-control" id="success"  required="required">
+<option value="">Select level room</option>
+
+<option  id="success" class="form-control" value="A">A</option>
+<option  id="success" class="form-control" value="B">B</option>
+<option   id="success" class="form-control" value="C">C</option>
+
+
+
+ </select>
+                                                        </div>
+                                                    </div>
+                                                    
+
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Depertment</label>
-                                                		<div class="">
-                                                			<input type="text" name="dept_id" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div> <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Department</label>
+                                                
+                                                       
+ <select name="de_id" class="form-control" id="success"  required="required">
+<option value="">select department name</option>
+<?php $sql = "SELECT * from department_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
+<?php }
+
+
+} ?>
+ </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="form-group has-success">
                                                       
 
                                                       
