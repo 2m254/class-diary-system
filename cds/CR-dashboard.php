@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('cr-includes/config.php');
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
@@ -64,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-primary" href="manage-class_diary.php">
 <?php 
-$sql1 ="SELECT detail_id from  details_tbl ";
+$sql1 ="SELECT cd_id from  class_diary_tbl ";
 $query1 = $dbh -> prepare($sql1);
 $query1->execute();
 $results1=$query1->fetchAll(PDO::FETCH_OBJ);
@@ -75,61 +75,11 @@ $totalstudents=$query1->rowCount();
                                             <span class="name">class diary</span>
                                             <span class="bg-icon"><i class="fa fa-users"></i></span>
                                         </a>
-                                        <!-- /.dashboard-stat -->
+                                      
                                     </div>
-                                    <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-danger" href="#">
-<?php 
-$sql ="SELECT id from  modules_tbl ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$totalsubjects=$query->rowCount();
-?>
-                                            <span class="number counter"><?php echo htmlentities($totalsubjects);?></span>
-                                            <span class="name">######2</span>
-                                            <span class="bg-icon"><i class="fa fa-ticket"></i></span>
-                                        </a>
-                                        <!-- /.dashboard-stat -->
+                                    
                                     </div>
-                                    <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-warning" href="#">
-                                        <?php 
-$sql2 ="SELECT id from  modules_tbl ";
-$query2 = $dbh -> prepare($sql2);
-$query2->execute();
-$results2=$query2->fetchAll(PDO::FETCH_OBJ);
-$totalclasses=$query2->rowCount();
-?>
-                                            <span class="number counter"><?php echo htmlentities($totalclasses);?></span>
-                                            <span class="name">######3</span>
-                                            <span class="bg-icon"><i class="fa fa-bank"></i></span>
-                                        </a>
-                                        <!-- /.dashboard-stat -->
-                                    </div>
-                                    <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-success" href="#">
-                                        <?php 
-$sql3="SELECT  distinct id from  modules_tbl ";
-$query3 = $dbh -> prepare($sql3);
-$query3->execute();
-$results3=$query3->fetchAll(PDO::FETCH_OBJ);
-$totalresults=$query3->rowCount();
-?>
-
-                                            <span class="number counter"><?php echo htmlentities($totalresults);?></span>
-                                            <span class="name">######4</span>
-                                            <span class="bg-icon"><i class="fa fa-file-text"></i></span>
-                                        </a>
-                                        <!-- /.dashboard-stat -->
-                                    </div>
-                                    <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
+                                   
 
                                 </div>
                                 <!-- /.row -->
@@ -149,6 +99,7 @@ $totalresults=$query3->rowCount();
 
         </div>
         <!-- /.main-wrapper -->
+        
 
         <!-- ========== COMMON JS FILES ========== -->
         <script src="js/jquery/jquery-2.2.4.min.js"></script>
@@ -202,7 +153,7 @@ $totalresults=$query3->rowCount();
                   "showMethod": "fadeIn",
                   "hideMethod": "fadeOut"
                 }
-                toastr["success"]( "Welcome to student Result Management System!");
+                toastr["success"]( "Welcome to Class Diary System!");
 
             });
         </script>

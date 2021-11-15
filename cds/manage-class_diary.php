@@ -74,8 +74,8 @@ if(strlen($_SESSION['alogin'])=="")
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li> Class-Diary</li>
+            							<li><a href="cr-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+                                        <li><a href="add-class_diary.php"><i class="fa fa-home"></i> Class-Diary</a/li>
             							<li class="active">Manage Class Diary</li>
             						</ul>
                                 </div>
@@ -95,6 +95,7 @@ if(strlen($_SESSION['alogin'])=="")
 
                                         <div class="panel">
                                             <div class="panel-heading">
+                                            <button name="login" class="btn btn-success btn-labeled pull-right"><a href="add-class_diary.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                 <div class="panel-title">
                                                     <h5>View Class Diary Info</h5>
                                                 </div>
@@ -108,37 +109,47 @@ else if($error){?>
                                             <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
                                         </div>
                                         <?php } ?>
-                                            <div class="panel-body p-20">
+                                            <div class="panel-body p-25">
 
                                                 <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>#</th>
-                                                            <th>#1</th>
-                                                            <th>#2</th>
-                                                            <th>#3</th>
-                                                            <th>#4</th>
-                                                            <th>#5</th>
-                                                            <th>#6</th>
+                                                            <th>ID</th>
+                                                            
+                                                            <th>Day</th>
+                                                            <th>Date</th>
+
+                                                            <th>Module</th>
+                                                            <th>Lecture</th>
+                                                            
+                                                            <th>Activity</th>
+                                                            <th>Content</th>
+                                                            
+                                                            <th>commnent Description</th>
                                                           
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                          <th>#</th>
-                                                            <th>#1</th>
-                                                            <th>#2</th>
-                                                            <th>#3</th>
-                                                            <th>#4</th>
-                                                            <th>#5</th>
-                                                            <th>#6</th>
+                                                          <th>ID</th>
+                                                         
+                                                            <th>Day</th>
+                                                            <th>Date</th>
+                                                            
+                                                            <th>Module</th>
+                                                            <th>Lecture</th>
+                                                            
+                                                            <th>Activity</th>
+                                                            <th>Content</th>
+                                                            
+                                                            <th>commnent Description</th>
                                                            
                                                             <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from tblclasses";
+<?php $sql = "SELECT * from class_diary_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -149,12 +160,19 @@ foreach($results as $result)
 {   ?>
 <tr>
  <td><?php echo htmlentities($cnt);?></td>
-                                                            <td><?php echo htmlentities($result->ClassName);?></td>
-                                                            <td><?php echo htmlentities($result->ClassNameNumeric);?></td>
-                                                            <td><?php echo htmlentities($result->Section);?></td>
-                                                            <td><?php echo htmlentities($result->CreationDate);?></td>
+                                                            
+                                                            <td><?php echo htmlentities($result->day);?></td>
+                                                            <td><?php echo htmlentities($result->dat);?></td>
+                                                            
+                                                            <td><?php echo htmlentities($result->mo_id);?></td>
+                                                            <td><?php echo htmlentities($result->lect_id);?></td>
+                                                          
+                                                            <td><?php echo htmlentities($result->activity);?></td>
+                                                            <td><?php echo htmlentities($result->toc);?></td>
+                                                            
+                                                            <td ><?php echo htmlentities($result->commdesc);?></td>
 <td>
-<a href="edit-class.php?classid=<?php echo htmlentities($result->id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit-class_diary.php?classid=<?php echo htmlentities($result->cd_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>

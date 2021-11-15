@@ -26,7 +26,7 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$msg="Class Created successfully";
+$msg="Lecture created successfully";
 }
 else 
 {
@@ -35,8 +35,7 @@ $error="Something went wrong. Please try again";
 
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+        <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -101,7 +100,7 @@ $error="Something went wrong. Please try again";
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="#">Lectures</a></li>
+            							<li><a href="manage-lectures.php">Lectures</a></li>
             							<li class="active">Create Lectures</li>
             						</ul>
                                 </div>
@@ -150,7 +149,7 @@ else if($error){?>
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Lecture Assistant</label>
                                                 		<div class="">
-                                                			<input type="text" name="lect_assistant" class="form-control" required="required" id="success">
+                                                			<input type="text" name="lect_assistant" class="form-control"  id="success">
                                                             
                                                 		</div>
                                                 	</div>
@@ -161,7 +160,7 @@ else if($error){?>
                                                        
  <select name="mo_id" class="form-control" id="success"  required="required">
 <option value="">Select Department Name</option>
-<?php $sql = "SELECT * from module_tbl ";
+<?php $sql = "SELECT * from modules_tbl ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

@@ -1,39 +1,33 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('cr-includes/config.php');
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
     }
     else{
-if(isset($_POST['submit']))
+if(isset($_POST['update']))
 {
-$le_title=$_POST['le_title'];
-$le_class=$_POST['le_class']; 
-$de_id=$_POST['de_id']; 
- 
+    $week=$_POST['week'];
+    $day=$_POST['day'];
+    $dat=$_POST['dat'];
+    
+
+   
+    
+    $cid=intval($_GET['classid']);
+    $sql="update  class_diary_tbl set week=:week,day=:day,dat=:dat where cd_id=:cid ";
+    $query = $dbh->prepare($sql);
+$query->bindParam(':week',$week,PDO::PARAM_STR);
+$query->bindParam(':day',$day,PDO::PARAM_STR);
+$query->bindParam(':dat',$dat,PDO::PARAM_STR);
 
 
 
-$sql="INSERT INTO  level_tbl(le_title,le_class,de_id) VALUES(:le_title,:le_class,:de_id)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':le_title',$le_title,PDO::PARAM_STR);
-$query->bindParam(':le_class',$le_class,PDO::PARAM_STR);
-$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
-
-
+$query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$msg="Level Created successfully";
-}
-else 
-{
-$error="Something went wrong. Please try again";
-}
-
+$msg="Data has been updated successfully";
 }
 ?>
 <!DOCTYPE html>
@@ -42,7 +36,7 @@ $error="Something went wrong. Please try again";
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>CDS HOD Create Modules</title>
+        <title>CDS Update Module</title>
         <link rel="stylesheet" href="css/bootstrap.css" media="screen" >
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
@@ -51,24 +45,6 @@ $error="Something went wrong. Please try again";
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
         <link rel="stylesheet" href="styles.css">
-         <style>
-        .errorWrap {
-    padding: 10px;
-    margin: 0 0 20px 0;
-    background: #fff;
-    border-left: 4px solid #dd3d36;
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-.succWrap{
-    padding: 10px;
-    margin: 0 0 20px 0;
-    background: #fff;
-    border-left: 4px solid #5cb85c;
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-}
-        </style>
     </head>
     <body class="top-navbar-fixed">
     <div class="login-background" >
@@ -80,31 +56,31 @@ $error="Something went wrong. Please try again";
         <div class="main-wrapper">
 
             <!-- ========== TOP NAVBAR ========== -->
-            <?php include('includes/topbar.php');?>   
+            <?php include('cr-includes/topbar.php');?>   
           <!-----End Top bar>
             <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
             <div class="content-wrapper">
                 <div class="content-container">
 
 <!-- ========== LEFT SIDEBAR ========== -->
-<?php include('includes/leftbar.php');?>                   
+<?php include('cr-includes/leftbar.php');?>                   
  <!-- /.left-sidebar -->
 
                     <div class="main-page">
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Create Levels </h2>
+                                    <h2 class="title">Update Class Diary</h2>
                                 </div>
                                 
                             </div>
                             <!-- /.row -->
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
-                                <ul class="breadcrumb">
-            							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><li><a href="manage-level.php"><i class="fa fa-home"></i>  Leveles</a></li>
-            							<li class="active">Create Leveles</li>
+                                    <ul class="breadcrumb">
+            							<li><a href="cr-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+            							<li><a href="manage-class_diary.php">Class Diary</a></li>
+            							<li class="active">Update Class diary</li>
             						</ul>
                                 </div>
                                
@@ -125,92 +101,88 @@ $error="Something went wrong. Please try again";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Create Level</h5>
+                                                    <h5>Update class diary info</h5>
                                                 </div>
                                             </div>
-           <?php if($msg){?>
+<?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
- <strong>Well done! </strong><?php echo htmlentities($msg); ?>
+ <strong>Well done!</strong><?php echo htmlentities($msg); ?>
  </div><?php } 
 else if($error){?>
     <div class="alert alert-danger left-icon-alert" role="alert">
                                             <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
                                         </div>
                                         <?php } ?>
-  
-                                            <div class="panel-body">
 
-                                                <form method="post">
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Level Name</label>
-                                                		<div class="">
-                                                			<input type="text" name="le_title" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div>
-                                                    
-                                                    <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Level Room</label>
-                                                
-                                                       
- <select name="le_class" class="form-control" id="success"  required="required">
-<option value="">Select level room</option>
-
-<option  id="success" class="form-control" value="A">A</option>
-<option  id="success" class="form-control" value="B">B</option>
-<option   id="success" class="form-control" value="C">C</option>
-
-
-
- </select>
-                                                        </div>
-                                                    </div>
-                                                    
-
-                                                    <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Department</label>
-                                                
-                                                       
- <select name="de_id" class="form-control" id="success"  required="required">
-<option value="">select department name</option>
-<?php $sql = "SELECT * from department_tbl ";
+                                                <form method="post" >
+<?php 
+$cid=intval($_GET['classid']);
+$sql = "SELECT * from class_diary_tbl where cd_id=:cid";
 $query = $dbh->prepare($sql);
+$query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount()>0)
+$cnt=1;
+if($query->rowCount() > 0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
-<?php }
+
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">week</label>
+                                                		<div class="">
+                                                			<input type="number" name="week" value="<?php echo htmlentities($result->week);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- 1,2,3,4 etc</span>
+                                                		</div>
+                                                	</div>
+                                                    <div class="form-group has-success">
+                                                      <div class="form-group">
+                                               <label for="default" class="control-label">day</label>
+                                                      
+<select name="day" class="form-control" id="success">
+
+<option selected >-----Select day-----</option>
+
+<option value="<?php echo htmlentities($result->day);?>">Monday</option>
+<option value="<?php echo htmlentities($result->day);?>">Tuesday</option>
+<option value="<?php echo htmlentities($result->day);?>">wednesday</option>
+<option value="<?php echo htmlentities($result->day);?> ">Thursday</option>
+<option value="<?php echo htmlentities($result->day);?>">Friday</option>
+<option value="<?php echo htmlentities($result->day);?>">Surtday</option>
+<option value="<?php echo htmlentities($result->day);?>">Sunday</option>
 
 
-} ?>
- </select>
+</select>
+<span class="help-block">Eg- monday,tuesday etc</span>
+<div class="form-group has-success">
+                                                        <label for="success" class="control-label">Date</label>
+                                                		<div class="">
+                                                			<input type="date" name="week" value="<?php echo htmlentities($result->date);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- 10/01/2021 etc</span>
+                                                		</div>
+                                                	</div>
                                                         </div>
                                                     </div>
+                                            
+                                                   
                                                     
-                                                    
-                                                    <div class="form-group has-success">
-                                                      
-
-                                                      
-                                                    
+                                                   
+                                                    <?php }} ?>
   <div class="form-group has-success">
 
                                                         <div class="">
-                                                           <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                
-
-
-                                                                                       		
+                                                            <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    
+                                                    
+                    
+                                                    		
                                                            
-                                                    <button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-level.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-class_diary.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     		</div>
                     </div>
 
+
+                                                    
                                                 </form>
 
                                               
@@ -231,6 +203,9 @@ foreach($results as $result)
 
                     </div>
                     <!-- /.main-page -->
+
+             
+                    <!-- /.right-sidebar -->
 
                 </div>
                 <!-- /.content-container -->
@@ -253,11 +228,10 @@ foreach($results as $result)
 
         <!-- ========== THEME JS ========== -->
         <script src="js/main.js"></script>
-
+        </div></div></div></div>
 
 
         <!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->
-        </div> </div> </div> </div>
     </body>
 </html>
 <?php  } ?>

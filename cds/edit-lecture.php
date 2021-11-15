@@ -76,7 +76,7 @@ $msg="Data has been updated successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="#">Lecture</a></li>
+            							<li><a href="manage-lecture.php">Lecture</a></li>
             							<li class="active">Update Lecture</li>
             						</ul>
                                 </div>
@@ -111,43 +111,44 @@ else if($error){?>
                                         </div>
                                         <?php } ?>
 
-                                                <form method="post" >
-<?php 
-$cid=intval($_GET['classid']);
-$sql = "SELECT * from lecture_tbl where lect_id=:cid";
-$query = $dbh->prepare($sql);
-$query->bindParam(':cid',$cid,PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>
+                                        <form method="post" >
+                            <?php 
+                            $cid=intval($_GET['classid']);
+                            $sql = "SELECT * from lecture_tbl where lect_id=:cid";
+                            $query = $dbh->prepare($sql);
+                            $query->bindParam(':cid',$cid,PDO::PARAM_STR);
+                            $query->execute();
+                            $results=$query->fetchAll(PDO::FETCH_OBJ);
+                            $cnt=1;
+                            if($query->rowCount() > 0)
+                            {
+                            foreach($results as $result)
+                              {   ?>
 
                                                     <div class="form-group has-success">
                                                         <label for="success" class="control-label">Lecture Name</label>
                                                 		<div class="">
                                                 			<input type="text" name="lect_name" value="<?php echo htmlentities($result->lect_name);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- John Smith etc</span>
+                                                            <span class="help-block">Eg- Johnson,james etc</span>
                                                 		</div>
                                                 	</div>
-                                                       <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Assistant Name</label>
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Lecture Assistant</label>
                                                         <div class="">
-                                                            <input type="text" name="lect_assistant" value="<?php echo htmlentities($result->lect_assistant);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- Johnson Ntwali</span>
+                                                            <input type="text"  name="lect_assistant" value="<?php echo htmlentities($result->lect_assistant);?>"  class="form-control" id="success">
+                                                            <span class="help-block">Eg- Brezze, Josiane etc</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
-                                                <label for="default" class="control-label">Module</label>
+                                                <label for="default" class="control-label">Course</label>
                                                 
                                                        
  <select name="mo_id" class="form-control" id="success"  required="required">
-<option value="">Select Department Name</option>
-<?php $sql = "SELECT * from module_tbl ";
+ <?php $sql = "SELECT * from module_tbl ";?>
+<option value="">Select module Name</option>
+<?php
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -163,6 +164,11 @@ foreach($results as $result)
  </select>
                                                         </div>
                                                     </div>
+
+                                                    
+                                                       
+                                                    
+                                                  
                                             
                                                    
                                                     
@@ -184,6 +190,7 @@ foreach($results as $result)
 
                                                     
                                                 </form>
+
 
                                               
                                             </div>

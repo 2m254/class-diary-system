@@ -80,7 +80,7 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li> Modules</li>
+                                        <li><li><a href="create-module.php"><i class="fa fa-home"></i> Modules</a></li>
             							<li class="active">Manage Modules</li>
             						</ul>
                                 </div>
@@ -148,7 +148,7 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT module_tbl.mo_id,module_tbl.mo_title,module_tbl.mo_code,module_tbl.mo_credits,level_tbl.le_title  from module_tbl join level_tbl on level_tbl.le_id=module_tbl.mo_id ";
+<?php $sql = "SELECT modules_tbl.mo_id,modules_tbl.mo_title,modules_tbl.mo_code,modules_tbl.mo_credit,level_tbl.le_title  from modules_tbl join level_tbl on level_tbl.le_id=modules_tbl.mo_id ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -161,7 +161,7 @@ foreach($results as $result)
  <td><?php echo htmlentities($cnt);?></td>
                                                             <td><?php echo htmlentities($result->mo_title);?></td>
                                                             <td><?php echo htmlentities($result->mo_code);?></td>
-                                                            <td><?php echo htmlentities($result->mo_credits);?></td>
+                                                            <td><?php echo htmlentities($result->mo_credit);?></td>
                                                             <td><?php echo htmlentities($result->le_title);?></td>
                                                            
 <td>

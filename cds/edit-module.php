@@ -15,7 +15,7 @@ if(isset($_POST['update']))
     $le_id=$_POST['le_id'];
     
     $cid=intval($_GET['classid']);
-    $sql="update  module_tbl set mo_title=:modulename,mo_code=:modulecode,mo_credits=:modulecredit,le_id=:le_id where mo_id=:cid ";
+    $sql="update  moduleS_tbl set mo_title=:modulename,mo_code=:modulecode,mo_credit=:modulecredit,le_id=:le_id where mo_id=:cid ";
     $query = $dbh->prepare($sql);
 $query->bindParam(':modulename',$modulename,PDO::PARAM_STR);
 $query->bindParam(':modulecode',$modulecode,PDO::PARAM_STR);
@@ -76,7 +76,7 @@ $msg="Data has been updated successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="#">Modules</a></li>
+            							<li><a href="manage-modules.php">Modules</a></li>
             							<li class="active">Update Modules</li>
             						</ul>
                                 </div>
@@ -114,7 +114,7 @@ else if($error){?>
                                                 <form method="post" >
 <?php 
 $cid=intval($_GET['classid']);
-$sql = "SELECT * from module_tbl where mo_id=:cid";
+$sql = "SELECT * from moduleS_tbl where mo_id=:cid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -142,7 +142,7 @@ foreach($results as $result)
                                                      <div class="form-group has-success">
                                                         <label for="success"  class="control-label">Module Credit</label>
                                                         <div class="">
-                                                            <input type="text"    name="modulecredit" value="<?php echo htmlentities($result->mo_credits);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <input type="text"    name="modulecredit" value="<?php echo htmlentities($result->mo_credit);?>" class="form-control" required="required" id="success" maxlength="2">
                                                             <span class="help-block">Eg- 10,15 etc</span>
                                                         </div>
                                                     </div>
@@ -152,8 +152,9 @@ foreach($results as $result)
                                                 
                                                        
  <select name="le_id" class="form-control" id="success"  required="required">
-<option value="">Select Department Name</option>
-<?php $sql = "SELECT * from level_tbl ";
+ <?php $sql = "SELECT * from level_tbl ";?>
+
+<?php
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -161,7 +162,8 @@ if($query->rowCount()>0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?>&nbsp; -<?php echo htmlentities($result->le_class); ?></option>
+
+<option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?>&nbsp; </option>
 <?php }
 
 

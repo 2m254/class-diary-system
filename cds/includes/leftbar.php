@@ -1,7 +1,7 @@
 <div class="left-sidebar bg-black-300 box-shadow ">
                         <div class="sidebar-content">
                             <div class="user-info closed">
-                                <img src="images/lock.png"  alt="#####" width="100" height="100" class="img-circle profile-img">
+                                <img src="images/admin.jpg"  alt="#####" width="100" height="100" class="img-circle profile-img">
                                 <h6 class="title">HOD</h6>
                                 <small class="info">Head Of Department</small>
                             </div>
@@ -49,6 +49,7 @@
 <li class="has-children">
                                         <a href="#"><i class="fa fa-info-circle"></i> <span>Class Diary </span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
+                                        <li><a href="add-class_diary2.php"><i class="fa fa-bars"></i> <span>add class diary</span></a></li>
                                             <li><a href="view_class_diary.php"><i class="fa fa-bars"></i> <span>View Class Diary</span></a></li>
                                             
                                            

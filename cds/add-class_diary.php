@@ -9,32 +9,37 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$week=$_POST['Week'];
-$day=$_POST['day']; 
-$dat=$_POST['dat'];
-$modulename=$_POST['modulename'];
-$modulecode=$_POST['modulecode'];
-$lecture=$_POST['lecture'];
-$starttime=$_POST['starttime'];
-$endtime=$_POST['endtime'];
-$activity=$_POST['activity'];
-$contenttitle=$_POST['contenttitle'];
-$comment=$_POST['comment'];
-$commentdesc=$_POST['commentdesc'];
-$sql="INSERT INTO  cd_tbl(week,day,dat,modulename,modulecode,lecture,startime,endtime,activity,comment,commentdesc) VALUES(:week,:day,:dat,:modulename,:modulecode,:lecture,:startime,:endtime,:activity,:comment,:commentdesc)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':week',$classname,PDO::PARAM_STR);
-$query->bindParam(':day',$classnamenumeric,PDO::PARAM_STR);
-$query->bindParam(':dat',$section,PDO::PARAM_STR);
-$query->bindParam(':modulename',$section,PDO::PARAM_STR);
-$query->bindParam(':modulecode',$section,PDO::PARAM_STR);
-$query->bindParam(':lecture',$section,PDO::PARAM_STR);
-$query->bindParam(':starttime',$section,PDO::PARAM_STR);
-$query->bindParam('endtime',$section,PDO::PARAM_STR);
-$query->bindParam(':activity',$section,PDO::PARAM_STR);
-$query->bindParam(':contenttitle',$section,PDO::PARAM_STR);
-$query->bindParam(':comment',$section,PDO::PARAM_STR);
-$query->bindParam(':commentdesc',$section,PDO::PARAM_STR);
+    $week=$_POST['week'];
+    $day=$_POST['day']; 
+    $dat=$_POST['dat'];
+    
+    $de_id=$_POST['de_id'];
+    $le_id=$_POST['le_id'];
+    $mo_id=$_POST['mo_id'];
+    $lect_id=$_POST['lect_id'];
+    $start_time=$_POST['start_time'];
+    $end_time=$_POST['end_time'];
+    $activity=$_POST['activity'];
+    $toc=$_POST['toc'];
+    $comment=$_POST['comment'];
+    $commdesc=$_POST['commdesc'];
+    
+    
+    $sql="INSERT INTO  class_diary_tbl(week,day,dat,de_id,le_id,mo_id,lect_id,start_time,end_time,activity,toc,comment,commdesc) VALUES(:week,:day,:dat,:de_id,:le_id,:mo_id,:lect_id,:start_time,:end_time,:activity,:toc,:comment,:commdesc)";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':week',$week,PDO::PARAM_STR);
+    $query->bindParam(':day',$day,PDO::PARAM_STR);
+    $query->bindParam(':dat',$dat,PDO::PARAM_STR);
+    $query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
+    $query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
+    $query->bindParam(':mo_id',$mo_id,PDO::PARAM_STR);
+    $query->bindParam(':lect_id',$lect_id,PDO::PARAM_STR);
+    $query->bindParam(':start_time',$start_time,PDO::PARAM_STR);
+    $query->bindParam('end_time',$end_time,PDO::PARAM_STR);
+    $query->bindParam(':activity',$activity,PDO::PARAM_STR);
+    $query->bindParam(':toc',$toc,PDO::PARAM_STR);
+    $query->bindParam(':comment',$comment,PDO::PARAM_STR);
+    $query->bindParam(':commdesc',$commdesc,PDO::PARAM_STR);
 
 
 
@@ -47,7 +52,7 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$msg="Class Created successfully";
+$msg="Class Diary Created successfully";
 }
 else 
 {
@@ -136,7 +141,8 @@ $error="Something went wrong. Please try again";
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="#">Class-Diary</a></li>
+                                    <li><a href="cr-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+            							<li><a href="manage-class_diary.php">Class-Diary</a></li>
             							<li class="active">add class diary</li>
             						</ul>
                                 </div>
@@ -174,22 +180,22 @@ else if($error){?>
   
                                             <div class="panel-body">
 
-                                                <form method="post">
+                                            <form method="post">
                                                    
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Week Number</label>
-                                                		<div class="">
-                                                			<input type="text" name="classname" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">week number</label>
+                                                       <div class="">
+                                                           <input type="number" name="week" class="form-control" required="required" id="success">
+                                                           
+                                                       </div>
+                                                   </div>
 
-                                                       <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Day</label>
-                                                       
- <select name="class" class="form-control" id="success" required="required">
-<option value="">Select Day</option>
+                                                      <div class="form-group has-success">
+                                                      <div class="form-group">
+                                               <label for="default" class="control-label">day</label>
+                                                      
+<select name="day" class="form-control" id="success">
+<option selected >-----Select day-----</option>
 
 <option value="Monday ">Monday</option>
 <option value="Tuesday ">Tuesday</option>
@@ -199,27 +205,26 @@ else if($error){?>
 <option value="Surtday ">Surtday</option>
 <option value="Sunday ">Sunday</option>
 
- </select>
-                                                        </div>
-                                                    </div>
+
+</select>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">Date</label>
+                                                       <div class="">
+                                                           <input type="date" name="dat" class="form-control" required="required" id="success">
+                                                           
                                                         
-                                                    
-                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Date</label>
-                                                        <div class="">
-                                                            <input type="date" name="section" class="form-control" required="required" id="success">
-                                                            
-                                                       
-                                                    </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Module Name</label>
-                                                
-                                                       
- <select name="class" class="form-control" id="success" onchange="my_fun(this.value);" required="required">
-<option value="">Select Module Name</option>
-<?php $sql = "SELECT * from modules_tbl";
+                                                   </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                      <div class="form-group">
+                                               <label for="default" class="control-label">Department</label>
+                                               
+                                                      
+<select name="de_id" class="form-control" id="success"  required="required">
+<option value="">select department name</option>
+<?php $sql = "SELECT * from department_tbl ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -227,20 +232,39 @@ if($query->rowCount()>0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->module_name); ?>&nbsp; <?php echo htmlentities($result->modulename); ?></option>
+<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
 <?php }
 
 
 } ?>
- </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Module Code</label>
-                                                       
- <select name="class" class="form-control" id="success" required="required">
-<option value="">Select Class</option>
+</select>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                      <div class="form-group">
+                                               <label for="default" class="control-label">level</label>
+                                                      
+<select name="le_id" class="form-control" id="success" required="required">
+<option selected>-----Select level-----</option>
+<?php $sql = "SELECT * from level_tbl";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?></option>
+<?php }} ?>
+</select>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                      <div class="form-group">
+                                               <label for="default" class="control-label">module</label>
+                                                      
+<select name="mo_id" class="form-control" id="success" required="required">
+<option selected>------Select module------</option>
 <?php $sql = "SELECT * from modules_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
@@ -249,17 +273,18 @@ if($query->rowCount() > 0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->module_code); ?>&nbsp; <?php echo htmlentities($result->modulecode); ?></option>
+<option value="<?php echo htmlentities($result->mo_id); ?>"><?php echo htmlentities($result->mo_title); ?></option>
 <?php }} ?>
- </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Lecture</label>
-                                                       
- <select name="class" class="form-control" id="success" required="required">
-<option value="">Select Class</option>
+</select>
+                                                       </div>
+                                                   </div>
+
+                                                   <div class="form-group has-success">
+                                                      <div class="form-group">
+                                               <label for="default" class="control-label">lecture</label>
+                                                      
+<select name="lect_id" class="form-control" id="success" required="required">
+<option selected>------Select lecture------</option>
 <?php $sql = "SELECT * from lecture_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
@@ -268,52 +293,53 @@ if($query->rowCount() > 0)
 {
 foreach($results as $result)
 {   ?>
-<option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->lecture_name); ?>&nbsp; <?php echo htmlentities($result->assistant_name); ?></option>
+<option value="<?php echo htmlentities($result->lect_id); ?>"><?php echo htmlentities($result->lect_name); ?></option>
 <?php }} ?>
- </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Start Time</label>
-                                                        <div class="">
-                                                            <input type="time" name="section" class="form-control" required="required" id="success">
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">End Time</label>
-                                                        <div class="">
-                                                            <input type="time" name="section" class="form-control" required="required" id="success">
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label"><u><b>Activity:</b></u></label>
-                                                        
-                                                        <label for="success" class="control-label">Practical</label>  <input type="radio" name="activity"   value="Practical" required="required" checked="">  <label for="success" class="control-label">Theory</label>   <input type="radio" name="activity"  id="success" value="Theory" required="required">  
-                                                            
-                                                        
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Title of the Contents </label>
-                                                        <div class="">
-                                                            <input type="text" name="section" class="form-control" required="required" id="success">
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label"><u><b>Comment:</b></u></label>
-                                                        <div class="">
-                                                        <label for="success" class="control-label">Understandable</label>  <input type="radio" name="comment"   value="Understandable" required="required" checked="">  <label for="success" class="control-label">Not Understandable</label>   <input type="radio" name="comment"  id="success" value="Not Understandable" required="required">  
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Comment Description </label>
-                                                        <div class="">
-                                                        <textarea rows="1" cols="2" class="form-control" required="required" id="success"></textarea>
-                                                        </div>
-                                                    </div>
+</select> 
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">Start Time</label>
+                                                       <div class="">
+                                                           <input type="time" name="start_time" class="form-control" required="required" id="success">
+                                                           
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">End Time</label>
+                                                       <div class="">
+                                                           <input type="time" name="end_time" class="form-control" required="required" id="success">
+                                                           
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label"><u><b>Activity:</b></u></label>
+                                                       
+                                                       <label for="success" class="control-label">Practical</label>  <input type="radio" name="activity"   value="Practical" required="required" checked="">  <label for="success" class="control-label">Theory</label>   <input type="radio" name="activity"  id="success" value="Theory" required="required">  
+                                                           
+                                                       
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">Title of the Contents </label>
+                                                       <div class="">
+                                                           <input type="text" name="toc" class="form-control" required="required" id="success">
+                                                           
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label"><u><b>Comment:</b></u></label>
+                                                       <div class="">
+                                                       <label for="success" class="control-label">Understandable</label>  <input type="radio" name="comment"   value="Understandable" required="required" checked="">  <label for="success" class="control-label">Not Understandable</label>   <input type="radio" name="comment"  id="success" value="Not Understandable" required="required">  
+                                                           
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">Comment Description </label>
+                                                       <div class="">
+                                                       <textarea rows="1" cols="25" name="commdesc"  ></textarea>
+                                                       </div>
+                                                   </div>
+                                                    
                                                     
   <div class="form-group has-success">
 

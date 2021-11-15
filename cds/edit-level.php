@@ -78,7 +78,7 @@ $msg="Data has been updated successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="#">Lecture</a></li>
+            							<li><a href="manage-level.php">Lecture</a></li>
             							<li class="active">Update Level</li>
             						</ul>
                                 </div>
@@ -135,10 +135,19 @@ else if($error){?>
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Level Room</label>
-                                                        <div class="">
-                                                            <input type="text" maxlength="1" name="le_class" value="<?php echo htmlentities($result->le_class);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- a, b, c etc</span>
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Level Room</label>
+                                                
+                                                       
+ <select name="le_class" class="form-control" id="success"  required="required">
+ <option value="<?php echo htmlentities($result->le_class); ?>"><?php echo htmlentities($result->le_class); ?></option>
+<option  id="success" class="form-control" value="A">A</option>
+<option  id="success" class="form-control" value="B">B</option>
+<option   id="success" class="form-control" value="C">C</option>
+
+
+
+ </select>
                                                         </div>
                                                     </div>
 
@@ -148,8 +157,9 @@ else if($error){?>
                                                 
                                                        
  <select name="de_id" class="form-control" id="success"  required="required">
-<option value="">Select Department Name</option>
-<?php $sql = "SELECT * from department_tbl ";
+ <?php $sql = "SELECT * from department_tbl ";
+
+
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

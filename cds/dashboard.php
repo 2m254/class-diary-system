@@ -62,7 +62,7 @@ if(strlen($_SESSION['alogin'])=="")
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-primary" href="manage-modules.php">
+                                        <a class="dashboard-stat bg-primary" href="manage-level.php">
 <?php 
 $sql1 ="SELECT le_id from level_tbl ";
 $query1 = $dbh -> prepare($sql1);
@@ -80,9 +80,9 @@ $totalstudents=$query1->rowCount();
                                     <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
 
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-danger" href="manage-lectures.php">
+                                        <a class="dashboard-stat bg-danger" href="manage-modules.php">
 <?php 
-$sql ="SELECT mo_id from  module_tbl ";
+$sql ="SELECT mo_id from  modules_tbl ";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -97,7 +97,7 @@ $totalsubjects=$query->rowCount();
                                     <!-- /.col-lg-3 col-md-3 col-sm-6 col-xs-12 -->
 
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-warning" href="manage-level.php">
+                                        <a class="dashboard-stat bg-warning" href="manage-lectures.php">
                                         <?php 
 $sql2 ="SELECT lect_id from  lecture_tbl ";
 $query2 = $dbh -> prepare($sql2);
@@ -116,7 +116,7 @@ $totalclasses=$query2->rowCount();
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <a class="dashboard-stat bg-success" href="#">
                                         <?php 
-$sql3="SELECT  distinct mod_id  from  modules_tbl ";
+$sql3="SELECT  distinct cd_id  from  class_diary_tbl ";
 $query3 = $dbh -> prepare($sql3);
 $query3->execute();
 $results3=$query3->fetchAll(PDO::FETCH_OBJ);
@@ -124,7 +124,7 @@ $totalresults=$query3->rowCount();
 ?>
 
                                             <span class="number counter"><?php echo htmlentities($totalresults);?></span>
-                                            <span class="name">#######4</span>
+                                            <span class="name">Class Diary </span>
                                             <span class="bg-icon"><i class="fa fa-file-text"></i></span>
                                         </a>
                                         <!-- /.dashboard-stat -->
@@ -202,7 +202,7 @@ $totalresults=$query3->rowCount();
                   "showMethod": "fadeIn",
                   "hideMethod": "fadeOut"
                 }
-                toastr["success"]( "Welcome to student Result Management System!");
+                toastr["success"]( "Welcome to Class Diary System!");
 
             });
         </script>

@@ -75,7 +75,7 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li> Lectures</li>
+                                        <li><li><a href="create-lecture.php"><i class="fa fa-home"></i> Lectures</a></li>
             							<li class="active">Manage Lectures</li>
             						</ul>
                                 </div>
@@ -138,7 +138,7 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT * from lecture_tbl";
+<?php $sql = "SELECT distinct lecture_tbl.lect_name,lecture_tbl.lect_assistant,modules_tbl.mo_id,modules_tbl.mo_title from lecture_tbl join modules_tbl on modules_tbl.mo_id=lecture_tbl.lect_id ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -151,7 +151,7 @@ foreach($results as $result)
  <td><?php echo htmlentities($cnt);?></td>
                                                             <td><?php echo htmlentities($result->lect_name);?></td>
                                                             <td><?php echo htmlentities($result->lect_assistant);?></td>
-                                                            <td><?php echo htmlentities($result->mo_id);?></td>
+                                                            <td><?php echo htmlentities($result->mo_title);?></td>
                                                            
                                                            
 <td>

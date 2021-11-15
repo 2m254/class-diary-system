@@ -1,7 +1,7 @@
 <div class="left-sidebar bg-black-300 box-shadow ">
                         <div class="sidebar-content">
                             <div class="user-info closed">
-                                <img src="http://placehold.it/90/c2c2c2?text=User" alt="John Doe" class="img-circle profile-img">
+                                <img src="images/user1.png" width="100" height="100" alt="John Doe" class="img-circle profile-img">
                                 <h6 class="title">C-R</h6>
                                 <small class="info">Class Representative</small>
                             </div>

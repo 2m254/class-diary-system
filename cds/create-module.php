@@ -11,15 +11,15 @@ if(isset($_POST['submit']))
 {
 $mo_title=$_POST['mo_title'];
 $mo_code=$_POST['mo_code']; 
-$mo_credits=$_POST['mo_credits'];
+$mo_credit=$_POST['mo_credit'];
 $le_id=$_POST['le_id'];
 
 
-$sql="INSERT INTO  module_tbl(mo_title,mo_code,mo_credits,le_id) VALUES(:mo_title,:mo_code,:mo_credits,:le_id)";
+$sql="INSERT INTO  modules_tbl(mo_title,mo_code,mo_credit,le_id) VALUES(:mo_title,:mo_code,:mo_credit,:le_id)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':mo_title',$mo_title,PDO::PARAM_STR);
 $query->bindParam(':mo_code',$mo_code,PDO::PARAM_STR);
-$query->bindParam(':mo_credits',$mo_credits,PDO::PARAM_STR);
+$query->bindParam(':mo_credit',$mo_credit,PDO::PARAM_STR);
 $query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
 
 $query->execute();
@@ -100,9 +100,10 @@ $error="Something went wrong. Please try again";
                             <!-- /.row -->
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
-                                    <ul class="breadcrumb">
-            							<li><a href="#">Modules</a></li>
-            							<li class="active">Create Modules</li>
+                                <ul class="breadcrumb">
+            							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+                                        <li><li><a href="manage-modules.php"><i class="fa fa-home"></i> Modules</a></li>
+            							<li class="active">Manage Modules</li>
             						</ul>
                                 </div>
                                
@@ -158,7 +159,7 @@ else if($error){?>
                                                        <div class="form-group has-success">
                                                         <label for="success"  class="control-label">Module Credit </label>
                                                         <div class="">
-                                                            <input type="text" maxlength="2" name="mo_credits" required="required" class="form-control" id="success">
+                                                            <input type="text" maxlength="2" name="mo_credit" required="required" class="form-control" id="success">
                                                             
 
                                                         </div>
@@ -169,7 +170,7 @@ else if($error){?>
                                                 
                                                        
  <select name="le_id" class="form-control" id="success"  required="required">
-<option value="">Select Department Name</option>
+<option value="">Select level Name</option>
 <?php $sql = "SELECT * from level_tbl ";
 $query = $dbh->prepare($sql);
 $query->execute();
