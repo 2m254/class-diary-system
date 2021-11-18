@@ -15,7 +15,7 @@ if(isset($_POST['update']))
     $le_id=$_POST['le_id'];
     
     $cid=intval($_GET['classid']);
-    $sql="update  moduleS_tbl set mo_title=:modulename,mo_code=:modulecode,mo_credit=:modulecredit,le_id=:le_id where mo_id=:cid ";
+    $sql="update  modules_tbl set mo_title=:modulename,mo_code=:modulecode,mo_credit=:modulecredit,le_id=:le_id where mo_id=:cid ";
     $query = $dbh->prepare($sql);
 $query->bindParam(':modulename',$modulename,PDO::PARAM_STR);
 $query->bindParam(':modulecode',$modulecode,PDO::PARAM_STR);

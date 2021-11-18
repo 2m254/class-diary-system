@@ -336,7 +336,7 @@ foreach($results as $result)
                                                    <div class="form-group has-success">
                                                        <label for="success" class="control-label">Comment Description </label>
                                                        <div class="">
-                                                       <textarea rows="1" cols="25" name="commdesc"  ></textarea>
+                                                       <textarea rows="5" cols="30" name="commdesc"  ></textarea>
                                                        </div>
                                                    </div>
                                                     

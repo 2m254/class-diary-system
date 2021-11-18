@@ -8,12 +8,7 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-
-
-
-
-
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -69,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Manage Modules</h2>
+                                    <h2 class="title">Manage Class Diary</h2>
                                 
                                 </div>
                                 
@@ -80,8 +75,8 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><li><a href="create-module.php"><i class="fa fa-home"></i> Modules</a></li>
-            							<li class="active">Manage Modules</li>
+                                        <li><a href="#"><i class="fa fa-home"></i> Class-Diary</a/li>
+            							<li class="active">View Class Diary.</li>
             						</ul>
                                 </div>
                              
@@ -91,24 +86,20 @@ if(strlen($_SESSION['alogin'])=="")
                         <!-- /.container-fluid -->
                                     
                         <section class="section">
-                        <div class="container-fluid">
+                            <div class="container-fluid">
 
                              
 
-<div class="row">
-    <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
 
-        <div class="panel">
-            <div class="panel-heading">
-                
-                <button name="login" class="btn btn-success btn-labeled pull-right"><a href="create-module.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                <div class="panel-title">
-                    <h5>View Modules Info</h5>
-                    
-                
-                </div>
-                
-            </div>
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                            <button name="login" class="btn btn-success btn-labeled pull-right"><a href="add-class_diary.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                <div class="panel-title">
+                                                    <h5>View Class Diary Info</h5>
+                                                </div>
+                                            </div>
 <?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
  <strong>Well done!</strong><?php echo htmlentities($msg); ?>
@@ -118,40 +109,47 @@ else if($error){?>
                                             <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
                                         </div>
                                         <?php } ?>
-                                            <div class="panel-body p-20">
+                                            <div class="panel-body p-25">
 
                                                 <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                           
-                                                            <th>#</th>
-                                                            <th>Module Title</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module Credit</th>
-                                                            <th>Level</th> 
+                                                            <th>ID</th>
                                                             
+                                                            <th>Day</th>
+                                                            <th>Date</th>
+
+                                                            <th>Module</th>
+                                                            <th>Lecture</th>
+                                                            
+                                                            <th>Activity</th>
+                                                            <th>Content</th>
+                                                            
+                                                            <th>commnent Description</th>
                                                           
-                                                            <th>Edit  / Delete</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                          <th>#</th>
-                                                          <th>Module Title</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module Credit</th>
-                                                            <th>Level</th> 
-
+                                                          <th>ID</th>
+                                                         
+                                                            <th>Day</th>
+                                                            <th>Date</th>
                                                             
+                                                            <th>Module</th>
+                                                            <th>Lecture</th>
+                                                            
+                                                            <th>Activity</th>
+                                                            <th>Content</th>
+                                                            
+                                                            <th>commnent Description</th>
                                                            
-                                                            <th>Edit  / Delete</th>
-                                                            
+                                                            <th>Action</th>
                                                         </tr>
-                                                        
                                                     </tfoot>
                                                     <tbody>
-                                                        
-<?php $sql = "SELECT distinct modules_tbl.mo_id,modules_tbl.mo_title,modules_tbl.mo_code,modules_tbl.mo_credit,level_tbl.le_title  from modules_tbl join level_tbl on level_tbl.le_id=modules_tbl.mo_id ";
+<?php $sql = "SELECT distinct class_diary_tbl.day,class_diary_tbl.dat,class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,modules_tbl.mo_title,lecture_tbl.lect_name from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -161,16 +159,22 @@ if($query->rowCount() > 0)
 foreach($results as $result)
 {   ?>
 <tr>
- <td><?php echo htmlentities($cnt);?>
+ <td><?php echo htmlentities($cnt);?></td>
+                                                            
+                                                            <td><?php echo htmlentities($result->day);?></td>
+                                                            <td><?php echo htmlentities($result->dat);?></td>
+                                                            
                                                             <td><?php echo htmlentities($result->mo_title);?></td>
-                                                            <td><?php echo htmlentities($result->mo_code);?></td>
-                                                            <td><?php echo htmlentities($result->mo_credit);?></td>
-                                                            <td><?php echo htmlentities($result->le_title);?></td>
-                                                           
+                                                            <td><?php echo htmlentities($result->lect_name);?></td>
+                                                          
+                                                            <td><?php echo htmlentities($result->activity);?></td>
+                                                            <td><?php echo htmlentities($result->toc);?></td>
+                                                            
+                                                            <td ><?php echo htmlentities($result->commdesc);?></td>
 <td>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mo_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
 <a href="delete.php?id=<?php echo htmlentities($result->mo_id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 
+</td>
 </tr>
 <?php $cnt=$cnt+1;}} ?>
                                                        

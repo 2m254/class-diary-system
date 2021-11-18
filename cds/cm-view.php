@@ -2,7 +2,8 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include_once 'controllers/Comment.php';
+	$com = new Comment();
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
@@ -43,6 +44,13 @@ if(strlen($_SESSION['alogin'])=="")
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 }
         </style>
+        <style>
+ 		.box{border: 2px solid #999;margin: 10px auto 0;padding: 10px;width: 1000px;height: 400px;overflow: scroll;}
+ 		.box ul{margin: 0;padding: 0;list-style: none;}
+ 		.box li{display: block;border-bottom: 1px dashed #ddd;margin-bottom: 5px;padding-bottom: 5px;}
+ 		.box li:last-child{border-bottom: 0 dashed #ddd;}
+ 		.box span{color: #888;}
+ 	</style>
     </head>
     <body class="top-navbar-fixed">
     <div class="login-background" >
@@ -111,76 +119,107 @@ else if($error){?>
                                         <?php } ?>
                                             <div class="panel-body p-25">
 
-                                                <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
-                                                    <thead>
+                                                
+                                            <div class="box">
+ 		<ul>
+ 			<?php 
+ 				$result = $com->index();
+ 				while ($data = $result->fetch_assoc()) {
+ 			 ?>
+ 			<li><b>
+             <div class="form-group has-success">
+                                                       <div class="form-group"><label for="default" class="control-label"><label for="default" class="control-label">Week:&nbsp;&nbsp;<?php echo $data['week']; ?><b> 
+                                                           &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; 
+                  Day:&nbsp;&nbsp;<?php echo $data['day'] ?> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Date:&nbsp;&nbsp;</h5><?php echo $data['dat']; ?><br><br></label>
+
+                  <b>
+             <div class="form-group has-success">
+                                                       <div class="form-group"><label for="default" class="control-label"><label for="default" class="control-label">Department:&nbsp;&nbsp;<?php echo $data['de_short']; ?><b> 
+                                                           &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; 
+                  <b>Class:&nbsp;&nbsp;<?php echo $data['le_title'] ?> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Room:&nbsp;&nbsp;</h5><?php echo $data['le_class']; ?><br><br></label>
+
+                 
+                    
+
+
+                  </label></div></div>
+
+                  <div class="panel-body p-25">
+
+                    <table id="" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+
+                    <thead>
                                                         <tr>
-                                                            <th>ID</th>
                                                             
-                                                            <th>Day</th>
-                                                            <th>Date</th>
 
                                                             <th>Module</th>
                                                             <th>Lecture</th>
                                                             
-                                                            <th>Activity</th>
-                                                            <th>Content</th>
+                                                           
                                                             
-                                                            <th>commnent Description</th>
-                                                          
-                                                            <th>Action</th>
+                                                           
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                          <th>ID</th>
+                                                          
                                                          
-                                                            <th>Day</th>
-                                                            <th>Date</th>
+                                                          
                                                             
                                                             <th>Module</th>
                                                             <th>Lecture</th>
                                                             
-                                                            <th>Activity</th>
-                                                            <th>Content</th>
-                                                            
-                                                            <th>commnent Description</th>
                                                            
-                                                            <th>Action</th>
+                                                            
+                                                           
+                                                           
+                                                           
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT distinct class_diary_tbl.day,class_diary_tbl.dat,class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,modules_tbl.mo_title,lecture_tbl.lect_name from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>
-<tr>
- <td><?php echo htmlentities($cnt);?></td>
-                                                            
-                                                            <td><?php echo htmlentities($result->day);?></td>
-                                                            <td><?php echo htmlentities($result->dat);?></td>
-                                                            
-                                                            <td><?php echo htmlentities($result->mo_title);?></td>
-                                                            <td><?php echo htmlentities($result->lect_name);?></td>
-                                                          
-                                                            <td><?php echo htmlentities($result->activity);?></td>
-                                                            <td><?php echo htmlentities($result->toc);?></td>
-                                                            
-                                                            <td ><?php echo htmlentities($result->commdesc);?></td>
-<td>
-<a href="edit-class_diary.php?classid=<?php echo htmlentities($result->cd_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
-</td>
-</tr>
-<?php $cnt=$cnt+1;}} ?>
+                                                                
+                                                                <td><?php echo $data['mo_title']; ?></td>
+                                                                <td><?php echo $data['lect_name']; ?></td>
+                                                                
+                                                               
+                                                            
+
+
                                                        
                                                     
                                                     </tbody>
-                                                </table>
+                                                    
+
+                 </table></div>
+                
+                
+                </li>
+
+ 			<?php } ?>
+ 		</ul>
+ 	</div><br><br>
+ 	
+
+                                                       
+                                                   
 
                                          
                                                 <!-- /.col-md-12 -->

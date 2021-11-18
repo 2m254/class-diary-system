@@ -1,38 +1,35 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('cm-includes/config.php');
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
     }
     else{
 if(isset($_POST['submit']))
+    {
+$password=md5($_POST['password']);
+$newpassword=md5($_POST['newpassword']);
+$username=$_SESSION['alogin'];
+    $sql ="SELECT Password FROM admin WHERE UserName=:username and Password=:password";
+$query= $dbh -> prepare($sql);
+$query-> bindParam(':username', $username, PDO::PARAM_STR);
+$query-> bindParam(':password', $password, PDO::PARAM_STR);
+$query-> execute();
+$results = $query -> fetchAll(PDO::FETCH_OBJ);
+if($query -> rowCount() > 0)
 {
-$mo_title=$_POST['mo_title'];
-$mo_code=$_POST['mo_code']; 
-$mo_credit=$_POST['mo_credit'];
-$le_id=$_POST['le_id'];
-
-
-$sql="INSERT INTO  modules_tbl(mo_title,mo_code,mo_credit,le_id) VALUES(:mo_title,:mo_code,:mo_credit,:le_id)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':mo_title',$mo_title,PDO::PARAM_STR);
-$query->bindParam(':mo_code',$mo_code,PDO::PARAM_STR);
-$query->bindParam(':mo_credit',$mo_credit,PDO::PARAM_STR);
-$query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
-
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$msg="Class Created successfully";
+$con="update admin set Password=:newpassword where UserName=:username";
+$chngpwd1 = $dbh->prepare($con);
+$chngpwd1-> bindParam(':username', $username, PDO::PARAM_STR);
+$chngpwd1-> bindParam(':newpassword', $newpassword, PDO::PARAM_STR);
+$chngpwd1->execute();
+$msg="Your Password succesfully changed";
 }
-else 
-{
-$error="Something went wrong. Please try again";
+else {
+$error="Your current password is wrong";    
 }
-
 }
 ?>
 <!DOCTYPE html>
@@ -41,7 +38,7 @@ $error="Something went wrong. Please try again";
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>CDS HOD Create Modules</title>
+        <title>Admin change password</title>
         <link rel="stylesheet" href="css/bootstrap.css" media="screen" >
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
@@ -49,7 +46,18 @@ $error="Something went wrong. Please try again";
         <link rel="stylesheet" href="css/prism/prism.css" media="screen" > <!-- USED FOR DEMO HELP - YOU CAN REMOVE IT -->
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
-        <link rel="stylesheet" href="styles.css">
+        <script type="text/javascript">
+function valid()
+{
+if(document.chngpwd.newpassword.value!= document.chngpwd.confirmpassword.value)
+{
+alert("New Password and Confirm Password Field do not match  !!");
+document.chngpwd.confirmpassword.focus();
+return false;
+}
+return true;
+}
+</script>
          <style>
         .errorWrap {
     padding: 10px;
@@ -70,40 +78,28 @@ $error="Something went wrong. Please try again";
         </style>
     </head>
     <body class="top-navbar-fixed">
-    <div class="login-background" >
-        <div class="slider">
-        <div class="load">
-            
-
-        <div id="navbar">
         <div class="main-wrapper">
-
-            <!-- ========== TOP NAVBAR ========== -->
-            <?php include('includes/topbar.php');?>   
-          <!-----End Top bar>
-            <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
+            <?php include('cm-includes/topbar.php');?>   
             <div class="content-wrapper">
                 <div class="content-container">
-
-<!-- ========== LEFT SIDEBAR ========== -->
-<?php include('includes/leftbar.php');?>                   
+<?php include('cm-includes/leftbar.php');?>                   
  <!-- /.left-sidebar -->
 
                     <div class="main-page">
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Create Modules </h2>
+                                    <h2 class="title">Class Mentor Change Password</h2>
                                 </div>
                                 
                             </div>
                             <!-- /.row -->
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
-                                <ul class="breadcrumb">
-            							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><li><a href="manage-modules.php"><i class="fa fa-home"></i> Modules</a></li>
-            							<li class="active">Creat Modules</li>
+                                    <ul class="breadcrumb">
+            							<li><a href="cm-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+            						
+            							<li class="active">Admin change password</li>
             						</ul>
                                 </div>
                                
@@ -122,15 +118,14 @@ $error="Something went wrong. Please try again";
                                 <div class="row">
                                     <div class="col-md-8 col-md-offset-2">
                                         <div class="panel">
-                                            <div class="panel-heading"
-                                            >
+                                            <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Create Modules</h5>
+                                                    <h5>Admin Change Password</h5>
                                                 </div>
                                             </div>
            <?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
- <strong>Well done! </strong><?php echo htmlentities($msg); ?>
+ <strong>Well done!</strong><?php echo htmlentities($msg); ?>
  </div><?php } 
 else if($error){?>
     <div class="alert alert-danger left-icon-alert" role="alert">
@@ -140,67 +135,32 @@ else if($error){?>
   
                                             <div class="panel-body">
 
-                                                <form  method="post">
+                                                <form  name="chngpwd" method="post" \ onSubmit="return valid();">
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Title</label>
+                                                        <label for="success" class="control-label">Current Password</label>
                                                 		<div class="">
-                                                			<input type="text" name="mo_title" class="form-control" required="required" id="success">
-                                                            
+                                    <input type="password" name="password" class="form-control" required="required" id="success">
+                                                      
                                                 		</div>
                                                 	</div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Code</label>
-                                                		<div class="">
-                                                			<input type="text" maxlength="16" name="mo_code" class="form-control" required="required" id="success">
-                                                            
-                                                		</div>
-                                                	</div>
-
                                                        <div class="form-group has-success">
-                                                        <label for="success"  class="control-label">Module Credit </label>
+                                                        <label for="success" class="control-label">New Password</label>
                                                         <div class="">
-                                                            <input type="text" maxlength="2" name="mo_credit" required="required" class="form-control" id="success">
-                                                            
-
-                                                        </div>
-
-                                                        <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Level</label>
-                                                
-                                                       
- <select name="le_id" class="form-control" id="success"  required="required">
-<option value="">Select level Name</option>
-<?php $sql = "SELECT * from level_tbl ";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount()>0)
-{
-foreach($results as $result)
-{   ?>
-<option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?>&nbsp; -<?php echo htmlentities($result->le_class); ?></option>
-<?php }
-
-
-} ?>
- </select>
+                                                            <input type="password" name="newpassword" required="required" class="form-control" id="success">
                                                         </div>
                                                     </div>
-
-
-
-                                                        
-                                                    
+                                                     <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Confirm Password</label>
+                                                        <div class="">
+                                                            <input type="password" name="confirmpassword" class="form-control" required="required" id="success">
+                                                        </div>
+                                                    </div>
   <div class="form-group has-success">
 
                                                         <div class="">
-                                                           <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                                                       		
-                                                           
-                                                           <button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-modules.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                    		</div>
-                    </div>
+                                                           <button type="submit" name="submit" class="btn btn-success btn-labeled">Change<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    </div>
+
 
                                                     
                                                 </form>
@@ -249,7 +209,6 @@ foreach($results as $result)
 
 
         <!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->
-        </div> </div> </div> </div>
     </body>
 </html>
 <?php  } ?>

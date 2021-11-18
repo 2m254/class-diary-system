@@ -18,7 +18,7 @@
 
                 		<div class="collapse navbar-collapse" id="navbar-collapse-1">
                 			<ul class="nav navbar-nav" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                <li class="hidden-sm hidden-    xs"><a href="#" class="user-info-handle"><i class="fa fa-user"></i></a></li>
+                                <li class="hidden-sm hidden-    xs"><a href="#" class="user-info-handle"><i class="fa fa-user">Who</i></a></li>
                                 <li class="hidden-sm hidden-xs"><a href="#" class="full-screen-handle"><i class="fa fa-arrows-alt"></i></a></li>
                        
                 				<li class="hidden-xs hidden-xs"><!-- <a href="#">My Tasks</a> --></li>

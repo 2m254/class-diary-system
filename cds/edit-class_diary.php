@@ -9,25 +9,23 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $week=$_POST['week'];
-    $day=$_POST['day'];
-    $dat=$_POST['dat'];
-    
-
-   
+    $weeks=$_POST['weeks'];
+    $days=$_POST['days']; 
+    $date=$_POST['date'];
+    $de_id=$_POST['de_id'];
     
     $cid=intval($_GET['classid']);
-    $sql="update  class_diary_tbl set week=:week,day=:day,dat=:dat where cd_id=:cid ";
+    $sql="update  class_diary_tbl set week=:weeks,day=:days,dat=:date,de_id=:de_id where cd_id=:cid ";
     $query = $dbh->prepare($sql);
-$query->bindParam(':week',$week,PDO::PARAM_STR);
-$query->bindParam(':day',$day,PDO::PARAM_STR);
-$query->bindParam(':dat',$dat,PDO::PARAM_STR);
 
-
+$query->bindParam(':weeks',$weeks,PDO::PARAM_STR);
+$query->bindParam(':days',$days,PDO::PARAM_STR);
+$query->bindParam(':date',$date,PDO::PARAM_STR);
+$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$msg="Data has been updated successfully";
+$msg="C D S has been updated successfully";
 }
 ?>
 <!DOCTYPE html>
@@ -70,7 +68,7 @@ $msg="Data has been updated successfully";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Update Class Diary</h2>
+                                    <h2 class="title">Update Module</h2>
                                 </div>
                                 
                             </div>
@@ -80,7 +78,7 @@ $msg="Data has been updated successfully";
                                     <ul class="breadcrumb">
             							<li><a href="cr-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
             							<li><a href="manage-class_diary.php">Class Diary</a></li>
-            							<li class="active">Update Class diary</li>
+            							<li class="active">Update Class Diary.</li>
             						</ul>
                                 </div>
                                
@@ -101,7 +99,7 @@ $msg="Data has been updated successfully";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Update class diary info</h5>
+                                                    <h5>Update Class Diary info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -129,43 +127,64 @@ foreach($results as $result)
 {   ?>
 
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">week</label>
+                                                        <label for="success" class="control-label">week</Title></label>
                                                 		<div class="">
-                                                			<input type="number" name="week" value="<?php echo htmlentities($result->week);?>" required="required" class="form-control" id="success">
+                                                			<input type="number" name="weeks" value="<?php echo htmlentities($result->week);?>" required="required" class="form-control" id="success">
                                                             <span class="help-block">Eg- 1,2,3,4 etc</span>
                                                 		</div>
                                                 	</div>
                                                     <div class="form-group has-success">
-                                                      <div class="form-group">
-                                               <label for="default" class="control-label">day</label>
-                                                      
-<select name="day" class="form-control" id="success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">day</label>
+                                                
+                                                       
+ <select name="days" class="form-control" id="success"  required="required">
+ <option value="<?php echo htmlentities($result->day); ?>"><?php echo htmlentities($result->day); ?></option>
+ <option value="Monday ">Monday</option>
+<option value="Tuesday ">Tuesday</option>
+<option value="Wednesday ">wednesday</option>
+<option value="Thursday ">Thursday</option>
+<option value="Friday ">Friday</option>
+<option value="Surtday ">Surtday</option>
+<option value="Sunday ">Sunday</option>
 
-<option selected >-----Select day-----</option>
-
-<option value="<?php echo htmlentities($result->day);?>">Monday</option>
-<option value="<?php echo htmlentities($result->day);?>">Tuesday</option>
-<option value="<?php echo htmlentities($result->day);?>">wednesday</option>
-<option value="<?php echo htmlentities($result->day);?> ">Thursday</option>
-<option value="<?php echo htmlentities($result->day);?>">Friday</option>
-<option value="<?php echo htmlentities($result->day);?>">Surtday</option>
-<option value="<?php echo htmlentities($result->day);?>">Sunday</option>
 
 
-</select>
-<span class="help-block">Eg- monday,tuesday etc</span>
-<div class="form-group has-success">
-                                                        <label for="success" class="control-label">Date</label>
-                                                		<div class="">
-                                                			<input type="date" name="week" value="<?php echo htmlentities($result->date);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- 10/01/2021 etc</span>
-                                                		</div>
-                                                	</div>
+ </select>
+ <span class="help-block">Eg- Monday,Tuesday etc</span>
                                                         </div>
                                                     </div>
-                                            
-                                                   
-                                                    
+                                                     <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">Date</label>
+                                                        <div class="">
+                                                            <input type="date"    name="date" value="<?php echo htmlentities($result->dat);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <span class="help-block">Eg- 08:00 AM, 12:50 PM etc</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Department</label>
+                                                
+                                                       
+ <select name="de_id" class="form-control" id="success"  required="required">
+ <?php $sql = "SELECT * from department_tbl ";
+
+
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
+<?php }
+
+
+} ?>
+ </select>
+                                                        </div>
+                                                    </div>
                                                    
                                                     <?php }} ?>
   <div class="form-group has-success">

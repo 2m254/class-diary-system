@@ -47,6 +47,7 @@ $error="Your current password is wrong";
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
         <script type="text/javascript">
+        <link rel="stylesheet" href="styles.css">
 function valid()
 {
 if(document.chngpwd.newpassword.value!= document.chngpwd.confirmpassword.value)

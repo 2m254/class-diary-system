@@ -13,7 +13,7 @@
                                         <span class="">Main Category</span>
                                     </li>
                                     <li>
-                                        <a href="cr-dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span> </a>
+                                        <a href="cm-dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span> </a>
                                      
                                     </li>
 
@@ -52,7 +52,7 @@
                                             <li><a href="#"><i class="fa fa fa-server"></i> <span>####</span></a></li>
                                            
                                         </ul>
-                                        <li><a href="change-password.php"><i class="fa fa fa-server"></i> <span> CR Change Password</span></a></li>
+                                        <li><a href="cr-change_password.php"><i class="fa fa fa-server"></i> <span> CR Change Password</span></a></li>
                                            
                                     </li>
                             </div>
