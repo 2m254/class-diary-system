@@ -172,7 +172,7 @@ foreach($results as $result)
                                                             
                                                             <td ><?php echo htmlentities($result->commdesc);?></td>
 <td>
-<a href="edit-class_diary.php?classid=<?php echo htmlentities($result->cd_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
+<a href="edit_class_diary.php?classid=<?php echo htmlentities($result->cd_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>
 </tr>

@@ -45,7 +45,7 @@ if(strlen($_SESSION['alogin'])=="")
 }
         </style>
         <style>
- 		.box{border: 2px solid #999;margin: 10px auto 0;padding: 10px;width: 1000px;height: 400px;overflow: scroll;}
+ 		.box{border: 2px solid #999;margin: 20px auto 0;padding: 10px;width: 1138px;height: 440px;overflow: scroll;}
  		.box ul{margin: 0;padding: 0;list-style: none;}
  		.box li{display: block;border-bottom: 1px dashed #ddd;margin-bottom: 5px;padding-bottom: 5px;}
  		.box li:last-child{border-bottom: 0 dashed #ddd;}
@@ -82,9 +82,9 @@ if(strlen($_SESSION['alogin'])=="")
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="cr-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><a href="add-class_diary.php"><i class="fa fa-home"></i> Class-Diary</a/li>
-            							<li class="active">Manage Class Diary</li>
+            							<li><a href="cm-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+                                        <li><a href="$"><i class="fa fa-home"></i> Class-Diary</a/li>
+            							<li class="active">View Class Diary</li>
             						</ul>
                                 </div>
                              
@@ -103,7 +103,7 @@ if(strlen($_SESSION['alogin'])=="")
 
                                         <div class="panel">
                                             <div class="panel-heading">
-                                            <button name="login" class="btn btn-success btn-labeled pull-right"><a href="add-class_diary.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                            
                                                 <div class="panel-title">
                                                     <h5>View Class Diary Info</h5>
                                                 </div>
@@ -126,39 +126,62 @@ else if($error){?>
  				$result = $com->index();
  				while ($data = $result->fetch_assoc()) {
  			 ?>
- 			<li><b>
+ 			<p><li><b>
              <div class="form-group has-success">
-                                                       <div class="form-group"><label for="default" class="control-label"><label for="default" class="control-label">Week:&nbsp;&nbsp;<?php echo $data['week']; ?><b> 
+                                                       <div class="form-group"><label for="default" class="control-label"><b>Week:</b></h6>&nbsp;&nbsp;<?php echo $data['week']; ?><b> 
                                                            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp; &nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                   Day:&nbsp;&nbsp;<?php echo $data['day'] ?> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <b>Date:&nbsp;&nbsp;</h5><?php echo $data['dat']; ?><br><br></label>
+                  <b>Date:&nbsp;&nbsp;</h5><?php echo $data['dat']; ?><br></label></p>
 
-                  <b>
+                  <p><b>
              <div class="form-group has-success">
-                                                       <div class="form-group"><label for="default" class="control-label"><label for="default" class="control-label">Department:&nbsp;&nbsp;<?php echo $data['de_short']; ?><b> 
+                                                       <div class="form-group"><label for="default" class="control-label">Department:&nbsp;&nbsp;<?php echo $data['de_short']; ?><b> 
+                                                           
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; 
+                  <b>Class:&nbsp;&nbsp;<?php echo $data['le_title'] ?> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; 
+                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Room:&nbsp;&nbsp;</h5><?php echo $data['le_class']; ?><br></label></p>
+                  </label></div></div>
+
+
+
+
+                  <p><b>
+             <div class="form-group has-success">
+                                                       <div class="form-group"><label for="default" class="control-label">Start Time:&nbsp;&nbsp;<?php echo $data['start_time']; ?><b> 
                                                            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
-                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; 
-                  <b>Class:&nbsp;&nbsp;<?php echo $data['le_title'] ?> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                 &nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Activity:&nbsp;&nbsp;<?php echo $data['activity'] ?> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <b>Room:&nbsp;&nbsp;</h5><?php echo $data['le_class']; ?><br><br></label>
-
-                 
-                    
-
-
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;
+                  <b>End Time:&nbsp;&nbsp;</h5><?php echo $data['end_time']; ?><br><br></label></p>
                   </label></div></div>
+
+
 
                   <div class="panel-body p-25">
 
@@ -170,58 +193,67 @@ else if($error){?>
 
                                                             <th>Module</th>
                                                             <th>Lecture</th>
-                                                            
-                                                           
-                                                            
-                                                           
-                                                            
+                                                          
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
                                                           
-                                                         
-                                                          
-                                                            
                                                             <th>Module</th>
                                                             <th>Lecture</th>
-                                                            
-                                                           
-                                                            
-                                                           
-                                                           
-                                                           
+                                                          
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-
-                                                                
+ 
                                                                 <td><?php echo $data['mo_title']; ?></td>
                                                                 <td><?php echo $data['lect_name']; ?></td>
-                                                                
-                                                               
                                                             
-
-
-                                                       
-                                                    
                                                     </tbody>
                                                     
 
-                 </table></div>
+                 </table>
+
+                 <p><b>
+             <div class="form-group has-success">
+         <div class="form-group"><label for="default" class="control-label"> 
+                 
                 
+     <b>Activity:&nbsp;&nbsp;<?php echo $data['toc'] ?> </b>
+                  
+                 </b></b></label></div></p>
+                  
                 
+                </div>
+                
+                <p><b>
+             <div class="form-group has-success">
+         <div class="form-group"><label for="default" class="control-label"> 
+                 
+                
+     <b>Activity:&nbsp;&nbsp;<?php echo $data['commdesc'] ?> </b>
+                  
+                 </b></b></label></div></p>
+                  
+                
+                </div>
+                <button class="btn btn-success btn-labeled pull-left" href><a href="edit-class_diary.php?classid=<?php echo htmlentities($result->mo_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa "></i></span></button>
+                 
+                <div class="form-group text-center mb-3 mt-4">
+                    <div class="form-group mt-20">
+                                                    		
+                                                           
+                                                    			<button type="submit"  class="btn btn-success btn-labeled pull-right">Approve<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    		</div>
+                    </div>
+                    </div></div>
+
                 </li>
 
  			<?php } ?>
  		</ul>
  	</div><br><br>
  	
-
-                                                       
-                                                   
-
-                                         
                                                 <!-- /.col-md-12 -->
                                             </div>
                                         </div>

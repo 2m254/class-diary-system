@@ -169,7 +169,7 @@ foreach($results as $result)
                                                            
 <td>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mo_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
-<a href="delete.php?id=<?php echo htmlentities($result->mo_id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+<a href="delete.php?classid=<?php echo htmlentities($result->mo_id);?>"><button class="fa  fa-delete" onClick="return confirm('Do you really want to delete');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 
 </tr>
 <?php $cnt=$cnt+1;}} ?>
