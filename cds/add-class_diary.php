@@ -9,6 +9,7 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
+    $ay_id=$_POST['ay_id'];
     $week=$_POST['week'];
     $day=$_POST['day']; 
     $dat=$_POST['dat'];
@@ -25,8 +26,9 @@ if(isset($_POST['submit']))
     $commdesc=$_POST['commdesc'];
     
     
-    $sql="INSERT INTO  class_diary_tbl(week,day,dat,de_id,le_id,mo_id,lect_id,start_time,end_time,activity,toc,comment,commdesc) VALUES(:week,:day,:dat,:de_id,:le_id,:mo_id,:lect_id,:start_time,:end_time,:activity,:toc,:comment,:commdesc)";
+    $sql="INSERT INTO  class_diary_tbl(ay_id,week,day,dat,de_id,le_id,mo_id,lect_id,start_time,end_time,activity,toc,comment,commdesc) VALUES(:ay_id,:week,:day,:dat,:de_id,:le_id,:mo_id,:lect_id,:start_time,:end_time,:activity,:toc,:comment,:commdesc)";
     $query = $dbh->prepare($sql);
+    $query->bindParam(':ay_id',$ay_id,PDO::PARAM_STR);
     $query->bindParam(':week',$week,PDO::PARAM_STR);
     $query->bindParam(':day',$day,PDO::PARAM_STR);
     $query->bindParam(':dat',$dat,PDO::PARAM_STR);
@@ -181,6 +183,29 @@ else if($error){?>
                                             <div class="panel-body">
 
                                             <form method="post">
+
+                                            
+                                            <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Academic Year</label>
+                                                
+                                                       
+ 
+<?php $sql = "SELECT * from academic_year_tbl where status=1 ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+                                                   
+<input type="text" name="ay_id" class="form-control" id="classname" value="<?php echo htmlentities($result->year)?> --- semester: <?php echo htmlentities($result->semester)?>" readonly>
+                                                        
+
+                                                    <?php }} ?>
+                                                    </div>
+                                                    </div>
                                                    
                                                    <div class="form-group has-success">
                                                        <label for="success" class="control-label">week number</label>
@@ -265,7 +290,7 @@ foreach($results as $result)
                                                       
 <select name="mo_id" class="form-control" id="success" required="required">
 <option selected>------Select module------</option>
-<?php $sql = "SELECT * from modules_tbl";
+<?php $sql = "SELECT * from modules_tbl where status=1";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

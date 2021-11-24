@@ -191,9 +191,9 @@ else
 <td>
 <?php if($stts=='0')
 { ?>
-<a href="manage-academic_year.php?acid=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to ativate this academic year?');"><i class="fa fa-check" title="Acticvate Record"></i> </a><?php } else {?>
+<a href="manage-academic_year.php?acid=<?php echo htmlentities($result->ay_id);?>" onclick="confirm('do you really want to ativate this academic year?');"><i class="fa fa-check" title="Acticvate Record"></i> </a><?php } else {?>
 
-<a href="manage-academic_year.php?did=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to deativate this academic year?');"><i class="fa fa-times" title="Deactivate Record"></i> </a>
+<a href="manage-academic_year.php?did=<?php echo htmlentities($result->ay_id);?>" onclick="confirm('do you really want to deativate this academic year?');"><i class="fa fa-times" title="Deactivate Record"></i> </a>
 <?php }?>
                                                       
                                                            

@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('cr-includes/config.php');
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
@@ -9,27 +9,43 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $week=$_POST['week'];
+    $ay_id=$_POST['ay_id'];
+    $week=$_POST['week']; 
     $day=$_POST['day'];
     $dat=$_POST['dat'];
     $de_id=$_POST['de_id'];
     $le_id=$_POST['le_id'];
     $mo_id=$_POST['mo_id'];
-    
+    $lect_id=$_POST['lect_id'];
+    $start_time=$_POST['start_time'];
+    $end_time=$_POST['end_time'];
+    $activity=$_POST['activity'];
+    $toc=$_POST['toc'];
+    $comment=$_POST['comment'];
+    $commdesc=$_POST['commdesc'];
+
     $cid=intval($_GET['classid']);
-    $sql="update  class_diary_tbl set week=:week,day=:day,dat=:dat,de_id=:de_id,le_id=:le_id,mo_id=:mo_id where cd_id=:cid ";
+    $sql="update  class_diary_tbl set ay_id=:ay_id,week=:week,day=:day,dat=:dat,de_id=:de_id,le_id=:le_id,mo_id=:mo_id,lect_id=:lect_id,start_time=:start_time,
+    end_time=:end_time,activity=:activity,toc=:toc,comment=:comment,commdesc=:commdesc where cd_id=:cid ";
     $query = $dbh->prepare($sql);
+$query->bindParam(':ay_id',$ay_id,PDO::PARAM_STR);
 $query->bindParam(':week',$week,PDO::PARAM_STR);
 $query->bindParam(':day',$day,PDO::PARAM_STR);
 $query->bindParam(':dat',$dat,PDO::PARAM_STR);
 $query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
-$query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
-$query->bindParam(':mo_id',$mo_id,PDO::PARAM_STR);
-
+    $query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
+    $query->bindParam(':mo_id',$mo_id,PDO::PARAM_STR);
+    $query->bindParam(':lect_id',$lect_id,PDO::PARAM_STR);
+    $query->bindParam(':start_time',$start_time,PDO::PARAM_STR);
+    $query->bindParam('end_time',$end_time,PDO::PARAM_STR);
+    $query->bindParam(':activity',$activity,PDO::PARAM_STR);
+    $query->bindParam(':toc',$toc,PDO::PARAM_STR);
+    $query->bindParam(':comment',$comment,PDO::PARAM_STR);
+    $query->bindParam(':commdesc',$commdesc,PDO::PARAM_STR);
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$msg="Data has been updated successfully";
+$msg="C D S  has been updated successfully";
 }
 ?>
 <!DOCTYPE html>
@@ -89,7 +105,6 @@ $msg="Data has been updated successfully";
                             </div>
                             <!-- /.row -->
                         </div>
-                        <!-- /.container-fluid -->
 
                         <section class="section">
                             <div class="container-fluid">
@@ -103,7 +118,7 @@ $msg="Data has been updated successfully";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Update levels info</h5>
+                                                    <h5>Update Class Diary info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -117,26 +132,47 @@ else if($error){?>
                                         <?php } ?>
 
                                                 <form method="post" >
-                            <?php 
-                            $cid=intval($_GET['classid']);
-                            $sql = "SELECT class_diary_tbl.cd_id,class_diary_tbl.week,class_diary_tbl.day,class_diary_tbl.dat,class_diary_tbl.de_id,class_diary_tbl.le_id,class_diary_tbl.mo_id,class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,modules_tbl.mo_title,lecture_tbl.lect_name from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id where cd_id=:cid";
-                            $query = $dbh->prepare($sql);
-                            $query->bindParam(':cid',$cid,PDO::PARAM_STR);
-                            $query->execute();
-                            $results=$query->fetchAll(PDO::FETCH_OBJ);
-                            $cnt=1;
-                            if($query->rowCount() > 0)
-                            {
-                            foreach($results as $result)
-                              {   ?>
+<?php 
+$cid=intval($_GET['classid']);
+$sql = "SELECT distinct class_diary_tbl.cd_id,class_diary_tbl.week,class_diary_tbl.day,class_diary_tbl.dat,class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,modules_tbl.mo_title,lecture_tbl.lect_name from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id where cd_id=:cid";
+$query = $dbh->prepare($sql);
+$query->bindParam(':cid',$cid,PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   ?>
 
-                                                    <div class="form-group has-success">
+<div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Academic Year</label>
+                                                
+                                                       
+ 
+<?php $sql = "SELECT * from academic_year_tbl where status=1 ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+                                                   
+<input type="text" name="ay_id" class="form-control" id="classname" value="<?php echo htmlentities($result->year)?> -- semester: <?php echo htmlentities($result->semester)?>" readonly>
+                                                        
+
+                                                    <?php }} ?>
+                                                    </div>
+                                                    </div>
+                                                       <div class="form-group has-success">
                                                         <label for="success" class="control-label">Week</label>
-                                                		<div class="">
-                                                			<input type="number" name="week" value="<?php echo htmlentities($result->week);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- 1,2,3 etc</span>
-                                                		</div>
-                                                	</div>
+                                                        <div class="">
+                                                            <input type="number" name="week"  value="<?php echo htmlentities($result->week);?>" required="required" class="form-control" id="success" maxlength="8" >
+                                                            <span class="help-block">Eg- ict101 etc</span>
+                                                        </div>
+                                                    </div>
                                                     
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
@@ -160,15 +196,13 @@ else if($error){?>
 
                                                         </div>
                                                     </div>
-
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Date</label>
-                                                		<div class="">
-                                                			<input type="date" name="dat" value="<?php echo htmlentities($result->dat);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- 06/12/2021 etc</span>
-                                                		</div>
-                                                	</div>
-                                                    
+                                                     <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">dat</label>
+                                                        <div class="">
+                                                            <input type="date"    name="dat" value="<?php echo htmlentities($result->dat);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <span class="help-block">Eg- 10,15 etc</span>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
                                                 <label for="default" class="control-label">Department</label>
@@ -176,6 +210,8 @@ else if($error){?>
                                                        
  <select name="de_id" class="form-control" id="success"  required="required">
  <?php $sql = "SELECT * from department_tbl ";
+
+
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -189,12 +225,8 @@ foreach($results as $result)
 
 } ?>
  </select>
- <span class="help-block">Eg- IT, ET, RE etc</span>
                                                         </div>
                                                     </div>
-
-
-
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
                                                 <label for="default" class="control-label">Level</label>
@@ -218,10 +250,8 @@ foreach($results as $result)
 
 } ?>
  </select>
- <span class="help-block">Eg- Level 1, level 2 etc</span>
                                                         </div>
                                                     </div>
-
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
                                                 <label for="default" class="control-label">Module</label>
@@ -242,20 +272,105 @@ foreach($results as $result)
 
 } ?>
  </select>
- <span class="help-block">Eg- Analog, Java, Solar etc</span>
                                                         </div>
                                                     </div>
-                                                   
-                                            
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Lecture</label>
+                                                
+                                                       
+ <select name="lect_id" class="form-control" id="success"  required="required">
+ <?php $sql = "SELECT * from lecture_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->lect_id); ?>"><?php echo htmlentities($result->lect_name); ?></option>
+<?php }
+
+
+} ?>
+ </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">Start Time</label>
+                                                        <div class="">
+                                                            <input type="time"    name="start_time" value="<?php echo htmlentities($result->start_time);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <span class="help-block">Eg- 07:00:PM </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">End Time</label>
+                                                        <div class="">
+                                                            <input type="time"    name="end_time" value="<?php echo htmlentities($result->end_time);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <span class="help-block">Eg- 12:50:AM </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-success">
+                                                    <label for="success"  class="control-label">Activity</label>
+<div class="col-sm-10">
+<?php  $act=$result->activity;
+if($act=="Practical")
+{
+?>
+<input type="radio" name="activity" value="<?php echo htmlentities($result->activity);?>" required="required" checked>Practical <input type="radio" name="<?php echo htmlentities($result->activity);?>" value="Theory" required="required">Theory
+<?php }?>
+<?php  
+if($act=="Theory")
+{
+?>
+<input type="radio" name="activity" value="<?php echo htmlentities($result->activity);?>" required="required" >Practical <input type="radio" name="<?php echo htmlentities($result->activity);?>" value="Theory" required="required" checked>Theory
+<?php }?>
+</div>
+</div>
+
+<div class="form-group has-success">
+                                                        <label for="success"  class="control-label">Content</label>
+                                                        <div class="">
+                                                            <input type="text"    name="toc" value="<?php echo htmlentities($result->toc);?>" class="form-control" required="required" id="success" maxlength="2">
+                                                            <span class="help-block">Eg- title of content.</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group has-success">
+                                                    <label for="success"  class="control-label">Comment</label>
+<div class="col-sm-10">
+<?php  $activit=$result->activity;
+if($activit=="understandable")
+{
+?>
+<input type="radio" name="activity" value="<?php echo htmlentities($result->comment);?>" required="required" checked>Understandable <input type="radio" name="activity" value="<?php echo htmlentities($result->comment);?>" required="required">Not understandable
+<?php }?>
+<?php  
+if($activit=="not understandable")
+{
+?>
+<input type="radio" name="activity" value="<?php echo htmlentities($result->comment);?>" required="required" >Understandable <input type="radio" name="activity" value="<?php echo htmlentities($result->comment);?>" required="required" checked>Not Understandable
+<?php }?>
+</div>
+</div>
+<div class="form-group has-success">
+                                                       <label for="success" class="control-label">Comment Description </label>
+                                                       <div class="">
+                                                       <textarea rows="5" cols="30" name="commdesc" value="<?php echo htmlentities($result->commdesc);?>"></textarea>
+                                                       </div>
+                                                   </div>
+                                      
 
 
 
 
 
-                                                   
-                                                    
-                                                   
-                                                    <?php }} ?>
+
+
+
+
+
+                                                                                                       <?php }} ?>
   <div class="form-group has-success">
 
                                                         <div class="">
