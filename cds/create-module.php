@@ -12,16 +12,19 @@ if(isset($_POST['submit']))
 $mo_title=$_POST['mo_title'];
 $mo_code=$_POST['mo_code']; 
 $mo_credit=$_POST['mo_credit'];
+$ay_id=$_POST['ay_id'];
 $le_id=$_POST['le_id'];
+$status=1;
 
 
-$sql="INSERT INTO  modules_tbl(mo_title,mo_code,mo_credit,le_id) VALUES(:mo_title,:mo_code,:mo_credit,:le_id)";
+$sql="INSERT INTO  modules_tbl(mo_title,mo_code,mo_credit,ay_id,le_id,status) VALUES(:mo_title,:mo_code,:ay_id,:mo_credit,:le_id,:status)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':mo_title',$mo_title,PDO::PARAM_STR);
 $query->bindParam(':mo_code',$mo_code,PDO::PARAM_STR);
 $query->bindParam(':mo_credit',$mo_credit,PDO::PARAM_STR);
+$query->bindParam(':ay_id',$ay_id,PDO::PARAM_STR);
 $query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
-
+$query->bindParam(':status',$status,PDO::PARAM_STR);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
@@ -163,6 +166,28 @@ else if($error){?>
                                                             
 
                                                         </div>
+
+                                                        <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Academic Year</label>
+                                                
+                                                       
+ 
+<?php $sql = "SELECT * from academic_year_tbl where status=1 ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+                                                   
+<input type="text" name="ay_id" class="form-control" id="classname" value="<?php echo htmlentities($result->year)?> --- semester: <?php echo htmlentities($result->semester)?>" readonly>
+                                                        
+
+                                                    <?php }} ?>
+                                                    </div>
+                                                    </div>
 
                                                         <div class="form-group has-success">
                                                        <div class="form-group">

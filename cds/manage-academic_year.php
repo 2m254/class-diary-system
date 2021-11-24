@@ -8,12 +8,7 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-
-
-
-
-
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -69,7 +64,7 @@ if(strlen($_SESSION['alogin'])=="")
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Manage Modules</h2>
+                                    <h2 class="title">Manage Academic Year</h2>
                                 
                                 </div>
                                 
@@ -80,8 +75,8 @@ if(strlen($_SESSION['alogin'])=="")
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><li><a href="create-module.php"><i class="fa fa-home"></i> Modules</a></li>
-            							<li class="active">Manage Modules</li>
+                                        <li><li><a href="add-academic_year.php"><i class="fa fa-home"></i> Academic Year</a></li>
+            							<li class="active">Manage Academic Year</li>
             						</ul>
                                 </div>
                              
@@ -101,9 +96,9 @@ if(strlen($_SESSION['alogin'])=="")
         <div class="panel">
             <div class="panel-heading">
                 
-                <button name="login" class="btn btn-success btn-labeled pull-right"><a href="create-module.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                <button name="" class="btn btn-success btn-labeled pull-right"><a href="add-academic_year.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                 <div class="panel-title">
-                    <h5>View Modules Info</h5>
+                    <h5>View Lectures Info</h5>
                     
                 
                 </div>
@@ -123,40 +118,30 @@ else if($error){?>
                                                 <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                           
-                                                        <th>#</th>
-                                                          <th>Module Title</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module Credit</th>
-                                                            <th>Academic Year & semester</th>
-                                                            <th>Level</th> 
-                                                            <th>Status</th> 
+                                                            <th>ID</th>
+                                                            <th>Academic year</th>
+                                                            <th>Semester</th>
+                                                            <th>Status</th>
+                                                            
                                                             
                                                           
-                                                            <th>Edit </th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
-                                                        <tr>
-                                                          <th>#</th>
-                                                          <th>Module Title</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module Credit</th>
-                                                            <th>Academic Year & semester</th>
-                                                            <th>Level</th> 
-                                                            <th>Status</th> 
+                                                    <tr>
+                                                    <th>Academic year</th>
+                                                            <th>Semester</th>
+                                                            <th>Status</th>
                                                             
-
                                                             
-                                                           
-                                                            <th>Edit  </th>
                                                             
+                                                          
+                                                            <th>Action</th>
                                                         </tr>
-                                                        
                                                     </tfoot>
                                                     <tbody>
-                                                        
-<?php $sql = "SELECT  distinct modules_tbl.mo_id,modules_tbl.mo_title,modules_tbl.mo_code,modules_tbl.mo_credit,modules_tbl.status,academic_year_tbl.year,academic_year_tbl.semester,level_tbl.le_title from modules_tbl join academic_year_tbl on academic_year_tbl.ay_id=modules_tbl.mo_id join level_tbl on level_tbl.le_id=academic_year_tbl.ay_id ";
+<?php $sql = "SELECT * from academic_year_tbl";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -166,12 +151,9 @@ if($query->rowCount() > 0)
 foreach($results as $result)
 {   ?>
 <tr>
- <td><?php echo htmlentities($cnt);?>
-                                                            <td><?php echo htmlentities($result->mo_title);?></td>
-                                                            <td><?php echo htmlentities($result->mo_code);?></td>
-                                                            <td><?php echo htmlentities($result->mo_credit);?></td>
-                                                            <td><?php echo htmlentities($result->year);?>- semester: <?php echo htmlentities($result->semester);?></td>
-                                                            <td><?php echo htmlentities($result->le_title);?></td>
+ <td><?php echo htmlentities($cnt);?></td>
+                                                            <td><?php echo htmlentities($result->year);?></td>
+                                                            <td><?php echo htmlentities($result->semester);?></td>
                                                             <td><?php if($result->status==1){
 echo htmlentities('Active');
 }
@@ -179,11 +161,12 @@ else{
    echo htmlentities('Blocked'); 
 }
    ?></td>
+                                                      
                                                            
 <td>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mo_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
-</td>
+<a href="edit-academic_year.php?classid=<?php echo htmlentities($result->ay_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
+</td>
 </tr>
 <?php $cnt=$cnt+1;}} ?>
                                                        

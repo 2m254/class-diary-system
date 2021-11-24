@@ -20,6 +20,15 @@
                                     <li class="nav-header">
                                         <span class="">Appearance</span>
                                     </li>
+
+                                    <li class="has-children">
+                                        <a href="#"><i class="fa fa-users"></i> <span>Academic Year</span> <i class="fa fa-angle-right arrow"></i></a>
+                                        <ul class="child-nav">
+                                            <li><a href="add-academic_year.php"><i class="fa fa-bars"></i> <span>Add academic</span></a></li>
+                                            <li><a href="manage-academic_year.php"><i class="fa fa fa-server"></i> <span>manage Academic Year</span></a></li>
+                                            
+                                           
+                                        </ul>
                                     <li class="has-children">
                                         <a href="#"><i class="fa fa-users"></i> <span>Levels</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">

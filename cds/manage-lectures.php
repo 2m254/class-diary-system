@@ -138,7 +138,7 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT distinct lecture_tbl.lect_name,lecture_tbl.lect_assistant,modules_tbl.mo_title from lecture_tbl join modules_tbl on lecture_tbl.lect_id=modules_tbl.mo_id";
+<?php $sql = "SELECT distinct lecture_tbl.lect_id,lecture_tbl.lect_name,lecture_tbl.lect_assistant,modules_tbl.mo_title from lecture_tbl join modules_tbl on lecture_tbl.lect_id=modules_tbl.mo_id";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

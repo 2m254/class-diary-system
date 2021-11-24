@@ -7,26 +7,33 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-if(isset($_POST['update']))
+if(isset($_POST['submit']))
 {
-    $lect_name=$_POST['lect_name'];
-    $lect_assistant=$_POST['lect_assistant']; 
-    $de_id=$_POST['de_id']; 
-   
-   
-    
-    $cid=intval($_GET['classid']);
-    $sql="update  lecture_tbl set lect_name=:lect_name,lect_assistant=:lect_assistant,de_id=:de_id where lect_id=:cid ";
-    $query = $dbh->prepare($sql);
-$query->bindParam(':lect_name',$lect_name,PDO::PARAM_STR);
-$query->bindParam(':lect_assistant',$lect_assistant,PDO::PARAM_STR);
-$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
+$year=$_POST['year'];
+$semester=$_POST['semester'];
+$status=1;
+ 
 
 
 
-$query->bindParam(':cid',$cid,PDO::PARAM_STR);
+$sql="INSERT INTO  academic_year_tbl(year,semester,status) VALUES(:year,:semester,:status)";
+$query = $dbh->prepare($sql);
+$query->bindParam(':year',$year,PDO::PARAM_STR);
+$query->bindParam(':semester',$semester,PDO::PARAM_STR);
+$query->bindParam(':status',$status,PDO::PARAM_STR);
+
+
 $query->execute();
-$msg="Data has been updated successfully";
+$lastInsertId = $dbh->lastInsertId();
+if($lastInsertId)
+{
+$msg="Level Created successfully";
+}
+else 
+{
+$error="Something went wrong. Please try again";
+}
+
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +42,7 @@ $msg="Data has been updated successfully";
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>CDS Update Module</title>
+        <title>CDS HOD Create Modules</title>
         <link rel="stylesheet" href="css/bootstrap.css" media="screen" >
         <link rel="stylesheet" href="css/font-awesome.min.css" media="screen" >
         <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen" >
@@ -44,6 +51,24 @@ $msg="Data has been updated successfully";
         <link rel="stylesheet" href="css/main.css" media="screen" >
         <script src="js/modernizr/modernizr.min.js"></script>
         <link rel="stylesheet" href="styles.css">
+         <style>
+        .errorWrap {
+    padding: 10px;
+    margin: 0 0 20px 0;
+    background: #fff;
+    border-left: 4px solid #dd3d36;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+.succWrap{
+    padding: 10px;
+    margin: 0 0 20px 0;
+    background: #fff;
+    border-left: 4px solid #5cb85c;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+        </style>
     </head>
     <body class="top-navbar-fixed">
     <div class="login-background" >
@@ -69,17 +94,17 @@ $msg="Data has been updated successfully";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Update Level</h2>
+                                    <h2 class="title">Add Academic Year </h2>
                                 </div>
                                 
                             </div>
                             <!-- /.row -->
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
-                                    <ul class="breadcrumb">
+                                <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="manage-level.php">Lecture</a></li>
-            							<li class="active">Update Level</li>
+                                        <li><li><a href="manage-academic_year.php"><i class="fa fa-home"></i>Academic Year</a></li>
+            							<li class="active">Create Leveles</li>
             						</ul>
                                 </div>
                                
@@ -100,97 +125,70 @@ $msg="Data has been updated successfully";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Update levels info</h5>
+                                                    <h5>Create Level</h5>
                                                 </div>
                                             </div>
-<?php if($msg){?>
+           <?php if($msg){?>
 <div class="alert alert-success left-icon-alert" role="alert">
- <strong>Well done!</strong><?php echo htmlentities($msg); ?>
+ <strong>Well done! </strong><?php echo htmlentities($msg); ?>
  </div><?php } 
 else if($error){?>
     <div class="alert alert-danger left-icon-alert" role="alert">
                                             <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
                                         </div>
                                         <?php } ?>
+  
+                                            <div class="panel-body">
 
-                                                <form method="post" >
-                            <?php 
-                            $cid=intval($_GET['classid']);
-                            $sql = "SELECT * from lecture_tbl where lect_id=:cid";
-                            $query = $dbh->prepare($sql);
-                            $query->bindParam(':cid',$cid,PDO::PARAM_STR);
-                            $query->execute();
-                            $results=$query->fetchAll(PDO::FETCH_OBJ);
-                            $cnt=1;
-                            if($query->rowCount() > 0)
-                            {
-                            foreach($results as $result)
-                              {   ?>
-
+                                                <form method="post">
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Lecture Name</label>
+                                                        <label for="success" class="control-label">Year</label>
                                                 		<div class="">
-                                                			<input type="text" name="lect_name" value="<?php echo htmlentities($result->lect_name);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
-                                                		</div>
-                                                	</div>
-                                                    <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Lecture assistant</label>
-                                                		<div class="">
-                                                			<input type="text" name="lect_assistant" value="<?php echo htmlentities($result->lect_assistant);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
+                                                			<input type="text" name="year" class="form-control" required="required" id="success">
+                                                            <span class="help-block">Eg- 2019-2020 etc</span>
                                                 		</div>
                                                 	</div>
                                                     
-
+                                                    
+                                                    
+                                                    
+                                                      
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
-                                                <label for="default" class="control-label">Module</label>
+                                                <label for="default" class="control-label">Semester</label>
                                                 
                                                        
- <select name="mo_id" class="form-control" id="success"  required="required">
- <?php $sql = "SELECT * from modules_tbl ";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount()>0)
-{
-foreach($results as $result)
-{   ?>
-<option value="<?php echo htmlentities($result->mo_id); ?>"><?php echo htmlentities($result->mo_title); ?></option>
-<?php }
+ <select name="semester" class="form-control" id="success"  required="required">
+<option value="">Select Semester</option>
+
+<option  id="success" class="form-control" value="1">One</option>
+<option  id="success" class="form-control" value="2">Two</option>
 
 
-} ?>
+
+
  </select>
                                                         </div>
                                                     </div>
-
+                                                      
                                                     
-                                                       
-                                                    
-                                                  
-                                            
-                                                   
-                                                    
-                                                   
-                                                    <?php }} ?>
   <div class="form-group has-success">
 
                                                         <div class="">
-                                                            <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                    
-                                                    
-                    
-                                                    		
+                                                           <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                
+
+
+                                                                                       		
                                                            
-                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-level.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    <button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-academic_year.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     		</div>
                     </div>
 
+                                                </form>
 
-                                                    
-                                                </form></div>
+                                              
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- /.col-md-8 col-md-offset-2 -->
@@ -207,9 +205,6 @@ foreach($results as $result)
 
                     </div>
                     <!-- /.main-page -->
-
-             
-                    <!-- /.right-sidebar -->
 
                 </div>
                 <!-- /.content-container -->
@@ -232,10 +227,11 @@ foreach($results as $result)
 
         <!-- ========== THEME JS ========== -->
         <script src="js/main.js"></script>
-        </div></div></div></div>
+
 
 
         <!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->
+        </div> </div> </div> </div>
     </body>
 </html>
 <?php  } ?>

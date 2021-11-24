@@ -9,18 +9,20 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $modulename=$_POST['modulename'];
-    $modulecode=$_POST['modulecode']; 
-    $modulecredit=$_POST['modulecredit'];
-    $le_id=$_POST['le_id'];
+    $lect_name=$_POST['lect_name'];
+    $lect_assistant=$_POST['lect_assistant']; 
+    $de_id=$_POST['de_id']; 
+   
+   
     
     $cid=intval($_GET['classid']);
-    $sql="update  modules_tbl set mo_title=:modulename,mo_code=:modulecode,mo_credit=:modulecredit,le_id=:le_id where mo_id=:cid ";
+    $sql="update  lecture_tbl set lect_name=:lect_name,lect_assistant=:lect_assistant,de_id=:de_id where lect_id=:cid ";
     $query = $dbh->prepare($sql);
-$query->bindParam(':modulename',$modulename,PDO::PARAM_STR);
-$query->bindParam(':modulecode',$modulecode,PDO::PARAM_STR);
-$query->bindParam(':modulecredit',$modulecredit,PDO::PARAM_STR);
-$query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
+$query->bindParam(':lect_name',$lect_name,PDO::PARAM_STR);
+$query->bindParam(':lect_assistant',$lect_assistant,PDO::PARAM_STR);
+$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
+
+
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
@@ -67,7 +69,7 @@ $msg="Data has been updated successfully";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Update Module</h2>
+                                    <h2 class="title">Update Level</h2>
                                 </div>
                                 
                             </div>
@@ -76,8 +78,8 @@ $msg="Data has been updated successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="manage-modules.php">Modules</a></li>
-            							<li class="active">Update Modules</li>
+            							<li><a href="manage-level.php">Lecture</a></li>
+            							<li class="active">Update Level</li>
             						</ul>
                                 </div>
                                
@@ -98,7 +100,7 @@ $msg="Data has been updated successfully";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Update Module info</h5>
+                                                    <h5>Update levels info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -112,49 +114,42 @@ else if($error){?>
                                         <?php } ?>
 
                                                 <form method="post" >
-<?php 
-$cid=intval($_GET['classid']);
-$sql = "SELECT * from moduleS_tbl where mo_id=:cid";
-$query = $dbh->prepare($sql);
-$query->bindParam(':cid',$cid,PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>
+                            <?php 
+                            $cid=intval($_GET['classid']);
+                            $sql = "SELECT * from lecture_tbl where lect_id=:cid";
+                            $query = $dbh->prepare($sql);
+                            $query->bindParam(':cid',$cid,PDO::PARAM_STR);
+                            $query->execute();
+                            $results=$query->fetchAll(PDO::FETCH_OBJ);
+                            $cnt=1;
+                            if($query->rowCount() > 0)
+                            {
+                            foreach($results as $result)
+                              {   ?>
 
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Title</Title></label>
+                                                        <label for="success" class="control-label">Lecture Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="modulename" value="<?php echo htmlentities($result->mo_title);?>" required="required" class="form-control" id="success">
-                                                            <span class="help-block">Eg- ICT,Analog,Soral Energy etc</span>
+                                                			<input type="text" name="lect_name" value="<?php echo htmlentities($result->lect_name);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
                                                 		</div>
                                                 	</div>
-                                                       <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Module Code</label>
-                                                        <div class="">
-                                                            <input type="text" name="modulecode"  value="<?php echo htmlentities($result->mo_code);?>" required="required" class="form-control" id="success" maxlength="8" >
-                                                            <span class="help-block">Eg- ict101 etc</span>
-                                                        </div>
-                                                    </div>
-                                                     <div class="form-group has-success">
-                                                        <label for="success"  class="control-label">Module Credit</label>
-                                                        <div class="">
-                                                            <input type="text"    name="modulecredit" value="<?php echo htmlentities($result->mo_credit);?>" class="form-control" required="required" id="success" maxlength="2">
-                                                            <span class="help-block">Eg- 10,15 etc</span>
-                                                        </div>
-                                                    </div>
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Lecture assistant</label>
+                                                		<div class="">
+                                                			<input type="text" name="lect_assistant" value="<?php echo htmlentities($result->lect_assistant);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
+                                                		</div>
+                                                	</div>
+                                                    
+
                                                     <div class="form-group has-success">
                                                        <div class="form-group">
-                                                <label for="default" class="control-label">Level</label>
+                                                <label for="default" class="control-label">Department</label>
                                                 
                                                        
- <select name="le_id" class="form-control" id="success"  required="required">
- <?php $sql = "SELECT * from level_tbl ";?>
-
-<?php
+ <select name="de_id" class="form-control" id="success"  required="required">
+ <?php $sql = "SELECT * from department_tbl ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -162,8 +157,7 @@ if($query->rowCount()>0)
 {
 foreach($results as $result)
 {   ?>
-
-<option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?>&nbsp; </option>
+<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
 <?php }
 
 
@@ -171,6 +165,12 @@ foreach($results as $result)
  </select>
                                                         </div>
                                                     </div>
+
+                                                    
+                                                       
+                                                    
+                                                  
+                                            
                                                    
                                                     
                                                    
@@ -184,16 +184,13 @@ foreach($results as $result)
                     
                                                     		
                                                            
-                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-modules.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-level.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     		</div>
                     </div>
 
 
                                                     
-                                                </form>
-
-                                              
-                                            </div>
+                                                </form></div>
                                         </div>
                                     </div>
                                     <!-- /.col-md-8 col-md-offset-2 -->
