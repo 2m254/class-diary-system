@@ -8,6 +8,32 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
+        // for activate Subject   	
+if(isset($_GET['acid']))
+{
+$acid=intval($_GET['acid']);
+$status=1;
+$sql="update academic_year_tbl set status=:status where ay_id=:acid ";
+$query = $dbh->prepare($sql);
+$query->bindParam(':acid',$acid,PDO::PARAM_STR);
+$query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->execute();
+$msg="Academic Year Activate successfully";
+}
+
+ // for Deactivate Subject
+if(isset($_GET['did']))
+{
+$did=intval($_GET['did']);
+$status=0;
+$sql="update academic_year_tbl set status=:status where ay_id=:did ";
+$query = $dbh->prepare($sql);
+$query->bindParam(':did',$did,PDO::PARAM_STR);
+$query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->execute();
+$msg="Academic Year Deactivate successfully";
+}
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,13 +156,10 @@ else if($error){?>
                                                     </thead>
                                                     <tfoot>
                                                     <tr>
-                                                    <th>Academic year</th>
+                                                    <th>ID</th>
+                                                            <th>Academic year</th>
                                                             <th>Semester</th>
-                                                            <th>Status</th>
-                                                            
-                                                            
-                                                            
-                                                          
+                                                            <th>Status</th>                                                    
                                                             <th>Action</th>
                                                         </tr>
                                                     </tfoot>
@@ -154,16 +177,27 @@ foreach($results as $result)
  <td><?php echo htmlentities($cnt);?></td>
                                                             <td><?php echo htmlentities($result->year);?></td>
                                                             <td><?php echo htmlentities($result->semester);?></td>
-                                                            <td><?php if($result->status==1){
-echo htmlentities('Active');
+                                                            <td><?php $stts=$result->status;
+if($stts=='0')
+{
+	echo htmlentities('Inactive');
 }
-else{
-   echo htmlentities('Blocked'); 
+else
+{
+	echo htmlentities('Active');
 }
-   ?></td>
+                                                             ?></td>
+                                                            
+<td>
+<?php if($stts=='0')
+{ ?>
+<a href="manage-academic_year.php?acid=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to ativate this academic year?');"><i class="fa fa-check" title="Acticvate Record"></i> </a><?php } else {?>
+
+<a href="manage-academic_year.php?did=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to deativate this academic year?');"><i class="fa fa-times" title="Deactivate Record"></i> </a>
+<?php }?>
                                                       
                                                            
-<td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="edit-academic_year.php?classid=<?php echo htmlentities($result->ay_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
 </td>

@@ -11,16 +11,16 @@ if(isset($_POST['update']))
 {
     $year=$_POST['year'];
     $semester=$_POST['semester'];
-    $status=$_POST['status'];
+    
    
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  academic_year_tbl set year=:year,semester=:semester,status=:status where ay_id=:cid ";
+    $sql="update  academic_year_tbl set year=:year,semester=:semester where ay_id=:cid ";
     $query = $dbh->prepare($sql);
 $query->bindParam(':year',$year,PDO::PARAM_STR);
 $query->bindParam(':semester',$semester,PDO::PARAM_STR);
-$query->bindParam(':status',$status,PDO::PARAM_STR);
+
 
 
 
@@ -156,26 +156,7 @@ else if($error){?>
 
 
                                                     
-                                                    <div class="form-group has-success">
-<label for="success" class="control">Status</label>
-<div class="col-sm-10">
-<?php  $stats=$result->status;
-if($stats=="1")
-{
-?>
-<input type="radio" name="status" value="1" required="required" checked>Active <input type="radio" name="status" value="0" required="required">Block 
-<?php }?>
-<?php  
-if($stats=="0")
-{
-?>
-<input type="radio" name="status" value="1" required="required" >Active <input type="radio" name="status" value="0" required="required" checked>Block 
-<?php }?>
-
-
-
-</div>
-</div><br><br>
+                                                   
                                                     
                                               
                                                     <?php }} ?>

@@ -8,7 +8,31 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
+// for activate Subject   	
+if(isset($_GET['acid']))
+{
+$acid=intval($_GET['acid']);
+$status=1;
+$sql="update modules_tbl set status=:status where mo_id=:acid ";
+$query = $dbh->prepare($sql);
+$query->bindParam(':acid',$acid,PDO::PARAM_STR);
+$query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->execute();
+$msg="Subject Activate successfully";
+}
 
+ // for Deactivate Subject
+if(isset($_GET['did']))
+{
+$did=intval($_GET['did']);
+$status=0;
+$sql="update modules_tbl set status=:status where mo_id=:did ";
+$query = $dbh->prepare($sql);
+$query->bindParam(':did',$did,PDO::PARAM_STR);
+$query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->execute();
+$msg="Subject Deactivate successfully";
+}
 
 
 
@@ -172,16 +196,26 @@ foreach($results as $result)
                                                             <td><?php echo htmlentities($result->mo_credit);?></td>
                                                             <td><?php echo htmlentities($result->year);?>- semester: <?php echo htmlentities($result->semester);?></td>
                                                             <td><?php echo htmlentities($result->le_title);?></td>
-                                                            <td><?php if($result->status==1){
-echo htmlentities('Active');
+                                                            <td><?php $stts=$result->status;
+if($stts=='0')
+{
+	echo htmlentities('Inactive');
 }
-else{
-   echo htmlentities('Blocked'); 
+else
+{
+	echo htmlentities('Active');
 }
-   ?></td>
-                                                           
+                                                             ?></td>
+                                                            
 <td>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-module.php?classid=<?php echo htmlentities($result->mo_id);?>"><i  title="Edit Record"></i><button class="fa  fa-edit" ><span class=""></span></button> </a> 
+<?php if($stts=='0')
+{ ?>
+<a href="manage-modules.php?acid=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to ativate this Module');"><i class="fa fa-check" title="Acticvate Record"></i> </a><?php } else {?>
+
+<a href="manage-modules.php?did=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to deativate this Module');"><i class="fa fa-times" title="Deactivate Record"></i> </a>
+<?php }?>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-modules.php?classid=<?php echo htmlentities($result->mo_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 </td>
 
 </tr>

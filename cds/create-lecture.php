@@ -160,7 +160,7 @@ else if($error){?>
                                                        
  <select name="mo_id" class="form-control" id="success"  required="required">
 <option value="">Select Department Name</option>
-<?php $sql = "SELECT * from modules_tbl ";
+<?php $sql = "SELECT * from modules_tbl where status=1 ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
