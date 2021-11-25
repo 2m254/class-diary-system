@@ -27,7 +27,7 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$msg="Level Created successfully";
+$msg="Academic Year Created successfully 👍";
 }
 else 
 {
@@ -145,7 +145,7 @@ else if($error){?>
                                                         <label for="success" class="control-label">Year</label>
                                                 		<div class="">
                                                 			<input type="text" name="year" class="form-control" required="required" id="success">
-                                                            <span class="help-block">Eg- 2019-2020 etc</span>
+                                                            <span class="help-block">Eg- 2019 2020 etc</span>
                                                 		</div>
                                                 	</div>
                                                     

@@ -62,7 +62,7 @@ if(strlen($_SESSION['alogin'])=="")
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a class="dashboard-stat bg-primary" href="manage-class_diary.php">
+                                        <a class="dashboard-stat bg-primary" href="cm-view.php">
 <?php 
 $sql1 ="SELECT cd_id from  class_diary_tbl ";
 $query1 = $dbh -> prepare($sql1);

@@ -142,7 +142,7 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT distinct level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,department_tbl.de_short  from level_tbl join department_tbl on department_tbl.de_id=level_tbl.le_id ";
+<?php $sql = "SELECT distinct level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,department_tbl.de_short  from level_tbl join department_tbl where department_tbl.de_id=level_tbl.le_id ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

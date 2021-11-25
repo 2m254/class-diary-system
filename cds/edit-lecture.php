@@ -26,7 +26,7 @@ $query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$msg="Data has been updated successfully";
+$msg="Lecture has been updated successfully";
 }
 ?>
 <!DOCTYPE html>

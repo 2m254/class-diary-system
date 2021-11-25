@@ -59,8 +59,8 @@
                                         <a href="#"><i class="fa fa-info-circle"></i> <span>Class Diary </span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
                                         
-                                            <li><a href="view_class_diary.php"><i class="fa fa-bars"></i> <span>View Class Diary</span></a></li>
-                                            
+                                            <li><a href="view_class_diary.php"><i class="fa fa-bars"></i> <span>View Class Diary Table</span></a></li>
+                                            <li><a href="hod-view.php"><i class="fa fa-bars"></i> <span>View Class Diary </span></a></li>
                                            
                                         </ul>
                                         <li><a href="change-password.php"><i class="fa fa fa-server"></i> <span> HOD Change Password</span></a></li>

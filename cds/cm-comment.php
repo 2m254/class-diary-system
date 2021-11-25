@@ -113,7 +113,7 @@ else if($error){?>
                                         <form method="post" >
                             <?php 
                             $cid=intval($_GET['classid']);
-                            $sql = "SELECT * from class_diary_tbl where cd_id=:cid";
+                            $sql = "SELECT  * from class_diary_tbl where cd_id=:cid";
                             $query = $dbh->prepare($sql);
                             $query->bindParam(':cid',$cid,PDO::PARAM_STR);
                             $query->execute();
@@ -124,13 +124,29 @@ else if($error){?>
                             foreach($results as $result)
                               {   ?>
 
-                                <div class="form-group has-success">
-                                  <label for="success" class="control-label">comment</label>
-                            	<div class="">
-                                <textarea rows="5" cols="30" name="cm_comm"  class="form-control" id="success">jjj</textarea> 
-                                                            
-                                </div>
-                                </div>
+<div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Academic Year</label>
+                                                
+                                                       
+ 
+<?php $sql = "SELECT * from academic_year_tbl where status=1 ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+                                                   
+<input type="text" name="ay_id" class="form-control" id="classname" value="<?php echo htmlentities($result->year)?> -- semester: <?php echo htmlentities($result->semester)?>" readonly>
+                                                        
+
+                                                    <?php }} ?>
+                                                    </div>
+                                                    </div>
+
+                                
                                                    
 
                                                     

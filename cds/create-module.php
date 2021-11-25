@@ -29,7 +29,7 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$msg="Class Created successfully";
+$msg="Module Created successfully";
 }
 else 
 {

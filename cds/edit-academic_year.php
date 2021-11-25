@@ -26,7 +26,7 @@ $query->bindParam(':semester',$semester,PDO::PARAM_STR);
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$msg="Data has been updated successfully";
+$msg="academic year has been updated successfully";
 }
 ?>
 <!DOCTYPE html>

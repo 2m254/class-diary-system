@@ -26,7 +26,7 @@ $query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$msg="Data has been updated successfully";
+$msg="level has been updated successfully";
 }
 ?>
 <!DOCTYPE html>
@@ -78,7 +78,7 @@ $msg="Data has been updated successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="manage-level.php">Lecture</a></li>
+            							<li><a href="manage-level.php">Level</a></li>
             							<li class="active">Update Level</li>
             						</ul>
                                 </div>

@@ -62,11 +62,11 @@ if(strlen($_SESSION['alogin'])=="")
         <div class="main-wrapper">
 
             <!-- ========== TOP NAVBAR ========== -->
-   <?php include('cm-includes/topbar.php');?> 
+   <?php include('includes/topbar.php');?> 
             <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
             <div class="content-wrapper">
                 <div class="content-container">
-<?php include('cm-includes/leftbar.php');?>  
+<?php include('includes/leftbar.php');?>  
 
                     <div class="main-page">
                         <div class="container-fluid">
@@ -213,7 +213,7 @@ else if($error){?>
                   
                 
                 </div>
-                <button class="btn btn-success btn-labeled pull-left" href><a href="cm-comment.php?classid=<?php echo htmlentities($result->cd_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa "></i></span></button>
+                <button class="btn btn-success btn-labeled pull-left" href><a href="cm-comment.php?classid=<?php echo htmlentities($result->mo_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa "></i></span></button>
                  
                 <div class="form-group text-center mb-3 mt-4">
                     <div class="form-group mt-20">
@@ -224,7 +224,7 @@ else if($error){?>
                     </div>
                     </div></div>
 
-               <h3>-------------------------  ----------------------------  ---------------------------</h3>
+               <h3>------------------------- ---------------------------- ----------------------------</h3>
 
  			<?php } ?>
  		</ul>
