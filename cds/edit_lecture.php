@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('cm-includes/config.php');
+include('includes/config.php');
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
@@ -9,21 +9,24 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['update']))
 {
-    $cm_comm=$_POST['cm_comm'];
+    $lect_name=$_POST['lect_name'];
+    $lect_assistant=$_POST['lect_assistant']; 
+    $de_id=$_POST['de_id']; 
+   
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  class_diary_tbl set cm_comm=:cm_comm where cd_id=:cid ";
+    $sql="update  lecture_tbl set lect_name=:lect_name,lect_assistant=:lect_assistant,de_id=:de_id where lect_id=:cid ";
     $query = $dbh->prepare($sql);
-
-$query->bindParam(':cm_comm',$cm_comm,PDO::PARAM_STR);
-
+$query->bindParam(':lect_name',$lect_name,PDO::PARAM_STR);
+$query->bindParam(':lect_assistant',$lect_assistant,PDO::PARAM_STR);
+$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
 
 
 $query->bindParam(':cid',$cid,PDO::PARAM_STR);
 $query->execute();
-$msg="Comment has been added successfully";
+$msg="Data has been updated successfully";
 }
 ?>
 <!DOCTYPE html>
@@ -52,21 +55,21 @@ $msg="Comment has been added successfully";
         <div class="main-wrapper">
 
             <!-- ========== TOP NAVBAR ========== -->
-            <?php include('cm-includes/topbar.php');?>   
+            <?php include('includes/topbar.php');?>   
           <!-----End Top bar>
             <!-- ========== WRAPPER FOR BOTH SIDEBARS & MAIN CONTENT ========== -->
             <div class="content-wrapper">
                 <div class="content-container">
 
 <!-- ========== LEFT SIDEBAR ========== -->
-<?php include('cm-includes/leftbar.php');?>                   
+<?php include('includes/leftbar.php');?>                   
  <!-- /.left-sidebar -->
 
                     <div class="main-page">
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Add Comment</h2>
+                                    <h2 class="title">Update Level</h2>
                                 </div>
                                 
                             </div>
@@ -74,9 +77,9 @@ $msg="Comment has been added successfully";
                             <div class="row breadcrumb-div">
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
-            							<li><a href="cm-dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-            							<li><a href="cm-view.php">View class diary</a></li>
-            							<li class="active">Add Comment.</li>
+            							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+            							<li><a href="manage-level.php">Lecture</a></li>
+            							<li class="active">Update Level</li>
             						</ul>
                                 </div>
                                
@@ -97,7 +100,7 @@ $msg="Comment has been added successfully";
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <div class="panel-title">
-                                                    <h5>Add Comment.</h5>
+                                                    <h5>Update levels info</h5>
                                                 </div>
                                             </div>
 <?php if($msg){?>
@@ -110,10 +113,10 @@ else if($error){?>
                                         </div>
                                         <?php } ?>
 
-                                        <form method="post" >
+                                                <form method="post" >
                             <?php 
                             $cid=intval($_GET['classid']);
-                            $sql = "SELECT  * from class_diary_tbl where cd_id=:cid";
+                            $sql = "SELECT * from lecture_tbl where lect_id=:cid";
                             $query = $dbh->prepare($sql);
                             $query->bindParam(':cid',$cid,PDO::PARAM_STR);
                             $query->execute();
@@ -124,20 +127,44 @@ else if($error){?>
                             foreach($results as $result)
                               {   ?>
 
-<div class="form-group has-success">
-                                                       <div class="form-group">
-                                                       <div class="form-group has-success">
-                                                       <label for="success" class="control-label">Comment Description </label>
-                                                       <div class="">
-                                                       <textarea rows="5" cols="110" name="cm_comm" value="<?php echo htmlentities($result->cm_comm);?>"></textarea>
-                                                       </div>
-                                                   </div>
-                                      
-
-
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Lecture Name</label>
+                                                		<div class="">
+                                                			<input type="text" name="lect_name" value="<?php echo htmlentities($result->lect_name);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
+                                                		</div>
+                                                	</div>
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Lecture assistant</label>
+                                                		<div class="">
+                                                			<input type="text" name="lect_assistant" value="<?php echo htmlentities($result->lect_assistant);?>" required="required" class="form-control" id="success">
+                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
+                                                		</div>
+                                                	</div>
                                                     
 
-                                                   
+                                                    <div class="form-group has-success">
+                                                       <div class="form-group">
+                                                <label for="default" class="control-label">Department</label>
+                                                
+                                                       
+ <select name="de_id" class="form-control" id="success"  required="required">
+ <?php $sql = "SELECT * from department_tbl ";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+if($query->rowCount()>0)
+{
+foreach($results as $result)
+{   ?>
+<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
+<?php }
+
+
+} ?>
+ </select>
+                                                        </div>
+                                                    </div>
 
                                                     
                                                        
@@ -151,23 +178,19 @@ else if($error){?>
   <div class="form-group has-success">
 
                                                         <div class="">
-                                                            <button type="submit" name="update" class="btn btn-success btn-labeled">Add<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                            <button type="submit" name="update" class="btn btn-success btn-labeled">Update<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     
                                                     
                     
                                                     		
                                                            
-                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="cm-view.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                    			<button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-level.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                                                     		</div>
                     </div>
 
 
                                                     
-                                                </form>
-
-
-                                              
-                                            </div>
+                                                </form></div>
                                         </div>
                                     </div>
                                     <!-- /.col-md-8 col-md-offset-2 -->

@@ -2,8 +2,7 @@
 <?php
 session_start();
 error_reporting(0);
-include_once 'controllers/Comment.php';
-	$com = new Comment();
+include('includes/config.php');
 if(strlen($_SESSION['alogin'])=="")
     {   
     header("Location: index.php"); 
@@ -122,29 +121,39 @@ else if($error){?>
                                                 
                                             <div class="box">
  		<ul>
- 			<?php 
- 				$result = $com->index();
- 				while ($data = $result->fetch_assoc()) {
- 			 ?>
+             
+         <?php $sql = "SELECT distinct class_diary_tbl.cd_id,class_diary_tbl.week,department_tbl.de_short,class_diary_tbl.day,class_diary_tbl.dat,
+			class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,class_diary_tbl.start_time,class_diary_tbl.end_time,modules_tbl.mo_title,
+			lecture_tbl.lect_name,level_tbl.le_title,level_tbl.le_class,class_diary_tbl.cm_comm from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id 
+			join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id join department_tbl on 
+			department_tbl.de_id=class_diary_tbl.cd_id join level_tbl on level_tbl.le_id=class_diary_tbl.cd_id";
+$query = $dbh->prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   ?>
                <div class="form-group has-success"> <div class="form-group">
                
 
               <table border="0">
-                  <tr><td><b>Week:   </b> <?php echo $data['week'] ?> </td>
+                  <tr><td><b>Week:   </b> <?php  echo htmlentities($result->week);?> </td>
                 
-                  <td><b>Day:</b> <?php echo $data['day'] ?> </td>
-                  <td><b>Date:</b> <?php echo $data['dat'] ?> </td>
-                </tr><br>
-                <tr><td><b>Department:</b> <b><?php echo $data['de_short'] ?> </b></td>
-                
-                  <td><b>class:</b> <?php echo $data['le_title'] ?> </td>
-                  <td><b>Room:</b> <?php echo $data['le_class'] ?> </td>
+                  <td><b>Day:</b> <?php  echo htmlentities($result->day);?> </td>
+                  <td><b>Date:</b> <?php  echo htmlentities($result->dat);?> </td>
                 </tr>
-                <br>
-                <tr><td><b>Start Time:</b> <b><?php echo $data['start_time'] ?> </b></td>
+                <tr><td><b>Department:</b> <b><?php  echo htmlentities($result->de_short);?> </b></td>
                 
-                  <td><b>Activity:</b> <?php echo $data['activity'] ?> </td>
-                  <td><b>End Time:</b> <?php echo $data['end_time'] ?> </td>
+                  <td><b>class:</b> <?php  echo htmlentities($result->le_title);?> </td>
+                  <td><b>Room:</b> <?php  echo htmlentities($result->le_class); ?> </td>
+                </tr>
+                
+                <tr><td><b>Start Time:</b> <b><?php  echo htmlentities($result->start_time);?> </b></td>
+                
+                  <td><b>Activity:</b> <?php  echo htmlentities($result->activity); ?> </td>
+                  <td><b>End Time:</b> <?php  echo htmlentities($result->end_time); ?> </td>
                 </tr>
                
               </table> </label> </div>  </div>
@@ -167,24 +176,28 @@ else if($error){?>
                                                         <tr>
                                                             
 
-                                                            <th>Module</th>
+                                                        <th>Module</th>
                                                             <th>Lecture</th>
+                                                            
                                                           
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                          
-                                                            <th>Module</th>
+                                                        <th>Module</th>
                                                             <th>Lecture</th>
-                                                          
+                                                            
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
- 
-                                                                <td><?php echo $data['mo_title']; ?></td>
-                                                                <td><?php echo $data['lect_name']; ?></td>
-                                                            
+
+
+                                                                <td><?php  echo htmlentities($result->mo_title);?></td>
+                                                                <td><?php  echo htmlentities($result->lect_name); ?></td>
+                                                               
+</tr>
+
+
                                                     </tbody>
                                                     
 
@@ -195,7 +208,7 @@ else if($error){?>
          <div class="form-group">
                  
                 
-     <b>Activity:&nbsp;&nbsp;</b><?php echo $data['toc'] ?> 
+     <b>Activity:&nbsp;&nbsp;</b><?php  echo htmlentities($result->toc);?> 
                   
                  </label></div></p>
                   
@@ -207,13 +220,27 @@ else if($error){?>
          <div class="form-group">
                  
                 
-     <b>Activity:&nbsp;&nbsp;</b><?php echo $data['commdesc'] ?> 
+     <b>Activity:&nbsp;&nbsp;</b><?php  echo htmlentities($result->commdesc); ?> 
+                  
+                 </div>
+                  
+                
+                </div>  <div class="form-group has-success">
+         <div class="form-group">
+                 
+                
+     <h5><b>Your Comment:&nbsp;&nbsp;</h5><?php  echo htmlentities($result->cm_comm); ?> </b>
                   
                  </div>
                   
                 
                 </div>
-                <button class="btn btn-success btn-labeled pull-left" href><a href="cm-comment.php?classid=<?php echo htmlentities($result->cd_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa "></i></span></button>
+
+
+
+                <button class="btn btn-success btn-labeled pull-left" href><a href="cm-comment.php?classid=<?php echo htmlentities($result->cd_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa ">
+
+                </i></span></button>
                  
                 <div class="form-group text-center mb-3 mt-4">
                     <div class="form-group mt-20">
@@ -294,5 +321,5 @@ else if($error){?>
         </script></div></div></div></div>
     </body>
 </html>
-<?php } ?>
+<?php }} ?>
 
