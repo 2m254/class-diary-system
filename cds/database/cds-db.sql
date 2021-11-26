@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2021 at 12:16 AM
+-- Generation Time: Nov 25, 2021 at 10:47 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `cds-db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `academic_year_tbl`
+--
+
+CREATE TABLE `academic_year_tbl` (
+  `ay_id` int(5) NOT NULL,
+  `year` varchar(20) NOT NULL,
+  `semester` int(5) NOT NULL,
+  `status` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `academic_year_tbl`
+--
+
+INSERT INTO `academic_year_tbl` (`ay_id`, `year`, `semester`, `status`) VALUES
+(1, '2020-2021', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -41,8 +61,19 @@ CREATE TABLE `class_diary_tbl` (
   `activity` varchar(20) NOT NULL,
   `toc` varchar(100) NOT NULL,
   `comment` varchar(50) NOT NULL,
-  `commdesc` varchar(500) NOT NULL
+  `commdesc` varchar(500) NOT NULL,
+  `cm_comm` varchar(500) DEFAULT NULL,
+  `cm_checked` int(5) NOT NULL,
+  `status` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `class_diary_tbl`
+--
+
+INSERT INTO `class_diary_tbl` (`cd_id`, `week`, `day`, `dat`, `de_id`, `le_id`, `mo_id`, `lect_id`, `start_time`, `end_time`, `activity`, `toc`, `comment`, `commdesc`, `cm_comm`, `cm_checked`, `status`) VALUES
+(1, '1', 'Wednesday ', '2021-11-14', 1, 1, 2, 1, '08:00', '12:50', 'Theory', 'introduction ', 'Understandable', 'Hi this is the first comment i made.', 'kasjdlkfjdsf', 1, 0),
+(3, '3', 'Surtday ', '2020-11-18', 1, 1, 1, 5, '22:37', '22:40', 'Theory', 'introduction ', 'Not Understandable', 'we did not have enough materials to some.', 'hoooondndnnd', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -55,6 +86,15 @@ CREATE TABLE `department_tbl` (
   `de_title` varchar(50) NOT NULL,
   `de_short` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `department_tbl`
+--
+
+INSERT INTO `department_tbl` (`de_id`, `de_title`, `de_short`) VALUES
+(1, 'INFORMATION TECHNOLOGY', 'IT'),
+(2, 'ELECTRONIC TELECOMINICATION', 'ET'),
+(3, 'RENUABLE ENERGY', 'RE');
 
 -- --------------------------------------------------------
 
@@ -69,6 +109,16 @@ CREATE TABLE `lecture_tbl` (
   `mo_id` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `lecture_tbl`
+--
+
+INSERT INTO `lecture_tbl` (`lect_id`, `lect_name`, `lect_assistant`, `mo_id`) VALUES
+(1, 'Gilbert', 'Gatete', 1),
+(3, 'Arcade', 'Mugabe', 2),
+(4, 'Muvandimwe', '', 4),
+(5, 'Kalisa', 'Anselyme', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -82,6 +132,18 @@ CREATE TABLE `level_tbl` (
   `de_id` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `level_tbl`
+--
+
+INSERT INTO `level_tbl` (`le_id`, `le_title`, `le_class`, `de_id`) VALUES
+(1, 'level 1', 'A', 2),
+(2, 'level 1', 'B', 2),
+(3, 'level 2', 'A', 2),
+(4, 'level 3', 'A', 3),
+(5, 'level 3', 'A', 1),
+(6, 'level 3', 'C', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -93,8 +155,20 @@ CREATE TABLE `modules_tbl` (
   `mo_title` varchar(50) NOT NULL,
   `mo_code` varchar(10) NOT NULL,
   `mo_credit` int(2) NOT NULL,
-  `le_id` int(50) NOT NULL
+  `ay_id` int(30) NOT NULL,
+  `le_id` int(50) NOT NULL,
+  `status` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `modules_tbl`
+--
+
+INSERT INTO `modules_tbl` (`mo_id`, `mo_title`, `mo_code`, `mo_credit`, `ay_id`, `le_id`, `status`) VALUES
+(1, 'HTML with CSS', 'ict105', 11, 0, 5, 0),
+(2, 'Analog', 'ET', 10, 0, 1, 0),
+(3, 'Enterprenuership', 'RE301', 10, 0, 2, 0),
+(4, 'Advanced java', 'ict 302', 10, 0, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -137,6 +211,12 @@ CREATE TABLE `users_tbl` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `academic_year_tbl`
+--
+ALTER TABLE `academic_year_tbl`
+  ADD PRIMARY KEY (`ay_id`);
 
 --
 -- Indexes for table `class_diary_tbl`
@@ -201,34 +281,40 @@ ALTER TABLE `users_tbl`
 --
 
 --
+-- AUTO_INCREMENT for table `academic_year_tbl`
+--
+ALTER TABLE `academic_year_tbl`
+  MODIFY `ay_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `class_diary_tbl`
 --
 ALTER TABLE `class_diary_tbl`
-  MODIFY `cd_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `cd_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `department_tbl`
 --
 ALTER TABLE `department_tbl`
-  MODIFY `de_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `de_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `lecture_tbl`
 --
 ALTER TABLE `lecture_tbl`
-  MODIFY `lect_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `lect_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `level_tbl`
 --
 ALTER TABLE `level_tbl`
-  MODIFY `le_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `le_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `modules_tbl`
 --
 ALTER TABLE `modules_tbl`
-  MODIFY `mo_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `mo_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roll_tbl`

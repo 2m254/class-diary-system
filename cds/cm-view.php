@@ -120,11 +120,11 @@ else if($error){?>
 
                                                 
                                             <div class="box">
- 		<ul>
+ 		<ul><il>
              
          <?php $sql = "SELECT distinct class_diary_tbl.cd_id,class_diary_tbl.week,department_tbl.de_short,class_diary_tbl.day,class_diary_tbl.dat,
 			class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,class_diary_tbl.start_time,class_diary_tbl.end_time,modules_tbl.mo_title,
-			lecture_tbl.lect_name,level_tbl.le_title,level_tbl.le_class,class_diary_tbl.cm_comm from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id 
+			lecture_tbl.lect_name,level_tbl.le_title,level_tbl.le_class,class_diary_tbl.cm_checked,class_diary_tbl.cm_comm from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id 
 			join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id join department_tbl on 
 			department_tbl.de_id=class_diary_tbl.cd_id join level_tbl on level_tbl.le_id=class_diary_tbl.cd_id";
 $query = $dbh->prepare($sql);
@@ -238,20 +238,33 @@ foreach($results as $result)
 
 
 
-                <button class="btn btn-success btn-labeled pull-left" href><a href="cm-comment.php?classid=<?php echo htmlentities($result->cd_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa ">
+                <button class="btn btn-success btn-labeled pull-left" ><a href="cm-comment.php?classid=<?php echo htmlentities($result->cd_id);?>">Comment</a><span class="btn-label btn-label-left"><i class="fa ">
 
                 </i></span></button>
                  
-                <div class="form-group text-center mb-3 mt-4">
-                    <div class="form-group mt-20">
-                                                    		
-                                                           
-                                                    			<button type="submit"  class="btn btn-success btn-labeled pull-right">Approve<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                    		</div>
-                    </div>
-                    </div></div>
+                <div class="form-group">
 
-               <h3>-------------------------  ----------------------------  ---------------------------</h3>
+&nbsp;&nbsp;&nbsp;&nbsp;<p ><div class="btn btn-success btn-labeled pull-left">
+<?php  $stats=$result->cm_checked;
+if($stats=="1")
+{
+?>
+<input type="checkbox"  name="cm_checked" value="" required="required" checked> 
+<?php }?>
+<?php  
+if($stats=="0")
+{
+?>
+<input type="checkbox" name="cm_checked" value=""  > 
+<?php }?>
+
+
+
+</div></p>
+</div>
+
+
+</il></ul>
 
  			<?php } ?>
  		</ul>

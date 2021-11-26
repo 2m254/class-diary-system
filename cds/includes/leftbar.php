@@ -2,7 +2,7 @@
                         <div class="sidebar-content">
                             <div class="user-info closed">
                                 <img src="images/admin.jpg"  alt="#####" width="100" height="100" class="img-circle profile-img">
-                                <h6 class="title">HOD</h6>
+                                <h6 class="title"><?php echo$_SESSION['department'];?></h6>
                                 <small class="info">Head Of Department</small>
                             </div>
                             <!-- /.user-info -->

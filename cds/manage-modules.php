@@ -1,4 +1,13 @@
+<?php
+session_start();
+$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
 
+if($_SESSION['username']==''){
+    echo"<script> alert('Please LogIn First?')</script>";
+    echo"<script> history.back()</script>";
+    header("location: index.php");
+}
+?>
 <?php
 session_start();
 error_reporting(0);
@@ -18,7 +27,7 @@ $query = $dbh->prepare($sql);
 $query->bindParam(':acid',$acid,PDO::PARAM_STR);
 $query->bindParam(':status',$status,PDO::PARAM_STR);
 $query->execute();
-$msg="Subject Activate successfully";
+$msg="Module Activate successfully";
 }
 
  // for Deactivate Subject
@@ -31,7 +40,7 @@ $query = $dbh->prepare($sql);
 $query->bindParam(':did',$did,PDO::PARAM_STR);
 $query->bindParam(':status',$status,PDO::PARAM_STR);
 $query->execute();
-$msg="Subject Deactivate successfully";
+$msg="Module Deactivate successfully";
 }
 
 
@@ -180,7 +189,7 @@ else if($error){?>
                                                     </tfoot>
                                                     <tbody>
                                                         
-<?php $sql = "SELECT  distinct modules_tbl.mo_id,modules_tbl.mo_title,modules_tbl.mo_code,modules_tbl.mo_credit,modules_tbl.status,academic_year_tbl.year,academic_year_tbl.semester,level_tbl.le_title from modules_tbl join academic_year_tbl on academic_year_tbl.ay_id=modules_tbl.mo_id join level_tbl on level_tbl.le_id=academic_year_tbl.ay_id ";
+<?php $sql = "SELECT  distinct modules_tbl.mo_id,modules_tbl.mo_title,modules_tbl.mo_code,modules_tbl.mo_credit,modules_tbl.status,modules_tbl.le_id,academic_year_tbl.year,modules_tbl.ay_id,academic_year_tbl.semester,level_tbl.le_title,level_tbl.le_id,academic_year_tbl.ay_id from modules_tbl join academic_year_tbl on academic_year_tbl.ay_id=modules_tbl.ay_id join level_tbl on level_tbl.le_id=modules_tbl.le_id ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

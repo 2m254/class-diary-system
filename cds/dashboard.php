@@ -1,13 +1,15 @@
-<?php
+
+        <?php
+        include('cr-includes/config.php');
 session_start();
-error_reporting(0);
-include('includes/config.php');
-if(strlen($_SESSION['alogin'])=="")
-    {   
-    header("Location: index.php"); 
-    }
-    else{
-        ?>
+$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
+
+if($_SESSION['username']==''){
+    echo"<script> alert('Please LogIn First?')</script>";
+    echo"<script> history.back()</script>";
+    header("location: index.php");
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -211,4 +213,4 @@ $totalresults=$query3->rowCount();
         </div></div>
     </body>
 </html>
-<?php } ?>
+<?php ?>

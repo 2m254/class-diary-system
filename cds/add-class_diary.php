@@ -16,6 +16,7 @@ if(isset($_POST['submit']))
     
     $de_id=$_POST['de_id'];
     $le_id=$_POST['le_id'];
+    $level_room=$_POST['level_room'];
     $mo_id=$_POST['mo_id'];
     $lect_id=$_POST['lect_id'];
     $start_time=$_POST['start_time'];
@@ -24,9 +25,10 @@ if(isset($_POST['submit']))
     $toc=$_POST['toc'];
     $comment=$_POST['comment'];
     $commdesc=$_POST['commdesc'];
+   
     
     
-    $sql="INSERT INTO  class_diary_tbl(ay_id,week,day,dat,de_id,le_id,mo_id,lect_id,start_time,end_time,activity,toc,comment,commdesc) VALUES(:ay_id,:week,:day,:dat,:de_id,:le_id,:mo_id,:lect_id,:start_time,:end_time,:activity,:toc,:comment,:commdesc)";
+    $sql="INSERT INTO  class_diary_tbl(ay_id,week,day,dat,de_id,le_id,level_room,mo_id,lect_id,start_time,end_time,activity,toc,comment,commdesc) VALUES(:ay_id,:week,:day,:dat,:de_id,:le_id,:level_room,:mo_id,:lect_id,:start_time,:end_time,:activity,:toc,:comment,:commdesc)";
     $query = $dbh->prepare($sql);
     $query->bindParam(':ay_id',$ay_id,PDO::PARAM_STR);
     $query->bindParam(':week',$week,PDO::PARAM_STR);
@@ -34,6 +36,7 @@ if(isset($_POST['submit']))
     $query->bindParam(':dat',$dat,PDO::PARAM_STR);
     $query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
     $query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
+    $query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
     $query->bindParam(':mo_id',$mo_id,PDO::PARAM_STR);
     $query->bindParam(':lect_id',$lect_id,PDO::PARAM_STR);
     $query->bindParam(':start_time',$start_time,PDO::PARAM_STR);
@@ -248,8 +251,9 @@ foreach($results as $result)
                                                
                                                       
 <select name="de_id" class="form-control" id="success"  required="required">
-<option value="">select department name</option>
-<?php $sql = "SELECT * from department_tbl ";
+<?php 
+$dep=$_SESSION['department'];
+$sql = "SELECT * from department_tbl where de_short='$dep'";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -270,8 +274,10 @@ foreach($results as $result)
                                                <label for="default" class="control-label">level</label>
                                                       
 <select name="le_id" class="form-control" id="success" required="required">
-<option selected>-----Select level-----</option>
-<?php $sql = "SELECT * from level_tbl";
+<?php 
+$lev=$_SESSION['level_name'];
+$lev_room=$_SESSION['level_room'];
+$sql = "SELECT * from level_tbl where le_title='$lev' and le_class='$lev_room'";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -282,7 +288,16 @@ foreach($results as $result)
 <option value="<?php echo htmlentities($result->le_id); ?>"><?php echo htmlentities($result->le_title); ?></option>
 <?php }} ?>
 </select>
+
                                                        </div>
+                                                   </div>
+                                                   <div class="form-group has-success">
+                                                       <label for="success" class="control-label">Room</label>
+                                                       <div class="">
+                                                           <input type="text" name="level_room" value="<?php echo $_SESSION['level_room'];?>" readonly="<?php echo $_SESSION['level_room'];?>" class="form-control" required="required" id="success">
+                                                           
+                                                        
+                                                   </div>
                                                    </div>
                                                    <div class="form-group has-success">
                                                       <div class="form-group">

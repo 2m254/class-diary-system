@@ -30,14 +30,23 @@
             </div>
             <div class="login-padding">
                 <h2 class="text-center text-white">LOGIN</h2>
-                <form class="p-1" action="login.php" method="POST">
+                <form class="p-1" action="check_login.php" method="POST">
                     <div class="form-group">
-                        <label><h6>Enter Your Email:</h6></label>
-                        <input type="text" name="email" placeholder="Enter User ID" class="form-control" required>
+                        <label><h6>Enter Your UserName:</h6></label>
+                        <input type="text" name="username" placeholder="Enter User UserName" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label><h6>Enter Your Password:</h6></label>
                         <input type="Password" name="password" placeholder="Enter Password" class="form-control border-bottom" required>
+                       
+                    </div>
+                    <div class="form-group">
+                        <label><h6>Select Your Post:</h6></label>
+                        <select name="post" class="form-control border-bottom" required>
+                        <option>HOD</option>
+                        <option>CM</option>
+                        <option>CR</option>
+</select>
                        
                     </div>
                     <div class="form-group text-center mb-3 mt-4">

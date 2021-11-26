@@ -10,14 +10,15 @@ if(strlen($_SESSION['alogin'])=="")
 if(isset($_POST['update']))
 {
     $cm_comm=$_POST['cm_comm'];
+    $cm_checked=1;
    
     
     $cid=intval($_GET['classid']);
-    $sql="update  class_diary_tbl set cm_comm=:cm_comm where cd_id=:cid ";
+    $sql="update  class_diary_tbl set cm_comm=:cm_comm,cm_checked=:cm_checked where cd_id=:cid ";
     $query = $dbh->prepare($sql);
 
 $query->bindParam(':cm_comm',$cm_comm,PDO::PARAM_STR);
-
+$query->bindParam(':cm_checked',$cm_checked,PDO::PARAM_STR);
 
 
 
@@ -129,7 +130,7 @@ else if($error){?>
                                                        <div class="form-group has-success">
                                                        <label for="success" class="control-label">Comment Description </label>
                                                        <div class="">
-                                                       <textarea rows="5" cols="110" name="cm_comm" value="<?php echo htmlentities($result->cm_comm);?>"></textarea>
+                                                       <textarea rows="5" cols="110" name="cm_comm" value="<?php echo htmlentities($result->cm_comm);?>" required="required"></textarea>
                                                        </div>
                                                    </div>
                                       

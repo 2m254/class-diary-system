@@ -142,7 +142,9 @@ else if($error){?>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-<?php $sql = "SELECT distinct level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,department_tbl.de_short  from level_tbl join department_tbl where department_tbl.de_id=level_tbl.le_id ";
+<?php
+$deps=$_SESSION['department'];
+$sql = "SELECT distinct level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,level_tbl.de_id,department_tbl.de_short,department_tbl.de_id  from level_tbl join department_tbl where department_tbl.de_id=level_tbl.de_id and department_tbl.de_short='$deps'";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
