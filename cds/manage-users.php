@@ -1,13 +1,4 @@
-<?php
-session_start();
-$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
 
-if($_SESSION['username']==''){
-    echo"<script> alert('Please LogIn First?')</script>";
-    echo"<script> history.back()</script>";
-    header("location: index.php");
-}
-?>
 <?php
 session_start();
 error_reporting(0);
@@ -17,36 +8,7 @@ if(strlen($_SESSION['alogin'])=="")
     header("Location: index.php"); 
     }
     else{
-// for activate Subject   	
-if(isset($_GET['acid']))
-{
-$acid=intval($_GET['acid']);
-$status=1;
-$sql="update modules_tbl set status=:status where mo_id=:acid ";
-$query = $dbh->prepare($sql);
-$query->bindParam(':acid',$acid,PDO::PARAM_STR);
-$query->bindParam(':status',$status,PDO::PARAM_STR);
-$query->execute();
-$msg="Module Activate successfully";
-}
-
- // for Deactivate Subject
-if(isset($_GET['did']))
-{
-$did=intval($_GET['did']);
-$status=0;
-$sql="update modules_tbl set status=:status where mo_id=:did ";
-$query = $dbh->prepare($sql);
-$query->bindParam(':did',$did,PDO::PARAM_STR);
-$query->bindParam(':status',$status,PDO::PARAM_STR);
-$query->execute();
-$msg="Module Deactivate successfully";
-}
-
-
-
-
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -102,7 +64,7 @@ $msg="Module Deactivate successfully";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Manage Modules</h2>
+                                    <h2 class="title">Manage Lecture</h2>
                                 
                                 </div>
                                 
@@ -113,8 +75,8 @@ $msg="Module Deactivate successfully";
                                 <div class="col-md-6">
                                     <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><li><a href="create-module.php"><i class="fa fa-home"></i> Modules</a></li>
-            							<li class="active">Manage Modules</li>
+                                        <li><li><a href="create-lecture.php"><i class="fa fa-home"></i> Lectures</a></li>
+            							<li class="active">Manage Lectures</li>
             						</ul>
                                 </div>
                              
@@ -134,9 +96,9 @@ $msg="Module Deactivate successfully";
         <div class="panel">
             <div class="panel-heading">
                 
-                <button name="login" class="btn btn-success btn-labeled pull-right"><a href="create-module.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                <button name="login" class="btn btn-success btn-labeled pull-right"><a href="create-lecture.php">Add</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
                 <div class="panel-title">
-                    <h5>View Modules Info</h5>
+                    <h5>View Lectures Info</h5>
                     
                 
                 </div>
@@ -156,46 +118,32 @@ else if($error){?>
                                                 <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                           
-                                                        <th>#</th>
-                                                          <th>Module Title</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module Credit</th>
-                                                            <th>Academic Year & semester</th>
-                                                            <th>Level</th> 
-                                                            <th>Status</th> 
-                                                            
-                                                          
-                                                            <th>Edit </th>
-                                                        </tr>
+                                                            <th>ID</th>
+                                                            <th>First Name</th>
+                                                            <th>Last Name</th>
+                                                            <th>User Name</th>
+                                                            <th>Post</th>
+                                                            <th>Level Name</th>
+                                                            <th>Level Room</th>
+                                                            <th>Action</th>
                                                     </thead>
                                                     <tfoot>
-                                                        <tr>
-                                                          <th>#</th>
-                                                          <th>Module Title</th>
-                                                            <th>Module Code</th>
-                                                            <th>Module Credit</th>
-                                                            <th>Academic Year & semester</th>
-                                                            <th>Level</th> 
-                                                            <th>Status</th> 
-                                                            
-
-                                                            
-                                                           
-                                                            <th>Edit  </th>
-                                                            
+                                                    <tr>
+                                                    <th>ID</th>
+                                                            <th>First Name</th>
+                                                            <th>Last Name</th>
+                                                            <th>User Name</th>
+                                                            <th>Post</th>
+                                                            <th>Level Name</th>
+                                                            <th>Level Room</th>
+                                                            <th>Action</th>
                                                         </tr>
-                                                        
                                                     </tfoot>
                                                     <tbody>
-                                                        
-<?php 
+<?php
 $deps=$_SESSION['department'];
-$sql = "SELECT distinct modules_tbl.mo_id,modules_tbl.mo_code,modules_tbl.mo_credit,modules_tbl.status,modules_tbl.mo_title,modules_tbl.le_id
-,level_tbl.le_id,level_tbl.le_title,academic_year_tbl.semester,academic_year_tbl.ay_id,modules_tbl.ay_id,academic_year_tbl.year
- from modules_tbl 
-join level_tbl join academic_year_tbl where level_tbl.le_id=modules_tbl.ay_id  and 
-modules_tbl.department='$deps' ";
+
+$sql = "SELECT * from users_tbl where department='$deps' and post='CM' or post='CR'";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -205,34 +153,18 @@ if($query->rowCount() > 0)
 foreach($results as $result)
 {   ?>
 <tr>
- <td><?php echo htmlentities($cnt);?>
-                                                            <td><?php echo htmlentities($result->mo_title);?></td>
-                                                            <td><?php echo htmlentities($result->mo_code);?></td>
-                                                            <td><?php echo htmlentities($result->mo_credit);?></td>
-                                                            <td><?php echo htmlentities($result->year);?>- semester: <?php echo htmlentities($result->semester);?></td>
-                                                            <td><?php echo htmlentities($result->le_title);?></td>
-                                                            <td><?php $stts=$result->status;
-if($stts=='0')
-{
-	echo htmlentities('Inactive');
-}
-else
-{
-	echo htmlentities('Active');
-}
-                                                             ?></td>
-                                                            
+ <td><?php echo htmlentities($cnt);?></td>
+                                                            <td><?php echo htmlentities($result->fname);?></td>
+                                                            <td><?php echo htmlentities($result->lname);?></td>
+                                                            <td><?php echo htmlentities($result->username);?></td>
+                                                            <td><?php echo htmlentities($result->post);?></td>
+                                                            <td><?php echo htmlentities($result->level_name);?></td>
+                                                            <td><?php echo htmlentities($result->level_room);?></td>
+                                                           
 <td>
-<?php if($stts=='0')
-{ ?>
-<a href="manage-modules.php?acid=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to ativate this Module');"><i class="fa fa-check" title="Acticvate Record"></i> </a><?php } else {?>
+<a href="edit-lecture.php?classid=<?php echo htmlentities($result->lect_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 
-<a href="manage-modules.php?did=<?php echo htmlentities($result->mo_id);?>" onclick="confirm('do you really want to deativate this Module');"><i class="fa fa-times" title="Deactivate Record"></i> </a>
-<?php }?>
-
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="edit-modules.php?classid=<?php echo htmlentities($result->mo_id);?>"><i class="fa fa-edit" title="Edit Record"></i> </a> 
 </td>
-
 </tr>
 <?php $cnt=$cnt+1;}} ?>
                                                        

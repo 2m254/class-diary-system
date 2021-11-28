@@ -124,7 +124,7 @@ else if($error){?>
                                                             <th>#</th>
                                                             <th>Level Name</th>
                                                             <th>Level Room</th>
-                                                            <th>Depertment</th>
+                                                            
                                                           
                                                             <th>Action</th>
                                                         </tr>
@@ -134,7 +134,7 @@ else if($error){?>
                                                             <th>#</th>
                                                             <th>Level Name</th>
                                                             <th>Level Room</th>
-                                                            <th>Depertment</th>
+                                                            
                                                             
                                                             
                                                           
@@ -144,7 +144,9 @@ else if($error){?>
                                                     <tbody>
 <?php
 $deps=$_SESSION['department'];
-$sql = "SELECT distinct level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,level_tbl.de_id,department_tbl.de_short,department_tbl.de_id  from level_tbl join department_tbl where department_tbl.de_id=level_tbl.de_id and department_tbl.de_short='$deps'";
+$sql = "SELECT distinct level_tbl.le_id,level_tbl.le_title,level_tbl.le_class,level_tbl.de_id,
+department_tbl.de_short,department_tbl.de_id  from level_tbl join department_tbl 
+where level_tbl.de_id =department_tbl.de_id and department_tbl.de_short='$deps'";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -157,7 +159,7 @@ foreach($results as $result)
  <td><?php echo htmlentities($cnt);?></td>
                                                             <td><?php echo htmlentities($result->le_title);?></td>
                                                             <td><?php echo htmlentities($result->le_class);?></td>
-                                                            <td><?php echo htmlentities($result->de_short);?></td>
+                                                         
                                                             
                                                             
                                                            

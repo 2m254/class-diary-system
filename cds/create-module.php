@@ -14,10 +14,11 @@ $mo_code=$_POST['mo_code'];
 $mo_credit=$_POST['mo_credit'];
 $ay_id=$_POST['ay_id'];
 $le_id=$_POST['le_id'];
+$department=$_POST['department'];
 $status=1;
 
 
-$sql="INSERT INTO  modules_tbl(mo_title,mo_code,mo_credit,ay_id,le_id,status) VALUES(:mo_title,:mo_code,:ay_id,:mo_credit,:le_id,:status)";
+$sql="INSERT INTO  modules_tbl(mo_title,mo_code,mo_credit,ay_id,le_id,department,status) VALUES(:mo_title,:mo_code,:mo_credit,:ay_id,:le_id,:department,:status)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':mo_title',$mo_title,PDO::PARAM_STR);
 $query->bindParam(':mo_code',$mo_code,PDO::PARAM_STR);
@@ -25,6 +26,7 @@ $query->bindParam(':mo_credit',$mo_credit,PDO::PARAM_STR);
 $query->bindParam(':ay_id',$ay_id,PDO::PARAM_STR);
 $query->bindParam(':le_id',$le_id,PDO::PARAM_STR);
 $query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->bindParam(':department',$department,PDO::PARAM_STR);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
@@ -212,6 +214,13 @@ foreach($results as $result)
  </select>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Department</label>
+                                                		
+                                                        <div class="">
+                                                			<input type="text" name="department" value="<?php echo $_SESSION['department'];?>" readonly="<?php echo $_SESSION['department'];?>"class="form-control"  id="success">
+                                                            
+                                                		</div>
 
 
 

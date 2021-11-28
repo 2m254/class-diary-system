@@ -50,20 +50,29 @@
                                         <a href="#"><i class="fa fa-file-text"></i> <span>Lectures</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
                                             <li><a href="create-lecture.php"><i class="fa fa-bars"></i> <span>Create Lecture</span></a></li>
-                                            <li><a href="manage-lectures.php"><i class="fa fa fa-server"></i> <span>Manage Lectures</span></a></li>
+                                            
+                                            <li><a href="manage-lectures.php"><i class="fa fa fa-bars"></i> <span>Manage Lectures</span></a></li>
                                            
                                         </ul>
                                     </li>
                                     
-<li class="has-children">
-                                        <a href="#"><i class="fa fa-info-circle"></i> <span>Class Diary </span> <i class="fa fa-angle-right arrow"></i></a>
+    <li class="has-children">                                        
+        <a href="#"><i class="fa fa-info-circle"></i> <span>Class Diary </span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
                                         
                                             <li><a href="view_class_diary.php"><i class="fa fa-bars"></i> <span>View Class Diary Table</span></a></li>
                                             <li><a href="hod-view.php"><i class="fa fa-bars"></i> <span>View Class Diary </span></a></li>
                                            
                                         </ul>
-                                        <li><a href="change-password.php"><i class="fa fa fa-server"></i> <span> HOD Change Password</span></a></li>
+                                        <li class="has-children">                                        
+        <a href="#"><i class="fa fa-info-circle"></i> <span>Add User & Profile </span> <i class="fa fa-angle-right arrow"></i></a>
+                                        <ul class="child-nav">
+                                        
+                                        <li><a href="create-users.php"><i class="fa fa fa-server"></i> <span>Add CM Or CR </span></a></li>
+                                        <li><a href="manage-users.php"><i class="fa fa-bars"></i> <span>Manage User </span></a></li>
+                                            <li><a href="change-password.php"><i class="fa fa-server"></i> <span>Change Your Password </span></a></li>
+                                           
+                                        
                                            
                                     </li>
                             </div>

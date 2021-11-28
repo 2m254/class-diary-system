@@ -1,4 +1,15 @@
 
+  <?php
+        include('cr-includes/config.php');
+session_start();
+$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
+
+if($_SESSION['username']==''){
+    echo"<script> alert('Please LogIn First?')</script>";
+    echo"<script> history.back()</script>";
+    header("location: index.php");
+}
+?>
 <?php
 session_start();
 error_reporting(0);
@@ -122,17 +133,33 @@ else if($error){?>
                                             <div class="box">
  		<ul><il>
              
-         <?php $sql = "SELECT distinct class_diary_tbl.cd_id,class_diary_tbl.week,department_tbl.de_short,class_diary_tbl.day,class_diary_tbl.dat,
-			class_diary_tbl.activity,class_diary_tbl.toc,class_diary_tbl.commdesc,class_diary_tbl.start_time,class_diary_tbl.end_time,modules_tbl.mo_title,
-			lecture_tbl.lect_name,level_tbl.le_title,level_tbl.le_class,class_diary_tbl.cm_checked,class_diary_tbl.cm_comm from class_diary_tbl join modules_tbl on class_diary_tbl.cd_id=modules_tbl.mo_id 
-			join lecture_tbl on lecture_tbl.lect_id=class_diary_tbl.cd_id join department_tbl on 
-			department_tbl.de_id=class_diary_tbl.cd_id join level_tbl on level_tbl.le_id=class_diary_tbl.cd_id";
+         <?php 
+         $deps=$_SESSION['department'];
+
+
+         $sql = "SELECT class_diary_tbl.cd_id,class_diary_tbl.de_id,department_tbl.de_id,
+         department_tbl.de_short,class_diary_tbl.toc,class_diary_tbl.cm_checked,class_diary_tbl.cm_comm,class_diary_tbl.commdesc,class_diary_tbl.week,class_diary_tbl.day,class_diary_tbl.dat
+         ,class_diary_tbl.le_id,level_tbl.le_id,level_tbl.le_class,level_tbl.le_title
+         ,class_diary_tbl.start_time,class_diary_tbl.end_time,class_diary_tbl.activity,class_diary_tbl.mo_id
+         ,class_diary_tbl.lect_id,modules_tbl.mo_id,modules_tbl.mo_title,lecture_tbl.lect_id,lecture_tbl.lect_name
+           from class_diary_tbl join department_tbl join level_tbl join modules_tbl join lecture_tbl
+            where class_diary_tbl.de_id=department_tbl.de_id and class_diary_tbl.mo_id=modules_tbl.mo_id 
+            and class_diary_tbl.lect_id=lecture_tbl.lect_id and class_diary_tbl.le_id=level_tbl.le_id and department_tbl.de_short='$deps'  ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $cnt=1;
-if($query->rowCount() > 0)
+if($query->rowCount()==0)
 {
+    
+        ?>
+        <div class="alert alert-danger left-icon-alert" role="alert">
+        <center><h2>No data available here</h2>
+        <strong><h4>Wait for Class Representative</h4></strong></center></div>
+        <?php
+    }
+    elseif($query->rowCount() > 0)
+    {
 foreach($results as $result)
 {   ?>
                <div class="form-group has-success"> <div class="form-group">
@@ -208,7 +235,7 @@ foreach($results as $result)
          <div class="form-group">
                  
                 
-     <b>Activity:&nbsp;&nbsp;</b><?php  echo htmlentities($result->toc);?> 
+     <b>Content:&nbsp;&nbsp;</b><?php  echo htmlentities($result->toc);?> 
                   
                  </label></div></p>
                   
@@ -220,7 +247,7 @@ foreach($results as $result)
          <div class="form-group">
                  
                 
-     <b>Activity:&nbsp;&nbsp;</b><?php  echo htmlentities($result->commdesc); ?> 
+     <b>Comment:&nbsp;&nbsp;</b><?php  echo htmlentities($result->commdesc); ?> 
                   
                  </div>
                   

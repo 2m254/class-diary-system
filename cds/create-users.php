@@ -1,15 +1,3 @@
-
-<?php
-        include('cr-includes/config.php');
-session_start();
-$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
-
-if($_SESSION['username']==''){
-    echo"<script> alert('Please LogIn First?')</script>";
-    echo"<script> history.back()</script>";
-    header("location: index.php");
-}
-?>
 <?php
 session_start();
 error_reporting(0);
@@ -21,25 +9,32 @@ if(strlen($_SESSION['alogin'])=="")
     else{
 if(isset($_POST['submit']))
 {
-$le_title=$_POST['le_title'];
-$le_class=$_POST['le_class']; 
-$de_id=$_POST['de_id']; 
- 
+$fname=$_POST['fname'];
+$lname=$_POST['lname']; 
+$username=$_POST['username'];
+$password=$_POST['password'];
+$post=$_POST['post'];
+$level_name=$_POST['level_name'];
+$level_room=$_POST['level_room'];
+$department=$_POST['department'];
 
 
-
-$sql="INSERT INTO  level_tbl(le_title,le_class,de_id) VALUES(:le_title,:le_class,:de_id)";
+$sql="INSERT INTO  users_tbl(fname,lname,username,password,post,level_name,level_room,department) VALUES(:fname,:lname,:username,:password,:post,:level_name,:level_room,:department)";
 $query = $dbh->prepare($sql);
-$query->bindParam(':le_title',$le_title,PDO::PARAM_STR);
-$query->bindParam(':le_class',$le_class,PDO::PARAM_STR);
-$query->bindParam(':de_id',$de_id,PDO::PARAM_STR);
 
-
+$query->bindParam(':fname',$fname,PDO::PARAM_STR);
+$query->bindParam(':lname',$lname,PDO::PARAM_STR);
+$query->bindParam(':username',$username,PDO::PARAM_STR);
+$query->bindParam(':password',$password,PDO::PARAM_STR);
+$query->bindParam(':post',$post,PDO::PARAM_STR);
+$query->bindParam(':level_name',$level_name,PDO::PARAM_STR);
+$query->bindParam(':level_room',$level_room,PDO::PARAM_STR);
+$query->bindParam(':department',$department,PDO::PARAM_STR);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$msg="Level Created successfully";
+$msg="New User Created successfully";
 }
 else 
 {
@@ -106,7 +101,7 @@ $error="Something went wrong. Please try again";
                         <div class="container-fluid">
                             <div class="row page-title-div">
                                 <div class="col-md-6">
-                                    <h2 class="title">Create Levels </h2>
+                                    <h2 class="title">Create Modules </h2>
                                 </div>
                                 
                             </div>
@@ -115,8 +110,8 @@ $error="Something went wrong. Please try again";
                                 <div class="col-md-6">
                                 <ul class="breadcrumb">
             							<li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
-                                        <li><li><a href="manage-level.php"><i class="fa fa-home"></i>  Leveles</a></li>
-            							<li class="active">Create Leveles</li>
+                                        <li><li><a href="manage-modules.php"><i class="fa fa-home"></i> Modules</a></li>
+            							<li class="active">Creat Modules</li>
             						</ul>
                                 </div>
                                
@@ -135,9 +130,10 @@ $error="Something went wrong. Please try again";
                                 <div class="row">
                                     <div class="col-md-8 col-md-offset-2">
                                         <div class="panel">
-                                            <div class="panel-heading">
+                                            <div class="panel-heading"
+                                            >
                                                 <div class="panel-title">
-                                                    <h5>Create Level</h5>
+                                                    <h5>Create Modules</h5>
                                                 </div>
                                             </div>
            <?php if($msg){?>
@@ -152,79 +148,83 @@ else if($error){?>
   
                                             <div class="panel-body">
 
-                                                <form method="post">
+                                                <form  method="post">
+                                                    
+                                                	</div>
                                                     <div class="form-group has-success">
-                                                        <label for="success" class="control-label">Level Name</label>
+                                                        <label for="success" class="control-label">First Name</label>
                                                 		<div class="">
-                                                			<input type="text" name="le_title" class="form-control" required="required" id="success">
-                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
+                                                			<input type="text"  name="fname" class="form-control" required="required" id="success">
                                                             
                                                 		</div>
                                                 	</div>
-                                                    
-                                                    <div class="form-group has-success">
-                                                       <div class="form-group">
-                                                <label for="default" class="control-label">Level Room</label>
-                                                
-                                                       
- <select name="le_class" class="form-control" id="success"  required="required">
-<option value="">Select level room</option>
 
-<option  id="success" class="form-control" value="A">A</option>
-<option  id="success" class="form-control" value="B">B</option>
-<option   id="success" class="form-control" value="C">C</option>
+                                                       <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">Last Name </label>
+                                                        <div class="">
+                                                            <input type="text"  name="lname" required="required" class="form-control" id="success">
+                                                            
 
-
-
- </select>
                                                         </div>
-                                                    </div>
-                                                    
+                                                        <div class="form-group has-success">
+                                                        <label for="success"  class="control-label">User Name </label>
+                                                        <div class="">
+                                                            <input type="text"  name="username" required="required" class="form-control" id="success">
+                                                            
 
-                                                    <div class="form-group has-success">
-                                                      <div class="form-group">
-                                               <label for="default" class="control-label">Department</label>
-                                               
-                                                      
-<select name="de_id" class="form-control" id="success"  required="required">
-<?php 
-$dep=$_SESSION['department'];
-$sql = "SELECT * from department_tbl where de_short='$dep'";
-$query = $dbh->prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount()>0)
-{
-foreach($results as $result)
-{   ?>
-<option value="<?php echo htmlentities($result->de_id); ?>"><?php echo htmlentities($result->de_short); ?></option>
-<?php }
+                                                        </div>
 
-
-} ?>
+                                                        <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Password</label>
+                                                		<div class="">
+                                                			<input type="password" name="password" class="form-control" required="required" id="success">
+                                                            
+                                                		</div>
+                                                        <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Select Post</label>
+                        <select name="post" class="form-control border-bottom" required>
+                       
+                        <option value="CM">CM</option>
+                        <option value="CR">CR</option>
 </select>
-                                                       </div>
-                                                   </div>
-                                                    
-                                                    
-                                                    <div class="form-group has-success">
-                                                      
+                       
+                    </div>
+                    <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Level Name</label>
+                                                		<div class="">
+                                                			<input type="text" name="level_name" class="form-control" required="required" id="success">
+                                                            <span class="help-block">Eg- level 1, level 2 etc</span>
+                                                		</div>
+                                                        <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Level Room</label>
+                                                		
+                                                        <div class="">
+                                                			<input type="text" name="level_room" class="form-control" required="required" id="success">
+                                                            <span class="help-block">Eg- A, B, C etc</span>
+                                                		</div>
+                                                        <div class="form-group has-success">
+                                                        <label for="success" class="control-label">Department</label>
+                                                		
+                                                        <div class="">
+                                                			<input type="text" name="department" value="<?php echo $_SESSION['department'];?>" readonly="<?php echo $_SESSION['department'];?>"class="form-control"  id="success">
+                                                            
+                                                		</div>
+                                                       
 
-                                                      
+
+
+
+                                                        
                                                     
   <div class="form-group has-success">
 
                                                         <div class="">
                                                            <button type="submit" name="submit" class="btn btn-success btn-labeled">Submit<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
-                                                
-
-
-                                                                                       		
-                                                           
-                                                    <button name="login" class="btn btn-success btn-labeled pull-right"><a href="manage-level.php">Back</a><span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                                             
                                                     		</div>
                     </div>
 
+                                                    
                                                 </form>
 
                                               

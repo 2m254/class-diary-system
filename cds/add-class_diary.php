@@ -1,4 +1,15 @@
-<?php
+
+  <?php
+        include('cr-includes/config.php');
+session_start();
+$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
+
+if($_SESSION['username']==''){
+    echo"<script> alert('Please LogIn First?')</script>";
+    echo"<script> history.back()</script>";
+    header("location: index.php");
+}
+?><?php
 session_start();
 error_reporting(0);
 include('includes/config.php');
@@ -292,9 +303,9 @@ foreach($results as $result)
                                                        </div>
                                                    </div>
                                                    <div class="form-group has-success">
-                                                       <label for="success" class="control-label">Room</label>
+                                                       <label for="success" class="control-label">Class</label>
                                                        <div class="">
-                                                           <input type="text" name="level_room" value="<?php echo $_SESSION['level_room'];?>" readonly="<?php echo $_SESSION['level_room'];?>" class="form-control" required="required" id="success">
+                                                           <input type="text" name="level_room"  class="form-control" value="<?php echo $_SESSION['level_room'];?>" readonly="<?php echo $_SESSION['level_room'];?>" id="success">
                                                            
                                                         
                                                    </div>
