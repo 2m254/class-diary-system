@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 error_reporting(0);
@@ -198,7 +199,10 @@ foreach($results as $result)
                                                        
  <select name="le_id" class="form-control" id="success"  required="required">
 <option value="">Select level Name</option>
-<?php $sql = "SELECT * from level_tbl ";
+<?php 
+$dep=$_SESSION['department'];
+$lev_n=$_SESSION['level_name'];
+$sql = "SELECT * from level_tbl where  ";
 $query = $dbh->prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);

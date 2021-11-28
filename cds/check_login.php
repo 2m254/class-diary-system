@@ -22,6 +22,8 @@ if(is_array($result)){
     $_SESSION['level_name'] = $result['level_name'];
     $_SESSION['level_room'] = $result['level_room'];
     $_SESSION['department'] = $result['department'];
+    $_SESSION['fname'] = $result['fname'];
+    $_SESSION['lname'] = $result['lname'];
     
     if(isset($_SESSION['username']) AND $result['post']=="HOD" AND $post=="HOD"){
       header('location:dashboard.php');

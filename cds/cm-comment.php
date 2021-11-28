@@ -1,4 +1,15 @@
+
 <?php
+        include('cr-includes/config.php');
+session_start();
+$con=mysqli_connect("localhost","root","","cds-db") or die("not connected");
+
+if($_SESSION['username']==''){
+    echo"<script> alert('Please LogIn First?')</script>";
+    echo"<script> history.back()</script>";
+    header("location: index.php");
+}
+?><?php
 session_start();
 error_reporting(0);
 include('cm-includes/config.php');
